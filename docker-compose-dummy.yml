@@ -1,0 +1,19 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "8020:8020"
+    environment:
+      - DB_NAME=db-name
+      - DB_USER=db-user
+      - DB_PASSWORD=db-pw
+      - DB_PORT=5432
+      - DB_HOST=172.17.0.1
+      - PROJECT_NAME=project-name
+      - SECRET_KEY=random-string-used-as-djangos-secret-key
+      - DJANGO_SUPERUSER_USERNAME=testuser
+      - DJANGO_SUPERUSER_PASSWORD=testuserpassword
+      - DJANGO_SUPERUSER_EMAIL=email@address.com
+    # volumes:
+    #   - $PWD:/opt/app/djangobaseproject
