@@ -4,8 +4,20 @@ from django_tables2.utils import A
 
 from browsing.browsing_utils import MergeColumn
 from . models import (
+    Bibliothek,
     Manuscript
 )
+
+
+class BibliothekTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = Bibliothek
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
 
 
 class ManuscriptTable(tables.Table):

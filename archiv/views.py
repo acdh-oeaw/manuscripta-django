@@ -8,11 +8,60 @@ from . filters import *
 from . forms import *
 from . tables import *
 from . models import (
+    Bibliothek,
     Manuscript
 )
 from browsing.browsing_utils import (
     GenericListView, BaseCreateView, BaseUpdateView, BaseDetailView
 )
+
+
+class BibliothekListView(GenericListView):
+
+    model = Bibliothek
+    filter_class = BibliothekListFilter
+    formhelper_class = BibliothekFilterFormHelper
+    table_class = BibliothekTable
+    init_columns = [
+        'id', 'lib_code',
+    ]
+    enable_merge = True
+
+
+class BibliothekDetailView(BaseDetailView):
+
+    model = Bibliothek
+    template_name = 'browsing/generic_detail.html'
+
+
+class BibliothekCreate(BaseCreateView):
+
+    model = Bibliothek
+    form_class = BibliothekForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(BibliothekCreate, self).dispatch(*args, **kwargs)
+
+
+class BibliothekUpdate(BaseUpdateView):
+
+    model = Bibliothek
+    form_class = BibliothekForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(BibliothekUpdate, self).dispatch(*args, **kwargs)
+
+
+class BibliothekDelete(DeleteView):
+    model = Bibliothek
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:bibliothek_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(BibliothekDelete, self).dispatch(*args, **kwargs)
 
 
 class ManuscriptListView(GenericListView):

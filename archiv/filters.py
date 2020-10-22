@@ -7,8 +7,58 @@ from dal import autocomplete
 from vocabs.filters import generous_concept_filter
 from vocabs.models import SkosConcept
 from . models import (
+    Bibliothek,
     Manuscript
 )
+
+
+class BibliothekListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Bibliothek._meta.get_field('legacy_id').help_text,
+        label=Bibliothek._meta.get_field('legacy_id').verbose_name
+    )
+    lib_code = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Bibliothek._meta.get_field('lib_code').help_text,
+        label=Bibliothek._meta.get_field('lib_code').verbose_name
+    )
+    lib_name = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Bibliothek._meta.get_field('lib_name').help_text,
+        label=Bibliothek._meta.get_field('lib_name').verbose_name
+    )
+    lib_type = django_filters.ModelMultipleChoiceFilter(
+        queryset=SkosConcept.objects.filter(
+            collection__name="lib_type"
+        ),
+        help_text=Bibliothek._meta.get_field('lib_type').help_text,
+        label=Bibliothek._meta.get_field('lib_type').verbose_name,
+        method=generous_concept_filter,
+        widget=autocomplete.Select2Multiple(
+            url="/vocabs-ac/specific-concept-ac/lib_type",
+            attrs={
+                'data-placeholder': 'Autocomplete ...',
+                'data-minimum-input-length': 2,
+                },
+        )
+    )
+    short_name = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Bibliothek._meta.get_field('short_name').help_text,
+        label=Bibliothek._meta.get_field('short_name').verbose_name
+    )
+
+    class Meta:
+        model = Bibliothek
+        fields = [
+            'id',
+            'legacy_id',
+            'lib_code',
+            'lib_name',
+            'lib_type',
+            'short_name',
+            ]
 
 
 class ManuscriptListFilter(django_filters.FilterSet):

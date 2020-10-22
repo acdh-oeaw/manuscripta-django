@@ -4,6 +4,18 @@ from dal import autocomplete
 from . models import *
 
 
+class BibliothekAC(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Bibliothek.objects.all()
+
+        if self.q:
+            qs = qs.filter(
+                Q(legacy_id__icontains=self.q) |
+                Q(lib_code__icontains=self.q)
+            )
+        return qs
+
+
 class ManuscriptAC(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Manuscript.objects.all()

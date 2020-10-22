@@ -17,6 +17,127 @@ def set_extra(self, **kwargs):
 models.Field.set_extra = set_extra
 
 
+class Bibliothek(models.Model):
+    ### Beschreibt eine Bibliothek ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    lib_code = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Bibliothekscode",
+        help_text="Bibliothekscode",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDlibrary",
+        arche_prop="hasNonLinkedIdentifier",
+        arche_prop_str_template="LIB-ID: <value>",
+    )
+    lib_name = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Name",
+        help_text="Name",
+    ).set_extra(
+        is_public=True,
+        data_lookup="library_name",
+        arche_prop="hasTitle",
+    )
+    lib_type = models.ForeignKey(
+        SkosConcept,
+        related_name='rvn_bibliothek_lib_type_skosconcept',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Art der Bibliothek",
+        help_text="Art der Bibliothek",
+    ).set_extra(
+        is_public=True,
+        data_lookup="library_type",
+    )
+    short_name = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Name (Abkürzung)",
+        help_text="Name (Abkürzung)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="library_name_short",
+        arche_prop="hasAlternativeTitle",
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+        
+        ordering = [
+            'lib_name',
+        ]
+        verbose_name = "Bibliothek"
+    
+    def __str__(self):
+        if self.lib_code:
+            return "{}".format(self.lib_code)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:bibliothek_browse')
+    
+    @classmethod
+    def get_source_table(self):
+        return None
+    
+    
+    @classmethod
+    def get_natural_primary_key(self):
+        return "lib_code"
+    
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:bibliothek_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:bibliothek_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:bibliothek_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:bibliothek_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:bibliothek_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:bibliothek_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:bibliothek_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False
+
+
 class Manuscript(models.Model):
     ### Beschreibt ein Manuscript ###
     legacy_id = models.CharField(

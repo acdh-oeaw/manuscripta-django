@@ -6,8 +6,63 @@ from crispy_forms.bootstrap import Accordion, AccordionGroup
 
 from vocabs.models import SkosConcept
 from . models import (
+    Bibliothek,
     Manuscript
 )
+
+
+class BibliothekFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(BibliothekFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'lib_code',
+                    'lib_name',
+                    'lib_type',
+                    'short_name',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class BibliothekForm(forms.ModelForm):
+    lib_type = forms.ModelChoiceField(
+        required=False,
+        label="Art der Bibliothek",
+        queryset=SkosConcept.objects.filter(collection__name="lib_type")
+    )
+
+    class Meta:
+        model = Bibliothek
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(BibliothekForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
 
 
 class ManuscriptFilterFormHelper(FormHelper):

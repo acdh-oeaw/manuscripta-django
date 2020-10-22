@@ -5,6 +5,30 @@ from . import views
 app_name = 'archiv'
 urlpatterns = [
     url(
+        r'^bibliothek/$',
+        views.BibliothekListView.as_view(),
+        name='bibliothek_browse'
+    ),
+    url(
+        r'^bibliothek/detail/(?P<pk>[0-9]+)$',
+        views.BibliothekDetailView.as_view(),
+        name='bibliothek_detail'
+    ),
+    url(
+        r'^bibliothek/create/$',
+        views.BibliothekCreate.as_view(),
+        name='bibliothek_create'
+    ),
+    url(
+        r'^bibliothek/edit/(?P<pk>[0-9]+)$',
+        views.BibliothekUpdate.as_view(),
+        name='bibliothek_edit'
+    ),
+    url(
+        r'^bibliothek/delete/(?P<pk>[0-9]+)$',
+        views.BibliothekDelete.as_view(),
+        name='bibliothek_delete'),
+    url(
         r'^manuscript/$',
         views.ManuscriptListView.as_view(),
         name='manuscript_browse'
