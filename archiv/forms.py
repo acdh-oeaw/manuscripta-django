@@ -7,7 +7,12 @@ from crispy_forms.bootstrap import Accordion, AccordionGroup
 from vocabs.models import SkosConcept
 from . models import (
     Bibliothek,
-    Manuscript
+    Initium,
+    Manuscript,
+    MsDesc,
+    MsPart,
+    Place,
+    Verfasser
 )
 
 
@@ -33,6 +38,8 @@ class BibliothekFilterFormHelper(FormHelper):
                     'lib_name',
                     'lib_type',
                     'short_name',
+                    'location',
+                    'address',
                     css_id="more"
                     ),
                 AccordionGroup(
@@ -57,6 +64,58 @@ class BibliothekForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BibliothekForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class InitiumFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(InitiumFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'legacy_pk',
+                    'manuscript',
+                    'initium',
+                    'explicit',
+                    'fol',
+                    'fol_sort',
+                    'fol_end',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class InitiumForm(forms.ModelForm):
+
+    class Meta:
+        model = Initium
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(InitiumForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = 'form-horizontal'
@@ -122,6 +181,202 @@ class ManuscriptForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ManuscriptForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class MsDescFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(MsDescFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'legacy_pk',
+                    'manuscript',
+                    'bibliography',
+                    'phys_desc',
+                    'content',
+                    'verfasser',
+                    'created',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class MsDescForm(forms.ModelForm):
+
+    class Meta:
+        model = MsDesc
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(MsDescForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class MsPartFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(MsPartFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'legacy_pk',
+                    'part_of_manuscript',
+                    'range',
+                    'date_str',
+                    'origin_date',
+                    'date_begin',
+                    'date_end',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class MsPartForm(forms.ModelForm):
+
+    class Meta:
+        model = MsPart
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(MsPartForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class PlaceFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(PlaceFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'name',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class PlaceForm(forms.ModelForm):
+
+    class Meta:
+        model = Place
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(PlaceForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class VerfasserFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(VerfasserFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'name',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class VerfasserForm(forms.ModelForm):
+
+    class Meta:
+        model = Verfasser
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(VerfasserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = 'form-horizontal'

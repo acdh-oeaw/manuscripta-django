@@ -65,6 +65,26 @@ class Bibliothek(models.Model):
         data_lookup="library_name_short",
         arche_prop="hasAlternativeTitle",
     )
+    location = models.ForeignKey(
+        "Place",
+        related_name='rvn_bibliothek_location_place',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Ort",
+        help_text="Ort",
+    ).set_extra(
+        is_public=True,
+        data_lookup="location",
+    )
+    address = models.TextField(
+        blank=True, null=True,
+        verbose_name="Adresse",
+        help_text="Adresse",
+    ).set_extra(
+        is_public=True,
+        data_lookup="address",
+    )
     orig_data_csv = models.TextField(
         blank=True,
         null=True,
@@ -132,6 +152,148 @@ class Bibliothek(models.Model):
         if prev:
             return reverse(
                 'archiv:bibliothek_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False
+
+
+class Initium(models.Model):
+    ### Beschreibt Initia ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    legacy_pk = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ID",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name='rvn_initium_manuscript_manuscript',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Manuscript",
+        help_text="Manuscript",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDmanuscripts",
+    )
+    initium = models.TextField(
+        blank=True, null=True,
+        verbose_name="Inititum",
+        help_text="Initium",
+    ).set_extra(
+        is_public=True,
+        data_lookup="Initium",
+    )
+    explicit = models.TextField(
+        blank=True, null=True,
+        verbose_name="Explicit",
+        help_text="Explicit",
+    ).set_extra(
+        is_public=True,
+        data_lookup="explicit",
+    )
+    fol = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Folio",
+        help_text="Folio",
+    ).set_extra(
+        is_public=True,
+        data_lookup="fol",
+    )
+    fol_sort = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Folio (sort)",
+        help_text="Folio (sort)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="fol_sort",
+    )
+    fol_end = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Folio (end)",
+        help_text="Folio (end)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="fol_end",
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+        
+        ordering = [
+            'legacy_pk',
+        ]
+        verbose_name = "Initium"
+    
+    def __str__(self):
+        if self.legacy_pk:
+            return "{}".format(self.legacy_pk)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:initium_browse')
+    
+    @classmethod
+    def get_source_table(self):
+        return "initia"
+    
+    
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+    
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:initium_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:initium_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:initium_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:initium_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:initium_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:initium_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:initium_detail',
                 kwargs={'pk': prev.first().id}
             )
         return False
@@ -290,7 +452,7 @@ class Manuscript(models.Model):
     geschichte = models.TextField(
         blank=True, null=True,
         verbose_name="Geschichte",
-        help_text="Geschcihte",
+        help_text="Geschichte",
     ).set_extra(
         is_public=True,
         data_lookup="geschichte",
@@ -330,7 +492,7 @@ class Manuscript(models.Model):
     
     @classmethod
     def get_natural_primary_key(self):
-        return "id"
+        return "ms_code"
     
     @classmethod
     def get_createview_url(self):
@@ -362,6 +524,466 @@ class Manuscript(models.Model):
         if prev:
             return reverse(
                 'archiv:manuscript_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False
+
+
+class MsDesc(models.Model):
+    ### Handschriftenbeschreibung ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    legacy_pk = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ID",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name='rvn_msdesc_manuscript_manuscript',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Manuscript",
+        help_text="Manuscript",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDmanuscripts",
+    )
+    bibliography = models.TextField(
+        blank=True, null=True,
+        verbose_name="Bibliographie",
+        help_text="Bibliographie",
+    ).set_extra(
+        is_public=True,
+        data_lookup="bibliography",
+    )
+    phys_desc = models.TextField(
+        blank=True, null=True,
+        verbose_name="phys_desc",
+        help_text="phys_desc",
+    ).set_extra(
+        is_public=True,
+        data_lookup="phys_desc",
+    )
+    content = models.TextField(
+        blank=True, null=True,
+        verbose_name="content",
+        help_text="content",
+    ).set_extra(
+        is_public=True,
+        data_lookup="content",
+    )
+    verfasser = models.ForeignKey(
+        "Verfasser",
+        related_name='rvn_msdesc_verfasser_verfasser',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Verfasser*In",
+        help_text="Verfasser*In",
+    ).set_extra(
+        is_public=True,
+        data_lookup="verfasser",
+    )
+    created = models.DateField(
+        blank=True, null=True,
+        verbose_name="Erstellungsdatum",
+        help_text="Erstellungsdatum",
+    ).set_extra(
+        is_public=True,
+        data_lookup="created",
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+        
+        ordering = [
+            'legacy_pk',
+        ]
+        verbose_name = "Manuscript Description"
+    
+    def __str__(self):
+        if self.legacy_pk:
+            return "{}".format(self.legacy_pk)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:msdesc_browse')
+    
+    @classmethod
+    def get_source_table(self):
+        return "mssdesc"
+    
+    
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+    
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:msdesc_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:msdesc_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:msdesc_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:msdesc_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:msdesc_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:msdesc_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:msdesc_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False
+
+
+class MsPart(models.Model):
+    ### Beschreibt einen Teil einer Handschrift ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    legacy_pk = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=False,
+        data_lookup="IDparts",
+        arche_prop="hasNonLinkedIdentifier",
+        arche_prop_str_template="Primärschlüssel Alt: <value>",
+    )
+    part_of_manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name='rvn_mspart_part_of_manuscript_manuscript',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Teil von Handschrift",
+        help_text="Teil von Handschrift",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDmanuscripts",
+    )
+    range = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="von-bis",
+        help_text="von-bis",
+    ).set_extra(
+        is_public=True,
+        data_lookup="range",
+        arche_prop="hasExtent",
+        arche_prop_str_template="von-bis: <value>",
+    )
+    date_str = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Datum (str)",
+        help_text="Datum (str)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_str",
+    )
+    origin_date = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Datum (orig)",
+        help_text="Datum (orig)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="origin_date",
+    )
+    date_begin = models.DateField(
+        blank=True, null=True,
+        verbose_name="Datum (start, norm)",
+        help_text="Datum (start, norm)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_begin",
+    )
+    date_end = models.DateField(
+        blank=True, null=True,
+        verbose_name="Datum (end, norm)",
+        help_text="Datum (end, norm)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_end",
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+        
+        ordering = [
+            'legacy_pk',
+        ]
+        verbose_name = "MsPart"
+    
+    def __str__(self):
+        if self.legacy_pk:
+            return "{}".format(self.legacy_pk)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:mspart_browse')
+    
+    @classmethod
+    def get_source_table(self):
+        return "mss_teile"
+    
+    
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+    
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:mspart_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:mspart_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:mspart_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:mspart_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:mspart_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:mspart_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:mspart_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False
+
+
+class Place(models.Model):
+    ### Beschreibt einen Ort ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    name = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Ortsname",
+        help_text="Ortsname",
+    ).set_extra(
+        is_public=True,
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+        
+        ordering = [
+            'name',
+        ]
+        verbose_name = "Place"
+    
+    def __str__(self):
+        if self.name:
+            return "{}".format(self.name)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:place_browse')
+    
+    @classmethod
+    def get_source_table(self):
+        return None
+    
+    
+    @classmethod
+    def get_natural_primary_key(self):
+        return "name"
+    
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:place_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:place_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:place_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:place_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:place_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:place_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:place_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False
+
+
+class Verfasser(models.Model):
+    ### Beschreibt Verfasser*in einer Beschreibung ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    name = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Name",
+        help_text="Name",
+    ).set_extra(
+        is_public=True,
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+        
+        ordering = [
+            'name',
+        ]
+        verbose_name = "Verfasser"
+    
+    def __str__(self):
+        if self.name:
+            return "{}".format(self.name)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:verfasser_browse')
+    
+    @classmethod
+    def get_source_table(self):
+        return None
+    
+    
+    @classmethod
+    def get_natural_primary_key(self):
+        return "name"
+    
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:verfasser_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:verfasser_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:verfasser_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:verfasser_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:verfasser_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:verfasser_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:verfasser_detail',
                 kwargs={'pk': prev.first().id}
             )
         return False

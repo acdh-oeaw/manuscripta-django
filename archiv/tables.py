@@ -5,7 +5,12 @@ from django_tables2.utils import A
 from browsing.browsing_utils import MergeColumn
 from . models import (
     Bibliothek,
-    Manuscript
+    Initium,
+    Manuscript,
+    MsDesc,
+    MsPart,
+    Place,
+    Verfasser
 )
 
 
@@ -20,6 +25,17 @@ class BibliothekTable(tables.Table):
         attrs = {"class": "table table-responsive table-hover"}
 
 
+class InitiumTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = Initium
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
 class ManuscriptTable(tables.Table):
 
     id = tables.LinkColumn(verbose_name='ID')
@@ -27,6 +43,50 @@ class ManuscriptTable(tables.Table):
 
     class Meta:
         model = Manuscript
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class MsDescTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = MsDesc
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class MsPartTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = MsPart
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class PlaceTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = Place
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class VerfasserTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = Verfasser
         sequence = ('id',)
         attrs = {"class": "table table-responsive table-hover"}
 

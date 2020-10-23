@@ -124,7 +124,7 @@ def pop_m2m_field(current_class, temp_item, row, cur_attr, sep='|'):
     return temp_item
 
 
-def pop_date_field(temp_item, row, cur_attr):
+def pop_date_field(temp_item, row, cur_attr, fd=None):
     """ adds value to DateField on the current temp_item
         :param temp_item: a model class object
         :param row: A pandas DataFrame row with column names matching the items field names
@@ -142,7 +142,7 @@ def pop_date_field(temp_item, row, cur_attr):
         try:
             value = parse(row[lookup_val])
         except Exception as e:
-            print(f"{row[lookup_val]} for field: {cur_attr} could not be parsed, due to Error: {e}")
+            # print(f"{row[lookup_val]} for field: {cur_attr} could not be parsed, due to Error: {e}")
             value = None
     elif pd.isnull(row[lookup_val]):
         value = None

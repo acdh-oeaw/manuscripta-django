@@ -9,7 +9,12 @@ from . forms import *
 from . tables import *
 from . models import (
     Bibliothek,
-    Manuscript
+    Initium,
+    Manuscript,
+    MsDesc,
+    MsPart,
+    Place,
+    Verfasser
 )
 from browsing.browsing_utils import (
     GenericListView, BaseCreateView, BaseUpdateView, BaseDetailView
@@ -64,6 +69,54 @@ class BibliothekDelete(DeleteView):
         return super(BibliothekDelete, self).dispatch(*args, **kwargs)
 
 
+class InitiumListView(GenericListView):
+
+    model = Initium
+    filter_class = InitiumListFilter
+    formhelper_class = InitiumFilterFormHelper
+    table_class = InitiumTable
+    init_columns = [
+        'id', 'legacy_pk',
+    ]
+    enable_merge = True
+
+
+class InitiumDetailView(BaseDetailView):
+
+    model = Initium
+    template_name = 'browsing/generic_detail.html'
+
+
+class InitiumCreate(BaseCreateView):
+
+    model = Initium
+    form_class = InitiumForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InitiumCreate, self).dispatch(*args, **kwargs)
+
+
+class InitiumUpdate(BaseUpdateView):
+
+    model = Initium
+    form_class = InitiumForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InitiumUpdate, self).dispatch(*args, **kwargs)
+
+
+class InitiumDelete(DeleteView):
+    model = Initium
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:initium_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InitiumDelete, self).dispatch(*args, **kwargs)
+
+
 class ManuscriptListView(GenericListView):
 
     model = Manuscript
@@ -110,5 +163,197 @@ class ManuscriptDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ManuscriptDelete, self).dispatch(*args, **kwargs)
+
+
+class MsDescListView(GenericListView):
+
+    model = MsDesc
+    filter_class = MsDescListFilter
+    formhelper_class = MsDescFilterFormHelper
+    table_class = MsDescTable
+    init_columns = [
+        'id', 'legacy_pk',
+    ]
+    enable_merge = True
+
+
+class MsDescDetailView(BaseDetailView):
+
+    model = MsDesc
+    template_name = 'browsing/generic_detail.html'
+
+
+class MsDescCreate(BaseCreateView):
+
+    model = MsDesc
+    form_class = MsDescForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsDescCreate, self).dispatch(*args, **kwargs)
+
+
+class MsDescUpdate(BaseUpdateView):
+
+    model = MsDesc
+    form_class = MsDescForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsDescUpdate, self).dispatch(*args, **kwargs)
+
+
+class MsDescDelete(DeleteView):
+    model = MsDesc
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:msdesc_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsDescDelete, self).dispatch(*args, **kwargs)
+
+
+class MsPartListView(GenericListView):
+
+    model = MsPart
+    filter_class = MsPartListFilter
+    formhelper_class = MsPartFilterFormHelper
+    table_class = MsPartTable
+    init_columns = [
+        'id', 'legacy_pk',
+    ]
+    enable_merge = True
+
+
+class MsPartDetailView(BaseDetailView):
+
+    model = MsPart
+    template_name = 'browsing/generic_detail.html'
+
+
+class MsPartCreate(BaseCreateView):
+
+    model = MsPart
+    form_class = MsPartForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsPartCreate, self).dispatch(*args, **kwargs)
+
+
+class MsPartUpdate(BaseUpdateView):
+
+    model = MsPart
+    form_class = MsPartForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsPartUpdate, self).dispatch(*args, **kwargs)
+
+
+class MsPartDelete(DeleteView):
+    model = MsPart
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:mspart_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsPartDelete, self).dispatch(*args, **kwargs)
+
+
+class PlaceListView(GenericListView):
+
+    model = Place
+    filter_class = PlaceListFilter
+    formhelper_class = PlaceFilterFormHelper
+    table_class = PlaceTable
+    init_columns = [
+        'id', 'name',
+    ]
+    enable_merge = True
+
+
+class PlaceDetailView(BaseDetailView):
+
+    model = Place
+    template_name = 'browsing/generic_detail.html'
+
+
+class PlaceCreate(BaseCreateView):
+
+    model = Place
+    form_class = PlaceForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PlaceCreate, self).dispatch(*args, **kwargs)
+
+
+class PlaceUpdate(BaseUpdateView):
+
+    model = Place
+    form_class = PlaceForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PlaceUpdate, self).dispatch(*args, **kwargs)
+
+
+class PlaceDelete(DeleteView):
+    model = Place
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:place_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PlaceDelete, self).dispatch(*args, **kwargs)
+
+
+class VerfasserListView(GenericListView):
+
+    model = Verfasser
+    filter_class = VerfasserListFilter
+    formhelper_class = VerfasserFilterFormHelper
+    table_class = VerfasserTable
+    init_columns = [
+        'id', 'name',
+    ]
+    enable_merge = True
+
+
+class VerfasserDetailView(BaseDetailView):
+
+    model = Verfasser
+    template_name = 'browsing/generic_detail.html'
+
+
+class VerfasserCreate(BaseCreateView):
+
+    model = Verfasser
+    form_class = VerfasserForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(VerfasserCreate, self).dispatch(*args, **kwargs)
+
+
+class VerfasserUpdate(BaseUpdateView):
+
+    model = Verfasser
+    form_class = VerfasserForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(VerfasserUpdate, self).dispatch(*args, **kwargs)
+
+
+class VerfasserDelete(DeleteView):
+    model = Verfasser
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:verfasser_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(VerfasserDelete, self).dispatch(*args, **kwargs)
 
 

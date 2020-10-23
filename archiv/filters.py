@@ -8,7 +8,12 @@ from vocabs.filters import generous_concept_filter
 from vocabs.models import SkosConcept
 from . models import (
     Bibliothek,
-    Manuscript
+    Initium,
+    Manuscript,
+    MsDesc,
+    MsPart,
+    Place,
+    Verfasser
 )
 
 
@@ -48,6 +53,19 @@ class BibliothekListFilter(django_filters.FilterSet):
         help_text=Bibliothek._meta.get_field('short_name').help_text,
         label=Bibliothek._meta.get_field('short_name').verbose_name
     )
+    location = django_filters.ModelMultipleChoiceFilter(
+        queryset=Place.objects.all(),
+        help_text=Bibliothek._meta.get_field('location').help_text,
+        label=Bibliothek._meta.get_field('location').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:place-autocomplete",
+        )
+    )
+    address = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Bibliothek._meta.get_field('address').help_text,
+        label=Bibliothek._meta.get_field('address').verbose_name
+    )
 
     class Meta:
         model = Bibliothek
@@ -58,6 +76,63 @@ class BibliothekListFilter(django_filters.FilterSet):
             'lib_name',
             'lib_type',
             'short_name',
+            'location',
+            'address',
+            ]
+
+
+class InitiumListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('legacy_id').help_text,
+        label=Initium._meta.get_field('legacy_id').verbose_name
+    )
+    manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=Manuscript.objects.all(),
+        help_text=Initium._meta.get_field('manuscript').help_text,
+        label=Initium._meta.get_field('manuscript').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        )
+    )
+    initium = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('initium').help_text,
+        label=Initium._meta.get_field('initium').verbose_name
+    )
+    explicit = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('explicit').help_text,
+        label=Initium._meta.get_field('explicit').verbose_name
+    )
+    fol = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('fol').help_text,
+        label=Initium._meta.get_field('fol').verbose_name
+    )
+    fol_sort = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('fol_sort').help_text,
+        label=Initium._meta.get_field('fol_sort').verbose_name
+    )
+    fol_end = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('fol_end').help_text,
+        label=Initium._meta.get_field('fol_end').verbose_name
+    )
+
+    class Meta:
+        model = Initium
+        fields = [
+            'id',
+            'legacy_id',
+            'legacy_pk',
+            'manuscript',
+            'initium',
+            'explicit',
+            'fol',
+            'fol_sort',
+            'fol_end',
             ]
 
 
@@ -166,6 +241,146 @@ class ManuscriptListFilter(django_filters.FilterSet):
             'hscensus',
             'remarks',
             'geschichte',
+            ]
+
+
+class MsDescListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=MsDesc._meta.get_field('legacy_id').help_text,
+        label=MsDesc._meta.get_field('legacy_id').verbose_name
+    )
+    manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=Manuscript.objects.all(),
+        help_text=MsDesc._meta.get_field('manuscript').help_text,
+        label=MsDesc._meta.get_field('manuscript').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        )
+    )
+    bibliography = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=MsDesc._meta.get_field('bibliography').help_text,
+        label=MsDesc._meta.get_field('bibliography').verbose_name
+    )
+    phys_desc = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=MsDesc._meta.get_field('phys_desc').help_text,
+        label=MsDesc._meta.get_field('phys_desc').verbose_name
+    )
+    content = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=MsDesc._meta.get_field('content').help_text,
+        label=MsDesc._meta.get_field('content').verbose_name
+    )
+    verfasser = django_filters.ModelMultipleChoiceFilter(
+        queryset=Verfasser.objects.all(),
+        help_text=MsDesc._meta.get_field('verfasser').help_text,
+        label=MsDesc._meta.get_field('verfasser').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:verfasser-autocomplete",
+        )
+    )
+
+    class Meta:
+        model = MsDesc
+        fields = [
+            'id',
+            'legacy_id',
+            'legacy_pk',
+            'manuscript',
+            'bibliography',
+            'phys_desc',
+            'content',
+            'verfasser',
+            'created',
+            ]
+
+
+class MsPartListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=MsPart._meta.get_field('legacy_id').help_text,
+        label=MsPart._meta.get_field('legacy_id').verbose_name
+    )
+    part_of_manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=Manuscript.objects.all(),
+        help_text=MsPart._meta.get_field('part_of_manuscript').help_text,
+        label=MsPart._meta.get_field('part_of_manuscript').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        )
+    )
+    range = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=MsPart._meta.get_field('range').help_text,
+        label=MsPart._meta.get_field('range').verbose_name
+    )
+    date_str = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=MsPart._meta.get_field('date_str').help_text,
+        label=MsPart._meta.get_field('date_str').verbose_name
+    )
+    origin_date = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=MsPart._meta.get_field('origin_date').help_text,
+        label=MsPart._meta.get_field('origin_date').verbose_name
+    )
+
+    class Meta:
+        model = MsPart
+        fields = [
+            'id',
+            'legacy_id',
+            'legacy_pk',
+            'part_of_manuscript',
+            'range',
+            'date_str',
+            'origin_date',
+            'date_begin',
+            'date_end',
+            ]
+
+
+class PlaceListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Place._meta.get_field('legacy_id').help_text,
+        label=Place._meta.get_field('legacy_id').verbose_name
+    )
+    name = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Place._meta.get_field('name').help_text,
+        label=Place._meta.get_field('name').verbose_name
+    )
+
+    class Meta:
+        model = Place
+        fields = [
+            'id',
+            'legacy_id',
+            'name',
+            ]
+
+
+class VerfasserListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Verfasser._meta.get_field('legacy_id').help_text,
+        label=Verfasser._meta.get_field('legacy_id').verbose_name
+    )
+    name = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Verfasser._meta.get_field('name').help_text,
+        label=Verfasser._meta.get_field('name').verbose_name
+    )
+
+    class Meta:
+        model = Verfasser
+        fields = [
+            'id',
+            'legacy_id',
+            'name',
             ]
 
 
