@@ -72,7 +72,7 @@ def pop_fk_field(current_class, temp_item, row, cur_attr, fd=None, source_name=F
     if rel_model_name == 'skosconcept':
         legacy_id = f"{cur_attr}__{my_val}".strip().lower()
     else:
-        legacy_id = f"{my_val}".strip().lower()
+        legacy_id = f"{my_val}".strip()
     temp_rel_obj, _ = fk.related_model.objects.get_or_create(
         legacy_id=legacy_id
     )

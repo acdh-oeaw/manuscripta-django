@@ -67,6 +67,14 @@ class ManuscriptListFilter(django_filters.FilterSet):
         help_text=Manuscript._meta.get_field('legacy_id').help_text,
         label=Manuscript._meta.get_field('legacy_id').verbose_name
     )
+    lib_code = django_filters.ModelMultipleChoiceFilter(
+        queryset=Bibliothek.objects.all(),
+        help_text=Manuscript._meta.get_field('lib_code').help_text,
+        label=Manuscript._meta.get_field('lib_code').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:bibliothek-autocomplete",
+        )
+    )
     ms_code = django_filters.CharFilter(
         lookup_expr='icontains',
         help_text=Manuscript._meta.get_field('ms_code').help_text,
@@ -112,6 +120,31 @@ class ManuscriptListFilter(django_filters.FilterSet):
         help_text=Manuscript._meta.get_field('dimensions').help_text,
         label=Manuscript._meta.get_field('dimensions').verbose_name
     )
+    origin_date = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Manuscript._meta.get_field('origin_date').help_text,
+        label=Manuscript._meta.get_field('origin_date').verbose_name
+    )
+    prov = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Manuscript._meta.get_field('prov').help_text,
+        label=Manuscript._meta.get_field('prov').verbose_name
+    )
+    fragm = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Manuscript._meta.get_field('fragm').help_text,
+        label=Manuscript._meta.get_field('fragm').verbose_name
+    )
+    remarks = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Manuscript._meta.get_field('remarks').help_text,
+        label=Manuscript._meta.get_field('remarks').verbose_name
+    )
+    geschichte = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Manuscript._meta.get_field('geschichte').help_text,
+        label=Manuscript._meta.get_field('geschichte').verbose_name
+    )
 
     class Meta:
         model = Manuscript
@@ -119,6 +152,7 @@ class ManuscriptListFilter(django_filters.FilterSet):
             'id',
             'legacy_id',
             'legacy_pk',
+            'lib_code',
             'ms_code',
             'ms_code_sort',
             'shelfmark',
@@ -126,6 +160,12 @@ class ManuscriptListFilter(django_filters.FilterSet):
             'material',
             'num_leaves',
             'dimensions',
+            'origin_date',
+            'prov',
+            'fragm',
+            'hscensus',
+            'remarks',
+            'geschichte',
             ]
 
 

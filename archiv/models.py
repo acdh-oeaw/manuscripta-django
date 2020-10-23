@@ -32,7 +32,6 @@ class Bibliothek(models.Model):
         is_public=True,
         data_lookup="IDlibrary",
         arche_prop="hasNonLinkedIdentifier",
-        arche_prop_str_template="LIB-ID: <value>",
     )
     lib_name = models.CharField(
         max_length=250,
@@ -96,7 +95,7 @@ class Bibliothek(models.Model):
     
     @classmethod
     def get_source_table(self):
-        return None
+        return "library"
     
     
     @classmethod
@@ -153,6 +152,18 @@ class Manuscript(models.Model):
         data_lookup="ID",
         arche_prop="hasNonLinkedIdentifier",
         arche_prop_str_template="Primärschlüssel Alt: <value>",
+    )
+    lib_code = models.ForeignKey(
+        "Bibliothek",
+        related_name='rvn_manuscript_lib_code_bibliothek',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Bibliothek",
+        help_text="Bibliothek",
+    ).set_extra(
+        is_public=True,
+        data_lookup="libCode",
     )
     ms_code = models.CharField(
         max_length=250,
@@ -227,6 +238,62 @@ class Manuscript(models.Model):
         data_lookup="dimensions",
         arche_prop="hasExtent",
         arche_prop_str_template="Dimensionen: <value>",
+    )
+    origin_date = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Entstehungsdatum",
+        help_text="Entstehungsdatum",
+    ).set_extra(
+        is_public=True,
+        data_lookup="origin_date",
+        arche_prop="hasNote",
+        arche_prop_str_template="Entstehungsdatum: <value>",
+    )
+    prov = models.TextField(
+        blank=True, null=True,
+        verbose_name="Provenienz",
+        help_text="Provenienz",
+    ).set_extra(
+        is_public=True,
+        data_lookup="prov",
+        arche_prop="hasNote",
+    )
+    fragm = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Fragm",
+        help_text="Fragm",
+    ).set_extra(
+        is_public=True,
+        data_lookup="fragm",
+    )
+    hscensus = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="hscensus",
+        help_text="hscensus",
+    ).set_extra(
+        is_public=True,
+        data_lookup="hscensus",
+        arche_prop="hasNonLinkedIdentifier",
+        arche_prop_str_template="hscensus: <value>",
+    )
+    remarks = models.TextField(
+        blank=True, null=True,
+        verbose_name="Anmerkungen",
+        help_text="Anmerkungen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="remarks",
+        arche_prop="hasNotes",
+    )
+    geschichte = models.TextField(
+        blank=True, null=True,
+        verbose_name="Geschichte",
+        help_text="Geschcihte",
+    ).set_extra(
+        is_public=True,
+        data_lookup="geschichte",
     )
     orig_data_csv = models.TextField(
         blank=True,

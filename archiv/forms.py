@@ -84,6 +84,7 @@ class ManuscriptFilterFormHelper(FormHelper):
                     'Advanced search',
                     
                     'legacy_pk',
+                    'lib_code',
                     'ms_code',
                     'ms_code_sort',
                     'shelfmark',
@@ -91,6 +92,12 @@ class ManuscriptFilterFormHelper(FormHelper):
                     'material',
                     'num_leaves',
                     'dimensions',
+                    'origin_date',
+                    'prov',
+                    'fragm',
+                    'hscensus',
+                    'remarks',
+                    'geschichte',
                     css_id="more"
                     ),
                 AccordionGroup(

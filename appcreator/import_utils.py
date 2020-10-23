@@ -131,7 +131,14 @@ def run_import(
             if limit:
                 df_data = df_data.head(limit)
             for i, row in df_data.iterrows():
-                temp_item, _ = current_class.objects.get_or_create(legacy_id=f"{float(row[0])}".lower().strip())
+                try:
+                    temp_item, _ = current_class.objects.get_or_create(
+                        legacy_id=f"{float(row[0])}".lower().strip()
+                    )
+                except ValueError:
+                    temp_item, _ = current_class.objects.get_or_create(
+                        legacy_id=f"{row[0]}".strip()
+                    )
                 row_data = f"{json.dumps(row.to_dict(), cls=DjangoJSONEncoder)}"
                 temp_item.orig_data_csv = row_data
                 col_counter = 0
@@ -167,21 +174,26 @@ def run_import(
                                 row, cur_attr, fd=field_mapping_inverse_dict,
                                 source_name=source_name
                             )
-
-                        # elif "{}".format(cur_attr_type) == "ManyToManyField" and isinstance(
-                        #     row[source_attr_name], str
-                        # ):
-                        #     pop_m2m_field(
-                        #         current_class, temp_item, row, cur_attr,
-                        #         sep=m2m_sep, fd=field_mapping_inverse_dict,
-                        #         source_name=source_name
-                        #     )
+                        elif "{}".format(cur_attr_type) == "ManyToManyField" and isinstance(
+                            row[source_attr_name], str
+                        ):
+                            pop_m2m_field(
+                                current_class, temp_item, row, cur_attr,
+                                sep=m2m_sep, fd=field_mapping_inverse_dict,
+                                source_name=source_name
+                            )
 
                         elif "{}".format(cur_attr_type) == "DateField":
                             pop_date_field(temp_item, row, cur_attr, fd=field_mapping_inverse_dict)
 
                         elif "{}".format(cur_attr_type) == "DateRangeField":
-                            pop_date_range_field(temp_item, row, cur_attr, sep=date_range_sep, fd=field_mapping_inverse_dict)
+                            pop_date_range_field(
+                                temp_item,
+                                row,
+                                cur_attr,
+                                sep=date_range_sep,
+                                fd=field_mapping_inverse_dict
+                            )
                         else:
                             pass
                     # else:
