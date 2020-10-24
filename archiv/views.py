@@ -8,17 +8,67 @@ from . filters import *
 from . forms import *
 from . tables import *
 from . models import (
+    Autor,
     Bibliothek,
     Initium,
     Manuscript,
     MsDesc,
     MsPart,
     Place,
-    Verfasser
+    Verfasser,
+    WerkInstanz
 )
 from browsing.browsing_utils import (
     GenericListView, BaseCreateView, BaseUpdateView, BaseDetailView
 )
+
+
+class AutorListView(GenericListView):
+
+    model = Autor
+    filter_class = AutorListFilter
+    formhelper_class = AutorFilterFormHelper
+    table_class = AutorTable
+    init_columns = [
+        'id', 'name',
+    ]
+    enable_merge = True
+
+
+class AutorDetailView(BaseDetailView):
+
+    model = Autor
+    template_name = 'browsing/generic_detail.html'
+
+
+class AutorCreate(BaseCreateView):
+
+    model = Autor
+    form_class = AutorForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AutorCreate, self).dispatch(*args, **kwargs)
+
+
+class AutorUpdate(BaseUpdateView):
+
+    model = Autor
+    form_class = AutorForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AutorUpdate, self).dispatch(*args, **kwargs)
+
+
+class AutorDelete(DeleteView):
+    model = Autor
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:autor_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AutorDelete, self).dispatch(*args, **kwargs)
 
 
 class BibliothekListView(GenericListView):
@@ -355,5 +405,53 @@ class VerfasserDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(VerfasserDelete, self).dispatch(*args, **kwargs)
+
+
+class WerkInstanzListView(GenericListView):
+
+    model = WerkInstanz
+    filter_class = WerkInstanzListFilter
+    formhelper_class = WerkInstanzFilterFormHelper
+    table_class = WerkInstanzTable
+    init_columns = [
+        'id', 'werk_titel',
+    ]
+    enable_merge = True
+
+
+class WerkInstanzDetailView(BaseDetailView):
+
+    model = WerkInstanz
+    template_name = 'browsing/generic_detail.html'
+
+
+class WerkInstanzCreate(BaseCreateView):
+
+    model = WerkInstanz
+    form_class = WerkInstanzForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(WerkInstanzCreate, self).dispatch(*args, **kwargs)
+
+
+class WerkInstanzUpdate(BaseUpdateView):
+
+    model = WerkInstanz
+    form_class = WerkInstanzForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(WerkInstanzUpdate, self).dispatch(*args, **kwargs)
+
+
+class WerkInstanzDelete(DeleteView):
+    model = WerkInstanz
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:werkinstanz_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(WerkInstanzDelete, self).dispatch(*args, **kwargs)
 
 

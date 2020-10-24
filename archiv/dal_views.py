@@ -4,6 +4,18 @@ from dal import autocomplete
 from . models import *
 
 
+class AutorAC(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Autor.objects.all()
+
+        if self.q:
+            qs = qs.filter(
+                Q(legacy_id__icontains=self.q) |
+                Q(name__icontains=self.q)
+            )
+        return qs
+
+
 class BibliothekAC(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Bibliothek.objects.all()
@@ -84,6 +96,18 @@ class VerfasserAC(autocomplete.Select2QuerySetView):
             qs = qs.filter(
                 Q(legacy_id__icontains=self.q) |
                 Q(name__icontains=self.q)
+            )
+        return qs
+
+
+class WerkInstanzAC(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = WerkInstanz.objects.all()
+
+        if self.q:
+            qs = qs.filter(
+                Q(legacy_id__icontains=self.q) |
+                Q(werk_titel__icontains=self.q)
             )
         return qs
 

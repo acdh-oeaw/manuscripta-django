@@ -6,14 +6,65 @@ from crispy_forms.bootstrap import Accordion, AccordionGroup
 
 from vocabs.models import SkosConcept
 from . models import (
+    Autor,
     Bibliothek,
     Initium,
     Manuscript,
     MsDesc,
     MsPart,
     Place,
-    Verfasser
+    Verfasser,
+    WerkInstanz
 )
+
+
+class AutorFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(AutorFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'name',
+                    'name_gnd',
+                    'gnd_id',
+                    'biogr_daten',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class AutorForm(forms.ModelForm):
+
+    class Meta:
+        model = Autor
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(AutorForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
 
 
 class BibliothekFilterFormHelper(FormHelper):
@@ -377,6 +428,66 @@ class VerfasserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(VerfasserForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class WerkInstanzFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(WerkInstanzFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'legacy_pk',
+                    'werk_titel',
+                    'werk_titel_alt',
+                    'textzeuge_kommentar',
+                    'sprache',
+                    'fol_start',
+                    'fol_end',
+                    'fol_sort',
+                    'manuscript',
+                    'autor',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class WerkInstanzForm(forms.ModelForm):
+    sprache = forms.ModelChoiceField(
+        required=False,
+        label="Sprache",
+        queryset=SkosConcept.objects.filter(collection__name="sprache")
+    )
+
+    class Meta:
+        model = WerkInstanz
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(WerkInstanzForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = 'form-horizontal'

@@ -7,14 +7,55 @@ from dal import autocomplete
 from vocabs.filters import generous_concept_filter
 from vocabs.models import SkosConcept
 from . models import (
+    Autor,
     Bibliothek,
     Initium,
     Manuscript,
     MsDesc,
     MsPart,
     Place,
-    Verfasser
+    Verfasser,
+    WerkInstanz
 )
+
+
+class AutorListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Autor._meta.get_field('legacy_id').help_text,
+        label=Autor._meta.get_field('legacy_id').verbose_name
+    )
+    name = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Autor._meta.get_field('name').help_text,
+        label=Autor._meta.get_field('name').verbose_name
+    )
+    name_gnd = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Autor._meta.get_field('name_gnd').help_text,
+        label=Autor._meta.get_field('name_gnd').verbose_name
+    )
+    gnd_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Autor._meta.get_field('gnd_id').help_text,
+        label=Autor._meta.get_field('gnd_id').verbose_name
+    )
+    biogr_daten = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Autor._meta.get_field('biogr_daten').help_text,
+        label=Autor._meta.get_field('biogr_daten').verbose_name
+    )
+
+    class Meta:
+        model = Autor
+        fields = [
+            'id',
+            'legacy_id',
+            'name',
+            'name_gnd',
+            'gnd_id',
+            'biogr_daten',
+            ]
 
 
 class BibliothekListFilter(django_filters.FilterSet):
@@ -381,6 +422,92 @@ class VerfasserListFilter(django_filters.FilterSet):
             'id',
             'legacy_id',
             'name',
+            ]
+
+
+class WerkInstanzListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WerkInstanz._meta.get_field('legacy_id').help_text,
+        label=WerkInstanz._meta.get_field('legacy_id').verbose_name
+    )
+    werk_titel = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WerkInstanz._meta.get_field('werk_titel').help_text,
+        label=WerkInstanz._meta.get_field('werk_titel').verbose_name
+    )
+    werk_titel_alt = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WerkInstanz._meta.get_field('werk_titel_alt').help_text,
+        label=WerkInstanz._meta.get_field('werk_titel_alt').verbose_name
+    )
+    textzeuge_kommentar = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WerkInstanz._meta.get_field('textzeuge_kommentar').help_text,
+        label=WerkInstanz._meta.get_field('textzeuge_kommentar').verbose_name
+    )
+    sprache = django_filters.ModelMultipleChoiceFilter(
+        queryset=SkosConcept.objects.filter(
+            collection__name="sprache"
+        ),
+        help_text=WerkInstanz._meta.get_field('sprache').help_text,
+        label=WerkInstanz._meta.get_field('sprache').verbose_name,
+        method=generous_concept_filter,
+        widget=autocomplete.Select2Multiple(
+            url="/vocabs-ac/specific-concept-ac/sprache",
+            attrs={
+                'data-placeholder': 'Autocomplete ...',
+                'data-minimum-input-length': 2,
+                },
+        )
+    )
+    fol_start = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WerkInstanz._meta.get_field('fol_start').help_text,
+        label=WerkInstanz._meta.get_field('fol_start').verbose_name
+    )
+    fol_end = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WerkInstanz._meta.get_field('fol_end').help_text,
+        label=WerkInstanz._meta.get_field('fol_end').verbose_name
+    )
+    fol_sort = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WerkInstanz._meta.get_field('fol_sort').help_text,
+        label=WerkInstanz._meta.get_field('fol_sort').verbose_name
+    )
+    manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=Manuscript.objects.all(),
+        help_text=WerkInstanz._meta.get_field('manuscript').help_text,
+        label=WerkInstanz._meta.get_field('manuscript').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        )
+    )
+    autor = django_filters.ModelMultipleChoiceFilter(
+        queryset=Autor.objects.all(),
+        help_text=WerkInstanz._meta.get_field('autor').help_text,
+        label=WerkInstanz._meta.get_field('autor').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:autor-autocomplete",
+        )
+    )
+
+    class Meta:
+        model = WerkInstanz
+        fields = [
+            'id',
+            'legacy_id',
+            'legacy_pk',
+            'werk_titel',
+            'werk_titel_alt',
+            'textzeuge_kommentar',
+            'sprache',
+            'fol_start',
+            'fol_end',
+            'fol_sort',
+            'manuscript',
+            'autor',
             ]
 
 

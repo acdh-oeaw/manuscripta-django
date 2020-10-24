@@ -128,16 +128,18 @@ def run_import(
             df_data.columns = map(str.lower, df_data.columns)
             df_keys = df_data.keys()
             nr_cols = len(df_keys)
+            legacy_id_field = current_class.get_natural_primary_key()
+            legacy_id_source_field = field_mapping_inverse_dict[legacy_id_field]
             if limit:
                 df_data = df_data.head(limit)
             for i, row in df_data.iterrows():
                 try:
                     temp_item, _ = current_class.objects.get_or_create(
-                        legacy_id=f"{float(row[0])}".lower().strip()
+                        legacy_id=f"{float(row[legacy_id_source_field])}".lower().strip()
                     )
                 except ValueError:
                     temp_item, _ = current_class.objects.get_or_create(
-                        legacy_id=f"{row[0]}".strip()
+                        legacy_id=f"{row[legacy_id_source_field]}".strip()
                     )
                 row_data = f"{json.dumps(row.to_dict(), cls=DjangoJSONEncoder)}"
                 temp_item.orig_data_csv = row_data

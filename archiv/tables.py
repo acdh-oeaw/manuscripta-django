@@ -4,14 +4,27 @@ from django_tables2.utils import A
 
 from browsing.browsing_utils import MergeColumn
 from . models import (
+    Autor,
     Bibliothek,
     Initium,
     Manuscript,
     MsDesc,
     MsPart,
     Place,
-    Verfasser
+    Verfasser,
+    WerkInstanz
 )
+
+
+class AutorTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = Autor
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
 
 
 class BibliothekTable(tables.Table):
@@ -87,6 +100,17 @@ class VerfasserTable(tables.Table):
 
     class Meta:
         model = Verfasser
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class WerkInstanzTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = WerkInstanz
         sequence = ('id',)
         attrs = {"class": "table table-responsive table-hover"}
 

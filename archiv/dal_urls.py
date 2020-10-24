@@ -5,6 +5,11 @@ from . import dal_views
 app_name = 'archiv'
 urlpatterns = [
     url(
+        r'^autor-autocomplete/$',
+        dal_views.AutorAC.as_view(),
+        name='autor-autocomplete'
+    ),
+    url(
         r'^bibliothek-autocomplete/$',
         dal_views.BibliothekAC.as_view(),
         name='bibliothek-autocomplete'
@@ -38,5 +43,10 @@ urlpatterns = [
         r'^verfasser-autocomplete/$',
         dal_views.VerfasserAC.as_view(),
         name='verfasser-autocomplete'
+    ),
+    url(
+        r'^werkinstanz-autocomplete/$',
+        dal_views.WerkInstanzAC.as_view(),
+        name='werkinstanz-autocomplete'
     ),
 ]

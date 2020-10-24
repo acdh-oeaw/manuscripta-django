@@ -5,6 +5,30 @@ from . import views
 app_name = 'archiv'
 urlpatterns = [
     url(
+        r'^autor/$',
+        views.AutorListView.as_view(),
+        name='autor_browse'
+    ),
+    url(
+        r'^autor/detail/(?P<pk>[0-9]+)$',
+        views.AutorDetailView.as_view(),
+        name='autor_detail'
+    ),
+    url(
+        r'^autor/create/$',
+        views.AutorCreate.as_view(),
+        name='autor_create'
+    ),
+    url(
+        r'^autor/edit/(?P<pk>[0-9]+)$',
+        views.AutorUpdate.as_view(),
+        name='autor_edit'
+    ),
+    url(
+        r'^autor/delete/(?P<pk>[0-9]+)$',
+        views.AutorDelete.as_view(),
+        name='autor_delete'),
+    url(
         r'^bibliothek/$',
         views.BibliothekListView.as_view(),
         name='bibliothek_browse'
@@ -172,4 +196,28 @@ urlpatterns = [
         r'^verfasser/delete/(?P<pk>[0-9]+)$',
         views.VerfasserDelete.as_view(),
         name='verfasser_delete'),
+    url(
+        r'^werkinstanz/$',
+        views.WerkInstanzListView.as_view(),
+        name='werkinstanz_browse'
+    ),
+    url(
+        r'^werkinstanz/detail/(?P<pk>[0-9]+)$',
+        views.WerkInstanzDetailView.as_view(),
+        name='werkinstanz_detail'
+    ),
+    url(
+        r'^werkinstanz/create/$',
+        views.WerkInstanzCreate.as_view(),
+        name='werkinstanz_create'
+    ),
+    url(
+        r'^werkinstanz/edit/(?P<pk>[0-9]+)$',
+        views.WerkInstanzUpdate.as_view(),
+        name='werkinstanz_edit'
+    ),
+    url(
+        r'^werkinstanz/delete/(?P<pk>[0-9]+)$',
+        views.WerkInstanzDelete.as_view(),
+        name='werkinstanz_delete'),
 ]
