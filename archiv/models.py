@@ -414,6 +414,153 @@ class Initium(models.Model):
         return False
 
 
+class Literatur(models.Model):
+    ### Literatur ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    legacy_pk = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ID",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    kurz_zitat = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Kurzzitat",
+        help_text="Kurzzitat",
+    ).set_extra(
+        is_public=True,
+        data_lookup="K123ID",
+    )
+    autor_nachname = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Autor (Nachname)",
+        help_text="Autor (Nachname)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="Autor",
+    )
+    jahr = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Jahr",
+        help_text="Erscheinungsjahr",
+    ).set_extra(
+        is_public=True,
+        data_lookup="Jahr",
+    )
+    nr = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Nr. ",
+        help_text="Nr. ",
+    ).set_extra(
+        is_public=True,
+        data_lookup="Nr",
+    )
+    kz = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="KZ",
+        help_text="KZ",
+    ).set_extra(
+        is_public=True,
+        data_lookup="KZ",
+    )
+    vollzitat = models.TextField(
+        blank=True, null=True,
+        verbose_name="Vollzitat",
+        help_text="Vollzitat",
+    ).set_extra(
+        is_public=True,
+        data_lookup="Literaturzitat",
+    )
+    anmerkung = models.TextField(
+        blank=True, null=True,
+        verbose_name="Anmerkung",
+        help_text="Anmerkung",
+    ).set_extra(
+        is_public=True,
+        data_lookup="Anmerkungen",
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+        
+        ordering = [
+            'kurz_zitat',
+        ]
+        verbose_name = "Literatur"
+    
+    def __str__(self):
+        if self.kurz_zitat:
+            return "{}".format(self.kurz_zitat)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:literatur_browse')
+    
+    @classmethod
+    def get_source_table(self):
+        return "lit"
+    
+    
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+    
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:literatur_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:literatur_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:literatur_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:literatur_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:literatur_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:literatur_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:literatur_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False
+
+
 class Manuscript(models.Model):
     ### Beschreibt ein Manuscript ###
     legacy_id = models.CharField(

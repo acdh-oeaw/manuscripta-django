@@ -40,6 +40,18 @@ class InitiumAC(autocomplete.Select2QuerySetView):
         return qs
 
 
+class LiteraturAC(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Literatur.objects.all()
+
+        if self.q:
+            qs = qs.filter(
+                Q(legacy_id__icontains=self.q) |
+                Q(kurz_zitat__icontains=self.q)
+            )
+        return qs
+
+
 class ManuscriptAC(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = Manuscript.objects.all()

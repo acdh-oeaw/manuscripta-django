@@ -4,6 +4,7 @@ from . models import (
     Autor,
     Bibliothek,
     Initium,
+    Literatur,
     Manuscript,
     MsDesc,
     MsPart,
@@ -14,6 +15,7 @@ from . models import (
 admin.site.register(Autor)
 admin.site.register(Bibliothek)
 admin.site.register(Initium)
+admin.site.register(Literatur)
 admin.site.register(Manuscript)
 admin.site.register(MsDesc)
 admin.site.register(MsPart)

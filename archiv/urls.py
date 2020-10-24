@@ -77,6 +77,30 @@ urlpatterns = [
         views.InitiumDelete.as_view(),
         name='initium_delete'),
     url(
+        r'^literatur/$',
+        views.LiteraturListView.as_view(),
+        name='literatur_browse'
+    ),
+    url(
+        r'^literatur/detail/(?P<pk>[0-9]+)$',
+        views.LiteraturDetailView.as_view(),
+        name='literatur_detail'
+    ),
+    url(
+        r'^literatur/create/$',
+        views.LiteraturCreate.as_view(),
+        name='literatur_create'
+    ),
+    url(
+        r'^literatur/edit/(?P<pk>[0-9]+)$',
+        views.LiteraturUpdate.as_view(),
+        name='literatur_edit'
+    ),
+    url(
+        r'^literatur/delete/(?P<pk>[0-9]+)$',
+        views.LiteraturDelete.as_view(),
+        name='literatur_delete'),
+    url(
         r'^manuscript/$',
         views.ManuscriptListView.as_view(),
         name='manuscript_browse'

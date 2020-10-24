@@ -20,6 +20,11 @@ urlpatterns = [
         name='initium-autocomplete'
     ),
     url(
+        r'^literatur-autocomplete/$',
+        dal_views.LiteraturAC.as_view(),
+        name='literatur-autocomplete'
+    ),
+    url(
         r'^manuscript-autocomplete/$',
         dal_views.ManuscriptAC.as_view(),
         name='manuscript-autocomplete'

@@ -10,6 +10,7 @@ from . models import (
     Autor,
     Bibliothek,
     Initium,
+    Literatur,
     Manuscript,
     MsDesc,
     MsPart,
@@ -174,6 +175,59 @@ class InitiumListFilter(django_filters.FilterSet):
             'fol',
             'fol_sort',
             'fol_end',
+            ]
+
+
+class LiteraturListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Literatur._meta.get_field('legacy_id').help_text,
+        label=Literatur._meta.get_field('legacy_id').verbose_name
+    )
+    kurz_zitat = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Literatur._meta.get_field('kurz_zitat').help_text,
+        label=Literatur._meta.get_field('kurz_zitat').verbose_name
+    )
+    autor_nachname = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Literatur._meta.get_field('autor_nachname').help_text,
+        label=Literatur._meta.get_field('autor_nachname').verbose_name
+    )
+    nr = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Literatur._meta.get_field('nr').help_text,
+        label=Literatur._meta.get_field('nr').verbose_name
+    )
+    kz = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Literatur._meta.get_field('kz').help_text,
+        label=Literatur._meta.get_field('kz').verbose_name
+    )
+    vollzitat = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Literatur._meta.get_field('vollzitat').help_text,
+        label=Literatur._meta.get_field('vollzitat').verbose_name
+    )
+    anmerkung = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Literatur._meta.get_field('anmerkung').help_text,
+        label=Literatur._meta.get_field('anmerkung').verbose_name
+    )
+
+    class Meta:
+        model = Literatur
+        fields = [
+            'id',
+            'legacy_id',
+            'legacy_pk',
+            'kurz_zitat',
+            'autor_nachname',
+            'jahr',
+            'nr',
+            'kz',
+            'vollzitat',
+            'anmerkung',
             ]
 
 

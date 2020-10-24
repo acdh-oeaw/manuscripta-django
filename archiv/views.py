@@ -11,6 +11,7 @@ from . models import (
     Autor,
     Bibliothek,
     Initium,
+    Literatur,
     Manuscript,
     MsDesc,
     MsPart,
@@ -165,6 +166,54 @@ class InitiumDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(InitiumDelete, self).dispatch(*args, **kwargs)
+
+
+class LiteraturListView(GenericListView):
+
+    model = Literatur
+    filter_class = LiteraturListFilter
+    formhelper_class = LiteraturFilterFormHelper
+    table_class = LiteraturTable
+    init_columns = [
+        'id', 'kurz_zitat',
+    ]
+    enable_merge = True
+
+
+class LiteraturDetailView(BaseDetailView):
+
+    model = Literatur
+    template_name = 'browsing/generic_detail.html'
+
+
+class LiteraturCreate(BaseCreateView):
+
+    model = Literatur
+    form_class = LiteraturForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(LiteraturCreate, self).dispatch(*args, **kwargs)
+
+
+class LiteraturUpdate(BaseUpdateView):
+
+    model = Literatur
+    form_class = LiteraturForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(LiteraturUpdate, self).dispatch(*args, **kwargs)
+
+
+class LiteraturDelete(DeleteView):
+    model = Literatur
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:literatur_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(LiteraturDelete, self).dispatch(*args, **kwargs)
 
 
 class ManuscriptListView(GenericListView):
