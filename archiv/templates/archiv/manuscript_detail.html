@@ -173,7 +173,12 @@
                               {% for x in object.rvn_initium_manuscript_manuscript.all %}
                               <tr>
                                 <td><a href="{{ x.get_absolute_url }}">{{ x.fol }}</a></td>
-                                <td>{{ x.initium }}</td>
+                                <td>
+                                  {{ x.initium }}
+                                  {% if x.werk %} <br />
+                                  <small>Werk: {{ x.werk }}</small>
+                                  {% endif %}
+                                </td>
                               </tr>
                               {% endfor %}
                           </tbody>
@@ -208,8 +213,15 @@
                           <tbody>
                               {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
                               <tr>
-                                <td><a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a></td>
-                                <td>{{ x.werk_titel }}</td>
+                                <td>
+                                  <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a>
+                                </td>
+                                <td>
+                                  {{ x.werk_titel }}
+                                  {% for y in x.rvn_initium_werk_werkinstanz.all %}
+                                  <li>{{ y.initium }}</li>
+                                  {% endfor %}
+                                </td>
                                 <td><a href="{{ x.autor.get_absolute_url }}">{{ x.autor }}</a></td>
                               </tr>
                               {% endfor %}
