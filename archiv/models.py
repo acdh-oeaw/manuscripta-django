@@ -792,6 +792,10 @@ class Manuscript(models.Model):
             )
         return False
 
+    def get_bibliography(self):
+        bibl = Zitat.objects.filter(manuscript=self)
+        return bibl
+
 
 class MsDesc(models.Model):
     ### Handschriftenbeschreibung ###

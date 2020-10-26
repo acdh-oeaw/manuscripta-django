@@ -233,7 +233,7 @@ class ManuscriptListView(GenericListView):
 class ManuscriptDetailView(BaseDetailView):
 
     model = Manuscript
-    template_name = 'browsing/generic_detail.html'
+    template_name = 'archiv/manuscript_detail.html'
 
 
 class ManuscriptCreate(BaseCreateView):
@@ -600,5 +600,3 @@ class ZitatDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ZitatDelete, self).dispatch(*args, **kwargs)
-
-
