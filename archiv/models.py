@@ -69,12 +69,12 @@ class Autor(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'name',
         ]
         verbose_name = "Autor"
-    
+
     def __str__(self):
         if self.name:
             return "{}".format(self.name)
@@ -87,16 +87,16 @@ class Autor(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:autor_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return "aut"
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "name"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:autor_create')
@@ -209,12 +209,12 @@ class Bibliothek(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'lib_name',
         ]
         verbose_name = "Bibliothek"
-    
+
     def __str__(self):
         if self.lib_code:
             return "{}".format(self.lib_code)
@@ -227,16 +227,16 @@ class Bibliothek(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:bibliothek_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return "library"
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "lib_code"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:bibliothek_create')
@@ -351,12 +351,12 @@ class Initium(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'legacy_pk',
         ]
         verbose_name = "Initium"
-    
+
     def __str__(self):
         if self.legacy_pk:
             return "{}".format(self.legacy_pk)
@@ -369,16 +369,16 @@ class Initium(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:initium_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return "initia"
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:initium_create')
@@ -498,15 +498,17 @@ class Literatur(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'kurz_zitat',
         ]
         verbose_name = "Literatur"
-    
+
     def __str__(self):
         if self.kurz_zitat:
             return "{}".format(self.kurz_zitat)
+        elif self.vollzitat:
+            return f"{self.vollzitat}"
         else:
             return "{}".format(self.legacy_id)
 
@@ -516,16 +518,16 @@ class Literatur(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:literatur_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return "lit"
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:literatur_create')
@@ -728,12 +730,12 @@ class Manuscript(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'ms_code_sort',
         ]
         verbose_name = "Manuscript"
-    
+
     def __str__(self):
         if self.ms_code:
             return "{}".format(self.ms_code)
@@ -746,16 +748,16 @@ class Manuscript(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:manuscript_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return "manuscripts"
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "ms_code"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:manuscript_create')
@@ -871,12 +873,12 @@ class MsDesc(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'legacy_pk',
         ]
         verbose_name = "Manuscript Description"
-    
+
     def __str__(self):
         if self.legacy_pk:
             return "{}".format(self.legacy_pk)
@@ -889,16 +891,16 @@ class MsDesc(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:msdesc_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return "mssdesc"
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:msdesc_create')
@@ -1016,12 +1018,12 @@ class MsPart(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'legacy_pk',
         ]
         verbose_name = "MsPart"
-    
+
     def __str__(self):
         if self.legacy_pk:
             return "{}".format(self.legacy_pk)
@@ -1034,16 +1036,16 @@ class MsPart(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:mspart_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return "mss_teile"
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:mspart_create')
@@ -1102,12 +1104,12 @@ class Place(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'name',
         ]
         verbose_name = "Place"
-    
+
     def __str__(self):
         if self.name:
             return "{}".format(self.name)
@@ -1120,16 +1122,16 @@ class Place(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:place_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return None
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "name"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:place_create')
@@ -1188,12 +1190,12 @@ class Verfasser(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'name',
         ]
         verbose_name = "Verfasser"
-    
+
     def __str__(self):
         if self.name:
             return "{}".format(self.name)
@@ -1206,16 +1208,16 @@ class Verfasser(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:verfasser_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return None
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "name"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:verfasser_create')
@@ -1246,6 +1248,122 @@ class Verfasser(models.Model):
         if prev:
             return reverse(
                 'archiv:verfasser_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False
+
+
+class WebLit(models.Model):
+    ### Link zu Literatur ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    legacy_pk = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ID",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    url = models.TextField(
+        blank=True, null=True,
+        verbose_name="URL",
+        help_text="URL",
+    ).set_extra(
+        is_public=True,
+        data_lookup="url",
+    )
+    beschriftung = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Beschriftung",
+        help_text="Beschriftung",
+    ).set_extra(
+        is_public=True,
+        data_lookup="beschriftung",
+    )
+    literatur = models.ForeignKey(
+        "Literatur",
+        related_name='rvn_weblit_literatur_literatur',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Literatur",
+        help_text="Literatur",
+    ).set_extra(
+        is_public=True,
+        data_lookup="lit_id",
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+
+        ordering = [
+            'url',
+        ]
+        verbose_name = "Link zu Literatur"
+
+    def __str__(self):
+        if self.url:
+            return "{}".format(self.url)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:weblit_browse')
+
+    @classmethod
+    def get_source_table(self):
+        return "liturl"
+
+
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:weblit_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:weblit_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:weblit_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:weblit_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:weblit_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:weblit_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:weblit_detail',
                 kwargs={'pk': prev.first().id}
             )
         return False
@@ -1364,12 +1482,12 @@ class WerkInstanz(models.Model):
         )
 
     class Meta:
-        
+
         ordering = [
             'legacy_pk',
         ]
         verbose_name = "Instanz eines Werkes"
-    
+
     def __str__(self):
         if self.werk_titel:
             return "{}".format(self.werk_titel)
@@ -1382,16 +1500,16 @@ class WerkInstanz(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:werkinstanz_browse')
-    
+
     @classmethod
     def get_source_table(self):
         return "aut"
-    
-    
+
+
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-    
+
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:werkinstanz_create')
@@ -1427,3 +1545,130 @@ class WerkInstanz(models.Model):
         return False
 
 
+class Zitat(models.Model):
+    ### Zitat ###
+    legacy_id = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Legacy ID"
+        )
+    legacy_pk = models.IntegerField(
+        blank=True, null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ID",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    literatur = models.ForeignKey(
+        "Literatur",
+        related_name='rvn_zitat_literatur_literatur',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Literatur",
+        help_text="Literatur",
+    ).set_extra(
+        is_public=True,
+        data_lookup="lit_id",
+    )
+    manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name='rvn_zitat_manuscript_manuscript',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Manuscript",
+        help_text="Manuscript",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ms_code",
+    )
+    kz_ms = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Seite, Ausgabe, Nr. ",
+        help_text="Seite, Ausgabe, Nr. ",
+    ).set_extra(
+        is_public=True,
+        data_lookup="KZ_SM",
+    )
+    signatur = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Signatur",
+        help_text="Signatur",
+    ).set_extra(
+        is_public=True,
+        data_lookup="Signatur",
+    )
+    orig_data_csv = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="The original data"
+        ).set_extra(
+            is_public=True
+        )
+
+    class Meta:
+
+        ordering = [
+            'literatur',
+        ]
+        verbose_name = "Zitat"
+
+    def __str__(self):
+        if self.literatur:
+            return "{}".format(self.literatur)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse('archiv:zitat_browse')
+
+    @classmethod
+    def get_source_table(self):
+        return "litsig"
+
+
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse('archiv:zitat_create')
+
+    def get_absolute_url(self):
+        return reverse('archiv:zitat_detail', kwargs={'pk': self.id})
+
+    def get_absolute_url(self):
+        return reverse('archiv:zitat_detail', kwargs={'pk': self.id})
+
+    def get_delete_url(self):
+        return reverse('archiv:zitat_delete', kwargs={'pk': self.id})
+
+    def get_edit_url(self):
+        return reverse('archiv:zitat_edit', kwargs={'pk': self.id})
+
+    def get_next(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return reverse(
+                'archiv:zitat_detail',
+                kwargs={'pk': next.first().id}
+            )
+        return False
+
+    def get_prev(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return reverse(
+                'archiv:zitat_detail',
+                kwargs={'pk': prev.first().id}
+            )
+        return False

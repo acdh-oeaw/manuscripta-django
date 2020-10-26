@@ -17,7 +17,9 @@ from . models import (
     MsPart,
     Place,
     Verfasser,
-    WerkInstanz
+    WebLit,
+    WerkInstanz,
+    Zitat
 )
 from browsing.browsing_utils import (
     GenericListView, BaseCreateView, BaseUpdateView, BaseDetailView
@@ -456,6 +458,54 @@ class VerfasserDelete(DeleteView):
         return super(VerfasserDelete, self).dispatch(*args, **kwargs)
 
 
+class WebLitListView(GenericListView):
+
+    model = WebLit
+    filter_class = WebLitListFilter
+    formhelper_class = WebLitFilterFormHelper
+    table_class = WebLitTable
+    init_columns = [
+        'id', 'url',
+    ]
+    enable_merge = True
+
+
+class WebLitDetailView(BaseDetailView):
+
+    model = WebLit
+    template_name = 'browsing/generic_detail.html'
+
+
+class WebLitCreate(BaseCreateView):
+
+    model = WebLit
+    form_class = WebLitForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(WebLitCreate, self).dispatch(*args, **kwargs)
+
+
+class WebLitUpdate(BaseUpdateView):
+
+    model = WebLit
+    form_class = WebLitForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(WebLitUpdate, self).dispatch(*args, **kwargs)
+
+
+class WebLitDelete(DeleteView):
+    model = WebLit
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:weblit_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(WebLitDelete, self).dispatch(*args, **kwargs)
+
+
 class WerkInstanzListView(GenericListView):
 
     model = WerkInstanz
@@ -502,5 +552,53 @@ class WerkInstanzDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(WerkInstanzDelete, self).dispatch(*args, **kwargs)
+
+
+class ZitatListView(GenericListView):
+
+    model = Zitat
+    filter_class = ZitatListFilter
+    formhelper_class = ZitatFilterFormHelper
+    table_class = ZitatTable
+    init_columns = [
+        'id', 'literatur',
+    ]
+    enable_merge = True
+
+
+class ZitatDetailView(BaseDetailView):
+
+    model = Zitat
+    template_name = 'browsing/generic_detail.html'
+
+
+class ZitatCreate(BaseCreateView):
+
+    model = Zitat
+    form_class = ZitatForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ZitatCreate, self).dispatch(*args, **kwargs)
+
+
+class ZitatUpdate(BaseUpdateView):
+
+    model = Zitat
+    form_class = ZitatForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ZitatUpdate, self).dispatch(*args, **kwargs)
+
+
+class ZitatDelete(DeleteView):
+    model = Zitat
+    template_name = 'webpage/confirm_delete.html'
+    success_url = reverse_lazy('archiv:zitat_browse')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ZitatDelete, self).dispatch(*args, **kwargs)
 
 

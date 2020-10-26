@@ -15,7 +15,9 @@ from . models import (
     MsPart,
     Place,
     Verfasser,
-    WerkInstanz
+    WebLit,
+    WerkInstanz,
+    Zitat
 )
 
 
@@ -490,6 +492,55 @@ class VerfasserForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'save'),)
 
 
+class WebLitFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(WebLitFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'legacy_pk',
+                    'url',
+                    'beschriftung',
+                    'literatur',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class WebLitForm(forms.ModelForm):
+
+    class Meta:
+        model = WebLit
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(WebLitForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
 class WerkInstanzFilterFormHelper(FormHelper):
     def __init__(self, *args, **kwargs):
         super(WerkInstanzFilterFormHelper, self).__init__(*args, **kwargs)
@@ -542,6 +593,56 @@ class WerkInstanzForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(WerkInstanzForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3'
+        self.helper.field_class = 'col-md-9'
+        self.helper.add_input(Submit('submit', 'save'),)
+
+
+class ZitatFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(ZitatFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = 'genericFilterForm'
+        self.form_method = 'GET'
+        self.helper.form_tag = False
+        self.add_input(Submit('Filter', 'Search'))
+        self.layout = Layout(
+            Fieldset(
+                'Basic search options',
+                'id',
+                css_id="basic_search_fields"
+                ),
+            Accordion(
+                AccordionGroup(
+                    'Advanced search',
+                    
+                    'legacy_pk',
+                    'literatur',
+                    'manuscript',
+                    'kz_ms',
+                    'signatur',
+                    css_id="more"
+                    ),
+                AccordionGroup(
+                    'admin',
+                    'legacy_id',
+                    css_id="admin_search"
+                    ),
+                )
+            )
+
+
+class ZitatForm(forms.ModelForm):
+
+    class Meta:
+        model = Zitat
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(ZitatForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = 'form-horizontal'

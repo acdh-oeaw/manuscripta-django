@@ -88,7 +88,7 @@ def get_class_sources_map(app_name):
 
 def run_import(
     app_name, m2m_sep="|", date_range_sep="/", limit=False,
-    file_class_map_dict=False
+    file_class_map_dict=False, filter_query=False
 ):
     """ runs data import from a collection of excel-files matching the model class of the
         passed in applications
@@ -117,6 +117,8 @@ def run_import(
         print(field_mapping_dict)
         field_mapping_inverse_dict = field_mapping_inverse(current_class)
         query = f"SELECT * FROM {source_name}"
+        if filter_query:
+            query = f"{query} {filter_query}"
         try:
             df_data = pd.read_sql(query, con=db_connection)
             print(source_name)

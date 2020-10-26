@@ -50,8 +50,18 @@ urlpatterns = [
         name='verfasser-autocomplete'
     ),
     url(
+        r'^weblit-autocomplete/$',
+        dal_views.WebLitAC.as_view(),
+        name='weblit-autocomplete'
+    ),
+    url(
         r'^werkinstanz-autocomplete/$',
         dal_views.WerkInstanzAC.as_view(),
         name='werkinstanz-autocomplete'
+    ),
+    url(
+        r'^zitat-autocomplete/$',
+        dal_views.ZitatAC.as_view(),
+        name='zitat-autocomplete'
     ),
 ]

@@ -112,6 +112,18 @@ class VerfasserAC(autocomplete.Select2QuerySetView):
         return qs
 
 
+class WebLitAC(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = WebLit.objects.all()
+
+        if self.q:
+            qs = qs.filter(
+                Q(legacy_id__icontains=self.q) |
+                Q(url__icontains=self.q)
+            )
+        return qs
+
+
 class WerkInstanzAC(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         qs = WerkInstanz.objects.all()
@@ -120,6 +132,18 @@ class WerkInstanzAC(autocomplete.Select2QuerySetView):
             qs = qs.filter(
                 Q(legacy_id__icontains=self.q) |
                 Q(werk_titel__icontains=self.q)
+            )
+        return qs
+
+
+class ZitatAC(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Zitat.objects.all()
+
+        if self.q:
+            qs = qs.filter(
+                Q(legacy_id__icontains=self.q) |
+                Q(literatur__icontains=self.q)
             )
         return qs
 

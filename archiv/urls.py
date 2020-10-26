@@ -221,6 +221,30 @@ urlpatterns = [
         views.VerfasserDelete.as_view(),
         name='verfasser_delete'),
     url(
+        r'^weblit/$',
+        views.WebLitListView.as_view(),
+        name='weblit_browse'
+    ),
+    url(
+        r'^weblit/detail/(?P<pk>[0-9]+)$',
+        views.WebLitDetailView.as_view(),
+        name='weblit_detail'
+    ),
+    url(
+        r'^weblit/create/$',
+        views.WebLitCreate.as_view(),
+        name='weblit_create'
+    ),
+    url(
+        r'^weblit/edit/(?P<pk>[0-9]+)$',
+        views.WebLitUpdate.as_view(),
+        name='weblit_edit'
+    ),
+    url(
+        r'^weblit/delete/(?P<pk>[0-9]+)$',
+        views.WebLitDelete.as_view(),
+        name='weblit_delete'),
+    url(
         r'^werkinstanz/$',
         views.WerkInstanzListView.as_view(),
         name='werkinstanz_browse'
@@ -244,4 +268,28 @@ urlpatterns = [
         r'^werkinstanz/delete/(?P<pk>[0-9]+)$',
         views.WerkInstanzDelete.as_view(),
         name='werkinstanz_delete'),
+    url(
+        r'^zitat/$',
+        views.ZitatListView.as_view(),
+        name='zitat_browse'
+    ),
+    url(
+        r'^zitat/detail/(?P<pk>[0-9]+)$',
+        views.ZitatDetailView.as_view(),
+        name='zitat_detail'
+    ),
+    url(
+        r'^zitat/create/$',
+        views.ZitatCreate.as_view(),
+        name='zitat_create'
+    ),
+    url(
+        r'^zitat/edit/(?P<pk>[0-9]+)$',
+        views.ZitatUpdate.as_view(),
+        name='zitat_edit'
+    ),
+    url(
+        r'^zitat/delete/(?P<pk>[0-9]+)$',
+        views.ZitatDelete.as_view(),
+        name='zitat_delete'),
 ]

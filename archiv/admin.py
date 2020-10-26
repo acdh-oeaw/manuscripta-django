@@ -10,7 +10,9 @@ from . models import (
     MsPart,
     Place,
     Verfasser,
-    WerkInstanz
+    WebLit,
+    WerkInstanz,
+    Zitat
 )
 admin.site.register(Autor)
 admin.site.register(Bibliothek)
@@ -21,4 +23,6 @@ admin.site.register(MsDesc)
 admin.site.register(MsPart)
 admin.site.register(Place)
 admin.site.register(Verfasser)
+admin.site.register(WebLit)
 admin.site.register(WerkInstanz)
+admin.site.register(Zitat)

@@ -13,7 +13,9 @@ from . models import (
     MsPart,
     Place,
     Verfasser,
-    WerkInstanz
+    WebLit,
+    WerkInstanz,
+    Zitat
 )
 
 
@@ -116,6 +118,17 @@ class VerfasserTable(tables.Table):
         attrs = {"class": "table table-responsive table-hover"}
 
 
+class WebLitTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = WebLit
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
 class WerkInstanzTable(tables.Table):
 
     id = tables.LinkColumn(verbose_name='ID')
@@ -123,6 +136,17 @@ class WerkInstanzTable(tables.Table):
 
     class Meta:
         model = WerkInstanz
+        sequence = ('id',)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class ZitatTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name='ID')
+    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+
+    class Meta:
+        model = Zitat
         sequence = ('id',)
         attrs = {"class": "table table-responsive table-hover"}
 

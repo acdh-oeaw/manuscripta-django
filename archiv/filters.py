@@ -16,7 +16,9 @@ from . models import (
     MsPart,
     Place,
     Verfasser,
-    WerkInstanz
+    WebLit,
+    WerkInstanz,
+    Zitat
 )
 
 
@@ -479,6 +481,43 @@ class VerfasserListFilter(django_filters.FilterSet):
             ]
 
 
+class WebLitListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WebLit._meta.get_field('legacy_id').help_text,
+        label=WebLit._meta.get_field('legacy_id').verbose_name
+    )
+    url = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WebLit._meta.get_field('url').help_text,
+        label=WebLit._meta.get_field('url').verbose_name
+    )
+    beschriftung = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=WebLit._meta.get_field('beschriftung').help_text,
+        label=WebLit._meta.get_field('beschriftung').verbose_name
+    )
+    literatur = django_filters.ModelMultipleChoiceFilter(
+        queryset=Literatur.objects.all(),
+        help_text=WebLit._meta.get_field('literatur').help_text,
+        label=WebLit._meta.get_field('literatur').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:literatur-autocomplete",
+        )
+    )
+
+    class Meta:
+        model = WebLit
+        fields = [
+            'id',
+            'legacy_id',
+            'legacy_pk',
+            'url',
+            'beschriftung',
+            'literatur',
+            ]
+
+
 class WerkInstanzListFilter(django_filters.FilterSet):
     legacy_id = django_filters.CharFilter(
         lookup_expr='icontains',
@@ -562,6 +601,52 @@ class WerkInstanzListFilter(django_filters.FilterSet):
             'fol_sort',
             'manuscript',
             'autor',
+            ]
+
+
+class ZitatListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Zitat._meta.get_field('legacy_id').help_text,
+        label=Zitat._meta.get_field('legacy_id').verbose_name
+    )
+    literatur = django_filters.ModelMultipleChoiceFilter(
+        queryset=Literatur.objects.all(),
+        help_text=Zitat._meta.get_field('literatur').help_text,
+        label=Zitat._meta.get_field('literatur').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:literatur-autocomplete",
+        )
+    )
+    manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=Manuscript.objects.all(),
+        help_text=Zitat._meta.get_field('manuscript').help_text,
+        label=Zitat._meta.get_field('manuscript').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        )
+    )
+    kz_ms = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Zitat._meta.get_field('kz_ms').help_text,
+        label=Zitat._meta.get_field('kz_ms').verbose_name
+    )
+    signatur = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Zitat._meta.get_field('signatur').help_text,
+        label=Zitat._meta.get_field('signatur').verbose_name
+    )
+
+    class Meta:
+        model = Zitat
+        fields = [
+            'id',
+            'legacy_id',
+            'legacy_pk',
+            'literatur',
+            'manuscript',
+            'kz_ms',
+            'signatur',
             ]
 
 
