@@ -151,6 +151,11 @@ class InitiumFilterFormHelper(FormHelper):
                     'fol',
                     'fol_sort',
                     'fol_end',
+                    'signtaur_fol',
+                    'titel_vorspann',
+                    'titel',
+                    'sprache',
+                    'werk',
                     css_id="more"
                     ),
                 AccordionGroup(
@@ -163,6 +168,11 @@ class InitiumFilterFormHelper(FormHelper):
 
 
 class InitiumForm(forms.ModelForm):
+    sprache = forms.ModelChoiceField(
+        required=False,
+        label="Sprache",
+        queryset=SkosConcept.objects.filter(collection__name="sprache")
+    )
 
     class Meta:
         model = Initium

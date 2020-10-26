@@ -69,12 +69,12 @@ class Autor(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'name',
         ]
         verbose_name = "Autor"
-
+    
     def __str__(self):
         if self.name:
             return "{}".format(self.name)
@@ -87,16 +87,16 @@ class Autor(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:autor_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "aut"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "name"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:autor_create')
@@ -209,12 +209,12 @@ class Bibliothek(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'lib_name',
         ]
         verbose_name = "Bibliothek"
-
+    
     def __str__(self):
         if self.lib_code:
             return "{}".format(self.lib_code)
@@ -227,16 +227,16 @@ class Bibliothek(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:bibliothek_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "library"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "lib_code"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:bibliothek_create')
@@ -342,6 +342,57 @@ class Initium(models.Model):
         is_public=True,
         data_lookup="fol_end",
     )
+    signtaur_fol = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Signatur (Folio)",
+        help_text="Signatur (Folio)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="Signatur_fol",
+    )
+    titel_vorspann = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Titelvorspann",
+        help_text="Titelvorspann",
+    ).set_extra(
+        is_public=True,
+        data_lookup="titelvorspann",
+    )
+    titel = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Titel",
+        help_text="Titel",
+    ).set_extra(
+        is_public=True,
+        data_lookup="titel",
+    )
+    sprache = models.ForeignKey(
+        SkosConcept,
+        related_name='rvn_initium_sprache_skosconcept',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Sprache",
+        help_text="Sprache",
+    ).set_extra(
+        is_public=True,
+        data_lookup="sprache",
+    )
+    werk = models.ForeignKey(
+        "WerkInstanz",
+        related_name='rvn_initium_werk_werkinstanz',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Werk",
+        help_text="Werk",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDaut",
+    )
     orig_data_csv = models.TextField(
         blank=True,
         null=True,
@@ -351,12 +402,12 @@ class Initium(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'legacy_pk',
         ]
         verbose_name = "Initium"
-
+    
     def __str__(self):
         if self.legacy_pk:
             return "{}".format(self.legacy_pk)
@@ -369,16 +420,16 @@ class Initium(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:initium_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "initia"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:initium_create')
@@ -498,17 +549,15 @@ class Literatur(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'kurz_zitat',
         ]
         verbose_name = "Literatur"
-
+    
     def __str__(self):
         if self.kurz_zitat:
             return "{}".format(self.kurz_zitat)
-        elif self.vollzitat:
-            return f"{self.vollzitat}"
         else:
             return "{}".format(self.legacy_id)
 
@@ -518,16 +567,16 @@ class Literatur(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:literatur_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "lit"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:literatur_create')
@@ -730,12 +779,12 @@ class Manuscript(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'ms_code_sort',
         ]
         verbose_name = "Manuscript"
-
+    
     def __str__(self):
         if self.ms_code:
             return "{}".format(self.ms_code)
@@ -748,16 +797,16 @@ class Manuscript(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:manuscript_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "manuscripts"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "ms_code"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:manuscript_create')
@@ -791,10 +840,6 @@ class Manuscript(models.Model):
                 kwargs={'pk': prev.first().id}
             )
         return False
-
-    def get_bibliography(self):
-        bibl = Zitat.objects.filter(manuscript=self)
-        return bibl
 
 
 class MsDesc(models.Model):
@@ -877,12 +922,12 @@ class MsDesc(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'legacy_pk',
         ]
         verbose_name = "Manuscript Description"
-
+    
     def __str__(self):
         if self.legacy_pk:
             return "{}".format(self.legacy_pk)
@@ -895,16 +940,16 @@ class MsDesc(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:msdesc_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "mssdesc"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:msdesc_create')
@@ -1022,12 +1067,12 @@ class MsPart(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'legacy_pk',
         ]
         verbose_name = "MsPart"
-
+    
     def __str__(self):
         if self.legacy_pk:
             return "{}".format(self.legacy_pk)
@@ -1040,16 +1085,16 @@ class MsPart(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:mspart_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "mss_teile"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:mspart_create')
@@ -1108,12 +1153,12 @@ class Place(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'name',
         ]
         verbose_name = "Place"
-
+    
     def __str__(self):
         if self.name:
             return "{}".format(self.name)
@@ -1126,16 +1171,16 @@ class Place(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:place_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return None
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "name"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:place_create')
@@ -1194,12 +1239,12 @@ class Verfasser(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'name',
         ]
         verbose_name = "Verfasser"
-
+    
     def __str__(self):
         if self.name:
             return "{}".format(self.name)
@@ -1212,16 +1257,16 @@ class Verfasser(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:verfasser_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return None
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "name"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:verfasser_create')
@@ -1310,12 +1355,12 @@ class WebLit(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'url',
         ]
         verbose_name = "Link zu Literatur"
-
+    
     def __str__(self):
         if self.url:
             return "{}".format(self.url)
@@ -1328,16 +1373,16 @@ class WebLit(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:weblit_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "liturl"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:weblit_create')
@@ -1486,12 +1531,12 @@ class WerkInstanz(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'legacy_pk',
         ]
         verbose_name = "Instanz eines Werkes"
-
+    
     def __str__(self):
         if self.werk_titel:
             return "{}".format(self.werk_titel)
@@ -1504,16 +1549,16 @@ class WerkInstanz(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:werkinstanz_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "aut"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:werkinstanz_create')
@@ -1615,12 +1660,12 @@ class Zitat(models.Model):
         )
 
     class Meta:
-
+        
         ordering = [
             'literatur',
         ]
         verbose_name = "Zitat"
-
+    
     def __str__(self):
         if self.literatur:
             return "{}".format(self.literatur)
@@ -1633,16 +1678,16 @@ class Zitat(models.Model):
     @classmethod
     def get_listview_url(self):
         return reverse('archiv:zitat_browse')
-
+    
     @classmethod
     def get_source_table(self):
         return "litsig"
-
-
+    
+    
     @classmethod
     def get_natural_primary_key(self):
         return "legacy_pk"
-
+    
     @classmethod
     def get_createview_url(self):
         return reverse('archiv:zitat_create')
@@ -1676,3 +1721,5 @@ class Zitat(models.Model):
                 kwargs={'pk': prev.first().id}
             )
         return False
+
+

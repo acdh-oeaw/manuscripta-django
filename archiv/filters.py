@@ -164,6 +164,44 @@ class InitiumListFilter(django_filters.FilterSet):
         help_text=Initium._meta.get_field('fol_end').help_text,
         label=Initium._meta.get_field('fol_end').verbose_name
     )
+    signtaur_fol = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('signtaur_fol').help_text,
+        label=Initium._meta.get_field('signtaur_fol').verbose_name
+    )
+    titel_vorspann = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('titel_vorspann').help_text,
+        label=Initium._meta.get_field('titel_vorspann').verbose_name
+    )
+    titel = django_filters.CharFilter(
+        lookup_expr='icontains',
+        help_text=Initium._meta.get_field('titel').help_text,
+        label=Initium._meta.get_field('titel').verbose_name
+    )
+    sprache = django_filters.ModelMultipleChoiceFilter(
+        queryset=SkosConcept.objects.filter(
+            collection__name="sprache"
+        ),
+        help_text=Initium._meta.get_field('sprache').help_text,
+        label=Initium._meta.get_field('sprache').verbose_name,
+        method=generous_concept_filter,
+        widget=autocomplete.Select2Multiple(
+            url="/vocabs-ac/specific-concept-ac/sprache",
+            attrs={
+                'data-placeholder': 'Autocomplete ...',
+                'data-minimum-input-length': 2,
+                },
+        )
+    )
+    werk = django_filters.ModelMultipleChoiceFilter(
+        queryset=WerkInstanz.objects.all(),
+        help_text=Initium._meta.get_field('werk').help_text,
+        label=Initium._meta.get_field('werk').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:werkinstanz-autocomplete",
+        )
+    )
 
     class Meta:
         model = Initium
@@ -177,6 +215,11 @@ class InitiumListFilter(django_filters.FilterSet):
             'fol',
             'fol_sort',
             'fol_end',
+            'signtaur_fol',
+            'titel_vorspann',
+            'titel',
+            'sprache',
+            'werk',
             ]
 
 
