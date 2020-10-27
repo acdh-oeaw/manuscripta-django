@@ -250,7 +250,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                      {% for x in object.get_bibliography %}
+                      {% for x in object.rvn_zitat_manuscript_manuscript.all %}
                       <tr>
                         <td>
                           <a href="{{ x.get_absolute_url }}">{{ x }}</a>
