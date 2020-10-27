@@ -1,8 +1,8 @@
-# hofburg
+# manuscripta
 
 ## docker
 
-build the image with `docker build -t hofburg .`
+build the image with `docker build -t manuscripta .`
 
 provide a .env file with
 ```
@@ -12,4 +12,4 @@ DB_PASSWORD=asdf
 PROJECT_NAME=nomythdbapp
 SECRET_KEY=hansi4ever
 ```
-run the container with `docker run -it -p 8020:8020 --rm --env-file .env_dev hofburg`
+run the container with `docker run -it -p 8020:8020 --rm --env-file .env_dev manuscripta`

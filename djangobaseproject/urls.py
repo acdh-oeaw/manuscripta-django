@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^browsing/', include('browsing.urls', namespace='browsing')),
     url(r'^archiv/', include('archiv.urls', namespace='archiv')),
     url(r'^archiv-ac/', include('archiv.dal_urls', namespace='archiv-ac')),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    # url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^info/', include('infos.urls', namespace='info')),
     url(r'^vocabs/', include('vocabs.urls', namespace='vocabs')),
     url(r'^vocabs-ac/', include('vocabs.dal_urls', namespace='vocabs-ac')),
