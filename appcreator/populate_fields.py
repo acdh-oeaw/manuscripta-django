@@ -85,7 +85,7 @@ def pop_fk_field(current_class, temp_item, row, cur_attr, fd=None, source_name=F
     return temp_item
 
 
-def pop_m2m_field(current_class, temp_item, row, cur_attr, sep='|'):
+def pop_m2m_field(current_class, temp_item, row, cur_attr, sep='|', fd=None):
     """ adds value to ManyToMany Field on the current temp_item
         :param current_class: a model class
         :param temp_item: a model class object
@@ -151,7 +151,7 @@ def pop_date_field(temp_item, row, cur_attr, fd=None):
     return temp_item
 
 
-def pop_date_range_field(temp_item, row, cur_attr, sep="|"):
+def pop_date_range_field(temp_item, row, cur_attr, sep="|", fd=None):
     """ adds value to DateRangeField on the current temp_item
         :param temp_item: a model class object
         :param row: A pandas DataFrame row with column names matching the items field names

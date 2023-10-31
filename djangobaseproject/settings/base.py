@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'reversion',
-    'django_extensions',
+    # 'django_extensions',
     'crispy_forms',
     'django_filters',
     'django_tables2',
