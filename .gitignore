@@ -53,3 +53,5 @@ node_modules
 # docker-compose
 docker-compose-dev.yml
 docker-compose-server.yml
+ksbm.sql
+/venv

@@ -26,27 +26,27 @@ app_name = '{{ app_name }}'
 urlpatterns = [
 {%- for x in data %}
     url(
-        r'^{{ x.model_name|lower }}/$',
+        r'^{{ x.model_name|lower }}/',
         views.{{ x.model_name}}ListView.as_view(),
         name='{{ x.model_name|lower }}_browse'
     ),
     url(
-        r'^{{ x.model_name|lower }}/detail/(?P<pk>[0-9]+)$',
+        r'^{{ x.model_name|lower }}/detail/<int:pk>',
         views.{{ x.model_name}}DetailView.as_view(),
         name='{{ x.model_name|lower }}_detail'
     ),
     url(
-        r'^{{ x.model_name|lower }}/create/$',
+        r'^{{ x.model_name|lower }}/create/',
         views.{{ x.model_name}}Create.as_view(),
         name='{{ x.model_name|lower }}_create'
     ),
     url(
-        r'^{{ x.model_name|lower }}/edit/(?P<pk>[0-9]+)$',
+        r'^{{ x.model_name|lower }}/edit/<int:pk>',
         views.{{ x.model_name}}Update.as_view(),
         name='{{ x.model_name|lower }}_edit'
     ),
     url(
-        r'^{{ x.model_name|lower }}/delete/(?P<pk>[0-9]+)$',
+        r'^{{ x.model_name|lower }}/delete/<int:pk>',
         views.{{ x.model_name}}Delete.as_view(),
         name='{{ x.model_name|lower }}_delete'),
 {%- endfor %}
