@@ -4,23 +4,44 @@
 {% load webpage_extras %}
 {% block content %}
 
-        <div class="jumbotron" style="background-image: url({% static 'webpage/img/project_background.jpg' %}) ">
-            <div class="container">
-                <h1 style="text-align:center; color: #111;">{% projects_metadata 'title' %}</h1>
-                <h3 style="text-align:center; color: #111;">{% projects_metadata 'subtitle' %}</h3>
-                <h5 style="text-align:center; color: #111;">{% projects_metadata 'description' %}</h5>
-            </div>
+        
+<div class="container col-xxl-8 px-2">
+    <div class="row flex-lg-row align-items-center g-5 py-5">
+        <div class="col-lg-6">
+            <h1 class="text-body-emphasis lh-1 mb-3">
+                Manuscripta
+            </h1>
+            <h2>
+                Mittelalterliche Handschriften in Österreich
+            </h2>
+            <p class="lead">A prototype <a href="https://www.djangoproject.com/">Django</a> implementation of <a href="https://manuscripta.at/">manuscripta.at</a>
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <!-- <a href="search.html" type="button"
+                    class="btn btn-primary btn-lg px-4 me-md-2">Search
+                </a> -->
+                <a href="{% url 'archiv:manuscript_browse' %}" type="button"
+                    class="btn btn-outline-secondary btn-lg px-4">Browse</a>
+                </div>
         </div>
-
+        <div class="col-10 col-sm-8 col-lg-6">
+            <figure class="figure">
+            <img src="{% static 'webpage/img/title-image.jpg' %}" class="d-block mx-lg-auto img-fluid"
+                alt="(Venice) La distruzione del tempio di Gerusalemme -Francesco Hayez" width="700" height="500" loading="lazy">
+                <figcaption class="figure-caption">Evangelistar von Speyer, um 1220; Manuscript in the Badische Landesbibliothek, Karlsruhe, Germany <a href="https://commons.wikimedia.org/wiki/File:Codex_Bruchsal_1_68r.jpg"><i class="bi bi-wikipedia" aria-hidden="true"><span class="visually-hidden">Link to the source of the image</span></i></a></figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
     <div class="container">
         <div class="row">
-            <div class="col-md-12" style="text-align:center">
+            <div class="col-md-12">
                 <h4>Data-Count</h4>
             </div>
             {% create_object_count app='archiv' as models %}
             {% for x in models %}
-                <div class="col-md-4  text-center">
-                    <div class="card flex-md-row mb-4 box-shadow">
+                <div class="col-md-4 text-center">
+                    <div class="card flex-md-row mb-4">
                         <div class="card-body">
                             <h4 class="mb-0">{{x.name}}</h4>
                             <h4 class="count">{{ x.count }}</h4>

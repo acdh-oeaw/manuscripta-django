@@ -5,7 +5,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <img src="{% static 'webpage/img/histogis_projektlogo_black.png' %}" alt="HistoGIS-logo" width="120">
+                <img src="{% static 'webpage/img/projekt-logo.jpg' %}" alt="Manuscripta Logo" width="120">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -20,12 +20,9 @@
                             Info
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">About
-                                </a></li>
-                            <li><a class="dropdown-item" href="{% url 'webpage:staticpage' template='team' %}">Team </a>
-                            </li>
-                            <li><a class="dropdown-item"
-                                    href="{% url 'webpage:staticpage' template='shp-samples' %}">Shape File Samples </a>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">About
+                                </a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -40,7 +37,7 @@
                             Browse
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% nav_menu app='shps' as links %}
+                            {% nav_menu app='archiv' as links %}
                             {% for x in links %}
                             <li><a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a></li>
                             {% endfor %}
