@@ -55,3 +55,4 @@ docker-compose-dev.yml
 docker-compose-server.yml
 ksbm.sql
 /venv
+manuscripta.sql
