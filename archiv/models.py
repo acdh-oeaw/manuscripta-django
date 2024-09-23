@@ -372,7 +372,7 @@ class Initium(models.Model):
     class Meta:
 
         ordering = [
-            "legacy_pk",
+            "manuscript", "fol_sort"
         ]
         verbose_name = "Initium"
 

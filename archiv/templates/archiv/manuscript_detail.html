@@ -1,7 +1,7 @@
 {% extends "browsing/generic_detail.html" %}
 {% load static %}
 {% load webpage_extras %}
-{% block title %}{{ object.name }}{% endblock %}
+{% block title %}{{ object.shelfmark }}{% endblock %}
 {% block scriptHeader %}
 
 <link rel="stylesheet" type="text/css"
@@ -314,8 +314,17 @@
       <li><strong>ToDo</strong> Wasserzeichen: Metadaten zu Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Vorschau Bilder zu
         Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Einzelbilder: fol. 47, 48, 114, 115, 124, 160, 162, 221, 224, 233, 236,
         237.</li>
-      <li><strong>ToDo</strong> Wissenschaftliche Beschreibung: Kat. Innsbruck 2, 101-105 (online).</li>
     </ul>
+    <div class="msDesc">
+      {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
+        <dl>
+          <dt>Wissenschaftliche Beschreibung:</dt>
+          <dd>{{ x.bibliography|safe }}</dd>
+          <dt>Phys Desc</dt>
+          <dd>{{ x.phys_desc|safe }}</dd>
+        </dl>
+        {% endfor %}
+    </div>
 
     <div class="accordion" id="mainAccordion">
       <div class="accordion-item">
@@ -363,6 +372,18 @@
         </div>
       </div>
     </div>
+
+    <hr />
+    <ul>
+      <li>ToDo: Fix sorting</li>
+      {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
+      <li>
+        <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a> |
+        {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}, {% endif %}{{ x.werk_titel }}</strong>{%elif x.werk_titel_alt %} {{x.werk_titel_alt|safe }} {% else %} leer {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  
 
 
   </div>

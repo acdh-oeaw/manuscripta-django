@@ -31,7 +31,7 @@ class BibliothekAC(autocomplete.Select2QuerySetView):
 
         if self.q:
             qs = qs.filter(
-                Q(legacy_id__icontains=self.q) | Q(lib_code__icontains=self.q)
+                Q(lib_code__icontains=self.q) | Q(lib_name__icontains=self.q)
             )
         return qs
 
