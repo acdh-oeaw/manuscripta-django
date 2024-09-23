@@ -6,9 +6,7 @@ app_name = "vocabs"
 
 urlpatterns = [
     path("", views.SkosConceptListView.as_view(), name="skosconcept_list"),
-    path(
-        "concepts/browse/", views.SkosConceptListView.as_view(), name="browse_vocabs"
-    ),
+    path("concepts/browse/", views.SkosConceptListView.as_view(), name="browse_vocabs"),
     path("<int:pk>", views.SkosConceptDetailView.as_view(), name="skosconcept_detail"),
     path("create/", views.SkosConceptCreate.as_view(), name="skosconcept_create"),
     path(

@@ -7,41 +7,155 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('archiv', '0002_literatur'),
+        ("archiv", "0002_literatur"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Zitat',
+            name="Zitat",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('legacy_id', models.CharField(blank=True, max_length=300, verbose_name='Legacy ID')),
-                ('legacy_pk', models.IntegerField(blank=True, help_text='Primärschlüssel Alt', null=True, verbose_name='Primärschlüssel Alt')),
-                ('kz_ms', models.CharField(blank=True, help_text='Seite, Ausgabe, Nr. ', max_length=250, verbose_name='Seite, Ausgabe, Nr. ')),
-                ('signatur', models.CharField(blank=True, help_text='Signatur', max_length=250, verbose_name='Signatur')),
-                ('orig_data_csv', models.TextField(blank=True, null=True, verbose_name='The original data')),
-                ('literatur', models.ForeignKey(blank=True, help_text='Literatur', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rvn_zitat_literatur_literatur', to='archiv.literatur', verbose_name='Literatur')),
-                ('manuscript', models.ForeignKey(blank=True, help_text='Manuscript', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rvn_zitat_manuscript_manuscript', to='archiv.manuscript', verbose_name='Manuscript')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "legacy_id",
+                    models.CharField(
+                        blank=True, max_length=300, verbose_name="Legacy ID"
+                    ),
+                ),
+                (
+                    "legacy_pk",
+                    models.IntegerField(
+                        blank=True,
+                        help_text="Primärschlüssel Alt",
+                        null=True,
+                        verbose_name="Primärschlüssel Alt",
+                    ),
+                ),
+                (
+                    "kz_ms",
+                    models.CharField(
+                        blank=True,
+                        help_text="Seite, Ausgabe, Nr. ",
+                        max_length=250,
+                        verbose_name="Seite, Ausgabe, Nr. ",
+                    ),
+                ),
+                (
+                    "signatur",
+                    models.CharField(
+                        blank=True,
+                        help_text="Signatur",
+                        max_length=250,
+                        verbose_name="Signatur",
+                    ),
+                ),
+                (
+                    "orig_data_csv",
+                    models.TextField(
+                        blank=True, null=True, verbose_name="The original data"
+                    ),
+                ),
+                (
+                    "literatur",
+                    models.ForeignKey(
+                        blank=True,
+                        help_text="Literatur",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="rvn_zitat_literatur_literatur",
+                        to="archiv.literatur",
+                        verbose_name="Literatur",
+                    ),
+                ),
+                (
+                    "manuscript",
+                    models.ForeignKey(
+                        blank=True,
+                        help_text="Manuscript",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="rvn_zitat_manuscript_manuscript",
+                        to="archiv.manuscript",
+                        verbose_name="Manuscript",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Zitat',
-                'ordering': ['literatur'],
+                "verbose_name": "Zitat",
+                "ordering": ["literatur"],
             },
         ),
         migrations.CreateModel(
-            name='WebLit',
+            name="WebLit",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('legacy_id', models.CharField(blank=True, max_length=300, verbose_name='Legacy ID')),
-                ('legacy_pk', models.IntegerField(blank=True, help_text='Primärschlüssel Alt', null=True, verbose_name='Primärschlüssel Alt')),
-                ('url', models.TextField(blank=True, help_text='URL', null=True, verbose_name='URL')),
-                ('beschriftung', models.CharField(blank=True, help_text='Beschriftung', max_length=250, verbose_name='Beschriftung')),
-                ('orig_data_csv', models.TextField(blank=True, null=True, verbose_name='The original data')),
-                ('literatur', models.ForeignKey(blank=True, help_text='Literatur', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rvn_weblit_literatur_literatur', to='archiv.literatur', verbose_name='Literatur')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "legacy_id",
+                    models.CharField(
+                        blank=True, max_length=300, verbose_name="Legacy ID"
+                    ),
+                ),
+                (
+                    "legacy_pk",
+                    models.IntegerField(
+                        blank=True,
+                        help_text="Primärschlüssel Alt",
+                        null=True,
+                        verbose_name="Primärschlüssel Alt",
+                    ),
+                ),
+                (
+                    "url",
+                    models.TextField(
+                        blank=True, help_text="URL", null=True, verbose_name="URL"
+                    ),
+                ),
+                (
+                    "beschriftung",
+                    models.CharField(
+                        blank=True,
+                        help_text="Beschriftung",
+                        max_length=250,
+                        verbose_name="Beschriftung",
+                    ),
+                ),
+                (
+                    "orig_data_csv",
+                    models.TextField(
+                        blank=True, null=True, verbose_name="The original data"
+                    ),
+                ),
+                (
+                    "literatur",
+                    models.ForeignKey(
+                        blank=True,
+                        help_text="Literatur",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="rvn_weblit_literatur_literatur",
+                        to="archiv.literatur",
+                        verbose_name="Literatur",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Link zu Literatur',
-                'ordering': ['url'],
+                "verbose_name": "Link zu Literatur",
+                "ordering": ["url"],
             },
         ),
     ]

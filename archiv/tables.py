@@ -3,7 +3,7 @@ import django_tables2 as tables
 from django_tables2.utils import A
 
 from browsing.browsing_utils import MergeColumn
-from . models import (
+from .models import (
     Autor,
     Bibliothek,
     Initium,
@@ -15,138 +15,137 @@ from . models import (
     Verfasser,
     WebLit,
     WerkInstanz,
-    Zitat
+    Zitat,
 )
 
 
 class AutorTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = Autor
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class BibliothekTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = Bibliothek
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class InitiumTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = Initium
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class LiteraturTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = Literatur
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class ManuscriptTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = Manuscript
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class MsDescTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = MsDesc
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class MsPartTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = MsPart
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class PlaceTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = Place
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class VerfasserTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = Verfasser
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class WebLitTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = WebLit
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class WerkInstanzTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = WerkInstanz
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
 class ZitatTable(tables.Table):
 
-    id = tables.LinkColumn(verbose_name='ID')
-    merge = MergeColumn(verbose_name='keep | remove', accessor='pk')
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:
         model = Zitat
-        sequence = ('id',)
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
-

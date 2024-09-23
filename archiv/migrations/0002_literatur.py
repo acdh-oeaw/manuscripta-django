@@ -6,28 +6,107 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('archiv', '0001_initial'),
+        ("archiv", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Literatur',
+            name="Literatur",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('legacy_id', models.CharField(blank=True, max_length=300, verbose_name='Legacy ID')),
-                ('legacy_pk', models.IntegerField(blank=True, help_text='Primärschlüssel Alt', null=True, verbose_name='Primärschlüssel Alt')),
-                ('kurz_zitat', models.CharField(blank=True, help_text='Kurzzitat', max_length=250, verbose_name='Kurzzitat')),
-                ('autor_nachname', models.CharField(blank=True, help_text='Autor (Nachname)', max_length=250, verbose_name='Autor (Nachname)')),
-                ('jahr', models.IntegerField(blank=True, help_text='Erscheinungsjahr', null=True, verbose_name='Jahr')),
-                ('nr', models.CharField(blank=True, help_text='Nr. ', max_length=250, verbose_name='Nr. ')),
-                ('kz', models.CharField(blank=True, help_text='KZ', max_length=250, verbose_name='KZ')),
-                ('vollzitat', models.TextField(blank=True, help_text='Vollzitat', null=True, verbose_name='Vollzitat')),
-                ('anmerkung', models.TextField(blank=True, help_text='Anmerkung', null=True, verbose_name='Anmerkung')),
-                ('orig_data_csv', models.TextField(blank=True, null=True, verbose_name='The original data')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "legacy_id",
+                    models.CharField(
+                        blank=True, max_length=300, verbose_name="Legacy ID"
+                    ),
+                ),
+                (
+                    "legacy_pk",
+                    models.IntegerField(
+                        blank=True,
+                        help_text="Primärschlüssel Alt",
+                        null=True,
+                        verbose_name="Primärschlüssel Alt",
+                    ),
+                ),
+                (
+                    "kurz_zitat",
+                    models.CharField(
+                        blank=True,
+                        help_text="Kurzzitat",
+                        max_length=250,
+                        verbose_name="Kurzzitat",
+                    ),
+                ),
+                (
+                    "autor_nachname",
+                    models.CharField(
+                        blank=True,
+                        help_text="Autor (Nachname)",
+                        max_length=250,
+                        verbose_name="Autor (Nachname)",
+                    ),
+                ),
+                (
+                    "jahr",
+                    models.IntegerField(
+                        blank=True,
+                        help_text="Erscheinungsjahr",
+                        null=True,
+                        verbose_name="Jahr",
+                    ),
+                ),
+                (
+                    "nr",
+                    models.CharField(
+                        blank=True,
+                        help_text="Nr. ",
+                        max_length=250,
+                        verbose_name="Nr. ",
+                    ),
+                ),
+                (
+                    "kz",
+                    models.CharField(
+                        blank=True, help_text="KZ", max_length=250, verbose_name="KZ"
+                    ),
+                ),
+                (
+                    "vollzitat",
+                    models.TextField(
+                        blank=True,
+                        help_text="Vollzitat",
+                        null=True,
+                        verbose_name="Vollzitat",
+                    ),
+                ),
+                (
+                    "anmerkung",
+                    models.TextField(
+                        blank=True,
+                        help_text="Anmerkung",
+                        null=True,
+                        verbose_name="Anmerkung",
+                    ),
+                ),
+                (
+                    "orig_data_csv",
+                    models.TextField(
+                        blank=True, null=True, verbose_name="The original data"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Literatur',
-                'ordering': ['kurz_zitat'],
+                "verbose_name": "Literatur",
+                "ordering": ["kurz_zitat"],
             },
         ),
     ]

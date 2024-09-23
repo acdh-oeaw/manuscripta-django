@@ -61,9 +61,7 @@ urlpatterns = [
         views.LiteraturDetailView.as_view(),
         name="literatur_detail",
     ),
-    path(
-        "literatur/create/", views.LiteraturCreate.as_view(), name="literatur_create"
-    ),
+    path("literatur/create/", views.LiteraturCreate.as_view(), name="literatur_create"),
     path(
         "literatur/edit/<int:pk>",
         views.LiteraturUpdate.as_view(),
@@ -148,9 +146,7 @@ urlpatterns = [
         views.VerfasserDetailView.as_view(),
         name="verfasser_detail",
     ),
-    path(
-        "verfasser/create/", views.VerfasserCreate.as_view(), name="verfasser_create"
-    ),
+    path("verfasser/create/", views.VerfasserCreate.as_view(), name="verfasser_create"),
     path(
         "verfasser/edit/<int:pk>",
         views.VerfasserUpdate.as_view(),

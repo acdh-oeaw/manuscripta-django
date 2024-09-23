@@ -7,19 +7,35 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('vocabs', '0001_initial'),
-        ('archiv', '0004_auto_20201026_1138'),
+        ("vocabs", "0001_initial"),
+        ("archiv", "0004_auto_20201026_1138"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='initium',
-            name='sprache',
-            field=models.ForeignKey(blank=True, help_text='Sprache', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rvn_initium_sprache_skosconcept', to='vocabs.skosconcept', verbose_name='Sprache'),
+            model_name="initium",
+            name="sprache",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Sprache",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="rvn_initium_sprache_skosconcept",
+                to="vocabs.skosconcept",
+                verbose_name="Sprache",
+            ),
         ),
         migrations.AddField(
-            model_name='initium',
-            name='werk',
-            field=models.ForeignKey(blank=True, help_text='Werk', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rvn_initium_werk_werkinstanz', to='archiv.werkinstanz', verbose_name='Werk'),
+            model_name="initium",
+            name="werk",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Werk",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="rvn_initium_werk_werkinstanz",
+                to="archiv.werkinstanz",
+                verbose_name="Werk",
+            ),
         ),
     ]

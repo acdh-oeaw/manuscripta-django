@@ -115,7 +115,7 @@ LEGACY_DB_CONNECTION = {
     "USER": os.environ.get("LDB_USER", "ksbm"),
     "PASSWORD": os.environ.get("LDB_PASSWORD"),
     "HOST": os.environ.get("LDB_HOST", "localhost"),
-    "PORT": os.environ.get("LDB_PORT", "3306")
+    "PORT": os.environ.get("LDB_PORT", "3306"),
 }
 
 SHEET_ID = "12fPlJQPk4dVzHQUQDH5AOFrjyBxCA2iPouP4I7cXLx8"

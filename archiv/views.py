@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
-from . filters import *
-from . forms import *
-from . tables import *
-from . models import (
+from .filters import *
+from .forms import *
+from .tables import *
+from .models import (
     Autor,
     Bibliothek,
     Initium,
@@ -18,10 +18,13 @@ from . models import (
     Verfasser,
     WebLit,
     WerkInstanz,
-    Zitat
+    Zitat,
 )
 from browsing.browsing_utils import (
-    GenericListView, BaseCreateView, BaseUpdateView, BaseDetailView
+    GenericListView,
+    BaseCreateView,
+    BaseUpdateView,
+    BaseDetailView,
 )
 
 
@@ -32,7 +35,8 @@ class AutorListView(GenericListView):
     formhelper_class = AutorFilterFormHelper
     table_class = AutorTable
     init_columns = [
-        'id', 'name',
+        "id",
+        "name",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -41,7 +45,7 @@ class AutorListView(GenericListView):
 class AutorDetailView(BaseDetailView):
 
     model = Autor
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class AutorCreate(BaseCreateView):
@@ -66,8 +70,8 @@ class AutorUpdate(BaseUpdateView):
 
 class AutorDelete(DeleteView):
     model = Autor
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:autor_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:autor_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -81,7 +85,8 @@ class BibliothekListView(GenericListView):
     formhelper_class = BibliothekFilterFormHelper
     table_class = BibliothekTable
     init_columns = [
-        'id', 'lib_code',
+        "id",
+        "lib_code",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -90,7 +95,7 @@ class BibliothekListView(GenericListView):
 class BibliothekDetailView(BaseDetailView):
 
     model = Bibliothek
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class BibliothekCreate(BaseCreateView):
@@ -115,8 +120,8 @@ class BibliothekUpdate(BaseUpdateView):
 
 class BibliothekDelete(DeleteView):
     model = Bibliothek
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:bibliothek_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:bibliothek_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -130,7 +135,8 @@ class InitiumListView(GenericListView):
     formhelper_class = InitiumFilterFormHelper
     table_class = InitiumTable
     init_columns = [
-        'id', 'legacy_pk',
+        "id",
+        "legacy_pk",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -139,7 +145,7 @@ class InitiumListView(GenericListView):
 class InitiumDetailView(BaseDetailView):
 
     model = Initium
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class InitiumCreate(BaseCreateView):
@@ -164,8 +170,8 @@ class InitiumUpdate(BaseUpdateView):
 
 class InitiumDelete(DeleteView):
     model = Initium
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:initium_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:initium_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -179,7 +185,8 @@ class LiteraturListView(GenericListView):
     formhelper_class = LiteraturFilterFormHelper
     table_class = LiteraturTable
     init_columns = [
-        'id', 'kurz_zitat',
+        "id",
+        "kurz_zitat",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -188,7 +195,7 @@ class LiteraturListView(GenericListView):
 class LiteraturDetailView(BaseDetailView):
 
     model = Literatur
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class LiteraturCreate(BaseCreateView):
@@ -213,8 +220,8 @@ class LiteraturUpdate(BaseUpdateView):
 
 class LiteraturDelete(DeleteView):
     model = Literatur
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:literatur_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:literatur_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -228,7 +235,8 @@ class ManuscriptListView(GenericListView):
     formhelper_class = ManuscriptFilterFormHelper
     table_class = ManuscriptTable
     init_columns = [
-        'id', 'ms_code',
+        "id",
+        "ms_code",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -237,7 +245,7 @@ class ManuscriptListView(GenericListView):
 class ManuscriptDetailView(BaseDetailView):
 
     model = Manuscript
-    template_name = 'archiv/manuscript_detail.html'
+    template_name = "archiv/manuscript_detail.html"
 
 
 class ManuscriptCreate(BaseCreateView):
@@ -262,8 +270,8 @@ class ManuscriptUpdate(BaseUpdateView):
 
 class ManuscriptDelete(DeleteView):
     model = Manuscript
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:manuscript_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:manuscript_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -277,7 +285,8 @@ class MsDescListView(GenericListView):
     formhelper_class = MsDescFilterFormHelper
     table_class = MsDescTable
     init_columns = [
-        'id', 'legacy_pk',
+        "id",
+        "legacy_pk",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -286,7 +295,7 @@ class MsDescListView(GenericListView):
 class MsDescDetailView(BaseDetailView):
 
     model = MsDesc
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class MsDescCreate(BaseCreateView):
@@ -311,8 +320,8 @@ class MsDescUpdate(BaseUpdateView):
 
 class MsDescDelete(DeleteView):
     model = MsDesc
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:msdesc_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:msdesc_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -326,7 +335,8 @@ class MsPartListView(GenericListView):
     formhelper_class = MsPartFilterFormHelper
     table_class = MsPartTable
     init_columns = [
-        'id', 'legacy_pk',
+        "id",
+        "legacy_pk",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -335,7 +345,7 @@ class MsPartListView(GenericListView):
 class MsPartDetailView(BaseDetailView):
 
     model = MsPart
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class MsPartCreate(BaseCreateView):
@@ -360,8 +370,8 @@ class MsPartUpdate(BaseUpdateView):
 
 class MsPartDelete(DeleteView):
     model = MsPart
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:mspart_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:mspart_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -375,7 +385,8 @@ class PlaceListView(GenericListView):
     formhelper_class = PlaceFilterFormHelper
     table_class = PlaceTable
     init_columns = [
-        'id', 'name',
+        "id",
+        "name",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -384,7 +395,7 @@ class PlaceListView(GenericListView):
 class PlaceDetailView(BaseDetailView):
 
     model = Place
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class PlaceCreate(BaseCreateView):
@@ -409,8 +420,8 @@ class PlaceUpdate(BaseUpdateView):
 
 class PlaceDelete(DeleteView):
     model = Place
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:place_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:place_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -424,7 +435,8 @@ class VerfasserListView(GenericListView):
     formhelper_class = VerfasserFilterFormHelper
     table_class = VerfasserTable
     init_columns = [
-        'id', 'name',
+        "id",
+        "name",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -433,7 +445,7 @@ class VerfasserListView(GenericListView):
 class VerfasserDetailView(BaseDetailView):
 
     model = Verfasser
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class VerfasserCreate(BaseCreateView):
@@ -458,8 +470,8 @@ class VerfasserUpdate(BaseUpdateView):
 
 class VerfasserDelete(DeleteView):
     model = Verfasser
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:verfasser_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:verfasser_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -473,7 +485,8 @@ class WebLitListView(GenericListView):
     formhelper_class = WebLitFilterFormHelper
     table_class = WebLitTable
     init_columns = [
-        'id', 'url',
+        "id",
+        "url",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -482,7 +495,7 @@ class WebLitListView(GenericListView):
 class WebLitDetailView(BaseDetailView):
 
     model = WebLit
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class WebLitCreate(BaseCreateView):
@@ -507,8 +520,8 @@ class WebLitUpdate(BaseUpdateView):
 
 class WebLitDelete(DeleteView):
     model = WebLit
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:weblit_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:weblit_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -522,7 +535,8 @@ class WerkInstanzListView(GenericListView):
     formhelper_class = WerkInstanzFilterFormHelper
     table_class = WerkInstanzTable
     init_columns = [
-        'id', 'werk_titel',
+        "id",
+        "werk_titel",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -531,7 +545,7 @@ class WerkInstanzListView(GenericListView):
 class WerkInstanzDetailView(BaseDetailView):
 
     model = WerkInstanz
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class WerkInstanzCreate(BaseCreateView):
@@ -556,8 +570,8 @@ class WerkInstanzUpdate(BaseUpdateView):
 
 class WerkInstanzDelete(DeleteView):
     model = WerkInstanz
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:werkinstanz_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:werkinstanz_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -571,7 +585,8 @@ class ZitatListView(GenericListView):
     formhelper_class = ZitatFilterFormHelper
     table_class = ZitatTable
     init_columns = [
-        'id', 'literatur',
+        "id",
+        "literatur",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -580,7 +595,7 @@ class ZitatListView(GenericListView):
 class ZitatDetailView(BaseDetailView):
 
     model = Zitat
-    template_name = 'browsing/generic_detail.html'
+    template_name = "browsing/generic_detail.html"
 
 
 class ZitatCreate(BaseCreateView):
@@ -605,8 +620,8 @@ class ZitatUpdate(BaseUpdateView):
 
 class ZitatDelete(DeleteView):
     model = Zitat
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:zitat_browse')
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:zitat_browse")
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

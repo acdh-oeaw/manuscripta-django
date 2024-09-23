@@ -17,7 +17,8 @@ models.Field.set_extra = set_extra
 
 
 class Autor(models.Model):
-    """ Beschreibt einen Autor """
+    """Beschreibt einen Autor"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     name = models.CharField(
         max_length=250,
@@ -116,7 +117,8 @@ class Autor(models.Model):
 
 
 class Bibliothek(models.Model):
-    """ Beschreibt eine Bibliothek """
+    """Beschreibt eine Bibliothek"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     lib_code = models.CharField(
         max_length=250,
@@ -240,7 +242,8 @@ class Bibliothek(models.Model):
 
 
 class Initium(models.Model):
-    """ Beschreibt Initia """
+    """Beschreibt Initia"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -422,7 +425,8 @@ class Initium(models.Model):
 
 
 class Literatur(models.Model):
-    """ Literatur """
+    """Literatur"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -559,7 +563,8 @@ class Literatur(models.Model):
 
 
 class Manuscript(models.Model):
-    """ Beschreibt ein Manuscript """
+    """Beschreibt ein Manuscript"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -781,7 +786,8 @@ class Manuscript(models.Model):
 
 
 class MsDesc(models.Model):
-    """ Handschriftenbeschreibung """
+    """Handschriftenbeschreibung"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -915,7 +921,8 @@ class MsDesc(models.Model):
 
 
 class MsPart(models.Model):
-    """ Beschreibt einen Teil einer Handschrift """
+    """Beschreibt einen Teil einer Handschrift"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -1049,7 +1056,8 @@ class MsPart(models.Model):
 
 
 class Place(models.Model):
-    """ Beschreibt einen Ort """
+    """Beschreibt einen Ort"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     name = models.CharField(
         max_length=250,
@@ -1121,7 +1129,8 @@ class Place(models.Model):
 
 
 class Verfasser(models.Model):
-    """ Beschreibt Verfasser*in einer Beschreibung """
+    """Beschreibt Verfasser*in einer Beschreibung"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     name = models.CharField(
         max_length=250,
@@ -1193,7 +1202,8 @@ class Verfasser(models.Model):
 
 
 class WebLit(models.Model):
-    """ Link zu Literatur """
+    """Link zu Literatur"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -1297,7 +1307,8 @@ class WebLit(models.Model):
 
 
 class WerkInstanz(models.Model):
-    """ Beschreibt ein konkrete Werk """
+    """Beschreibt ein konkrete Werk"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -1463,7 +1474,8 @@ class WerkInstanz(models.Model):
 
 
 class Zitat(models.Model):
-    """ Zitat """
+    """Zitat"""
+
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
