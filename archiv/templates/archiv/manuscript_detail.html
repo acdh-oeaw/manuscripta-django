@@ -9,6 +9,16 @@
 {% endblock scriptHeader %}
 
 {% block custom %}
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#new-view-tab" type="button" role="tab" aria-controls="new-view-tab" aria-selected="true">Neue Ansicht</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#classic-view-tab" type="button" role="tab" aria-controls="classic-view-tab" aria-selected="false">Klassische Ansicht</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="new-view-tab" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
     <div class="row">
         <div class="col-md-6">
             <div class="card">
@@ -274,6 +284,37 @@
             </div>
         </div>
     </div>
+  </div>
+  <div class="tab-pane fade" id="classic-view-tab" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <div class="p-2">
+      Innsbruck, Universitäts- und Landesbibliothek Tirol (ULBT) [Handschriftenliste | Kataloge | Infos | Kontakt] 
+    </div>  
+    <div class="border p-2">
+      <h2>{{ object.lib_code }}, {{ object.shelfmark }}</h2>
+      <h3>{{ object.heading }}</h3>
+      {% if object.olim_signatur %} Olim: {{ object.olim_signatur }}{% endif %}
+      {{ object.material }}
+      {{ object.num_leaves }}
+      {{ object.dimensions }}
+      {{ object.origin_date }} <br/>
+      Provenienz/Letztbesitzer: {{ object.prov }}
+    </div>
+    <div class="msParts">
+      Handschrift aus {{ object.rvn_mspart_part_of_manuscript_manuscript.count }} Teilen zusammengesetzt:
+      {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
+        {{ x.part }} ({{ x.range }}), {{ x.date_str }}
+      {% endfor %}
+    </div>
+    <ul>
+      <li><strong>ToDo</strong> OLIVER - Online manuscript description (HMML).</li>
+      <li><strong>ToDo</strong> Wasserzeichen:  Metadaten zu Teil 1, Teil 2, Teil 3, Teil 4, Teil 5  |  Vorschau Bilder zu Teil 1, Teil 2, Teil 3, Teil 4, Teil 5  |  Einzelbilder: fol. 47, 48, 114, 115, 124, 160, 162, 221, 224, 233, 236, 237.</li>
+      <li><strong>ToDo</strong> Wissenschaftliche Beschreibung: Kat. Innsbruck 2, 101-105 (online).</li>
+    </ul>
+    
+
+  </div>
+</div>
+
     <script>
       $(document).ready(function() {
         $('#example').DataTable({

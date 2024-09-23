@@ -765,9 +765,6 @@ class Manuscript(models.Model):
     def get_absolute_url(self):
         return reverse("archiv:manuscript_detail", kwargs={"pk": self.id})
 
-    def get_absolute_url(self):
-        return reverse("archiv:manuscript_detail", kwargs={"pk": self.id})
-
     def get_delete_url(self):
         return reverse("archiv:manuscript_delete", kwargs={"pk": self.id})
 
