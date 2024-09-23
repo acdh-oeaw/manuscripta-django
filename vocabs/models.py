@@ -710,7 +710,7 @@ class SkosConcept(models.Model):
         if self.pref_label:
             return f"{self.pref_label}"
         else:
-            self.id
+            return f"{self.id}"
 
 
 def get_all_children(self, include_self=True):

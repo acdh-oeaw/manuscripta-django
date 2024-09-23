@@ -86,6 +86,7 @@ class BibliothekListView(GenericListView):
     table_class = BibliothekTable
     init_columns = [
         "id",
+        "lib_name",
         "lib_code",
     ]
     enable_merge = True

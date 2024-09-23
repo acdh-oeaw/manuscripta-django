@@ -198,7 +198,7 @@ class Bibliothek(models.Model):
         if self.lib_name:
             return f"{self.lib_name}"
         elif self.lib_code:
-            f"{self.lib_code}"
+            return f"{self.lib_code}"
         else:
             return f"{self.id}"
 
@@ -733,9 +733,9 @@ class Manuscript(models.Model):
 
     def __str__(self):
         if self.ms_code:
-            return "{}".format(self.ms_code)
+            return f"{self.ms_code}"
         else:
-            return "{}".format(self.legacy_id)
+            return f"{self.id}"
 
     def field_dict(self):
         return model_to_dict(self)

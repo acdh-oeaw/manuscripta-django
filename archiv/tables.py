@@ -37,7 +37,7 @@ class BibliothekTable(tables.Table):
 
     class Meta:
         model = Bibliothek
-        sequence = ("id",)
+        sequence = ("id", "lib_name",)
         attrs = {"class": "table table-responsive table-hover"}
 
 
