@@ -1,16 +1,25 @@
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.abspath(os.path.join(__file__, "../")))
-)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+if os.environ.get("DEBUG"):
+    DEBUG = True
+else:
+    DEBUG = False
+ADD_ALLOWED_HOST = os.environ.get("ALLOWED_HOST", "*")
 
+SECRET_KEY = os.environ.get("SECRET_KEY", "hansi4ever")
 
-SHARED_URL = "https://shared.acdh.oeaw.ac.at/"
-PROJECT_NAME = "djangobaseproject"
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "0.0.0.0",
+    ADD_ALLOWED_HOST,
+]
 
 
 ACDH_IMPRINT_URL = (
@@ -41,7 +50,6 @@ INSTALLED_APPS = [
     "webpage",
     "browsing",
     "vocabs",
-    "infos",
     "archiv",
     "charts",
 ]
@@ -79,15 +87,39 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "webpage.webpage_content_processors.installed_apps",
-                "webpage.webpage_content_processors.is_dev_version",
-                "webpage.webpage_content_processors.get_db_name",
-                "webpage.webpage_content_processors.shared_url",
-                "webpage.webpage_content_processors.my_app_name",
             ],
         },
     },
 ]
+
+if os.environ.get("POSTGRES_DB"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("POSTGRES_DB", "manuscripta"),
+            "USER": os.environ.get("POSTGRES_USER", "postgres"),
+            "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "postgres"),
+            "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+            "PORT": os.environ.get("POSTEGRES_PORT", "5432"),
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+LEGACY_DB_CONNECTION = {
+    "NAME": os.environ.get("LDB_NAME", "ksbm"),
+    "USER": os.environ.get("LDB_USER", "ksbm"),
+    "PASSWORD": os.environ.get("LDB_PASSWORD"),
+    "HOST": os.environ.get("LDB_HOST", "localhost"),
+    "PORT": os.environ.get("LDB_PORT", "3306")
+}
+
+SHEET_ID = "12fPlJQPk4dVzHQUQDH5AOFrjyBxCA2iPouP4I7cXLx8"
 
 WSGI_APPLICATION = "djangobaseproject.wsgi.application"
 
@@ -131,26 +163,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles/")
 STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = "/media/"
-CKEDITOR_UPLOAD_PATH = "content/ckeditor/"
-
-CKEDITOR_IMAGE_BACKEND = "pillow"
-
-CKEDITOR_CONFIGS = {
-    "default": {
-        "toolbar": "full",
-        "extraPlugins": ",".join(
-            [
-                "mentions",
-            ]
-        ),
-        "height": 300,
-    },
-}
-
-ARCHE_SETTINGS = {
-    "project_name": ROOT_URLCONF.split(".")[0],
-    "base_url": "https://id.acdh.oeaw.ac.at/{}".format(ROOT_URLCONF.split(".")[0]),
-}
 
 VOCABS_DEFAULT_PEFIX = os.path.basename(BASE_DIR)
 

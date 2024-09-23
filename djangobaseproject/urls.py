@@ -19,7 +19,6 @@ urlpatterns = [
     path("browsing/", include("browsing.urls", namespace="browsing")),
     path("archiv/", include("archiv.urls", namespace="archiv")),
     path("archiv-ac/", include("archiv.dal_urls", namespace="archiv-ac")),
-    path("info/", include("infos.urls", namespace="info")),
     path("vocabs/", include("vocabs.urls", namespace="vocabs")),
     path("vocabs-ac/", include("vocabs.dal_urls", namespace="vocabs-ac")),
     path("", include("webpage.urls", namespace="webpage")),
