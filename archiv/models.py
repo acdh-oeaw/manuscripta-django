@@ -195,10 +195,12 @@ class Bibliothek(models.Model):
         verbose_name = "Bibliothek"
 
     def __str__(self):
-        if self.lib_code:
-            return "{}".format(self.lib_code)
+        if self.lib_name:
+            return f"{self.lib_name}"
+        elif self.lib_code:
+            f"{self.lib_code}"
         else:
-            return "{}".format(self.legacy_id)
+            return f"{self.id}"
 
     def field_dict(self):
         return model_to_dict(self)
