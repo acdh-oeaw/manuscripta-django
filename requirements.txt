@@ -6,7 +6,7 @@ django-crispy-forms
 django-extensions
 django-filter
 django-leaflet
-django-reversion
+django-next-prev>=1.1.0,<2
 django-super-deduper
 django-tables2
 djangorestframework

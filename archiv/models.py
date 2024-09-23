@@ -2,9 +2,9 @@
 
 from django.db import models
 from django.urls import reverse
+from next_prev import next_in_order, prev_in_order
 
 from vocabs.models import SkosConcept
-
 from browsing.browsing_utils import model_to_dict
 
 
@@ -17,7 +17,7 @@ models.Field.set_extra = set_extra
 
 
 class Autor(models.Model):
-    ### Beschreibt einen Autor ###
+    """ Beschreibt einen Autor """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     name = models.CharField(
         max_length=250,
@@ -96,9 +96,6 @@ class Autor(models.Model):
     def get_absolute_url(self):
         return reverse("archiv:autor_detail", kwargs={"pk": self.id})
 
-    def get_absolute_url(self):
-        return reverse("archiv:autor_detail", kwargs={"pk": self.id})
-
     def get_delete_url(self):
         return reverse("archiv:autor_delete", kwargs={"pk": self.id})
 
@@ -106,20 +103,20 @@ class Autor(models.Model):
         return reverse("archiv:autor_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:autor_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:autor_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:autor_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:autor_detail", kwargs={"pk": prev.id})
         return False
 
 
 class Bibliothek(models.Model):
-    ### Beschreibt eine Bibliothek ###
+    """ Beschreibt eine Bibliothek """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     lib_code = models.CharField(
         max_length=250,
@@ -223,9 +220,6 @@ class Bibliothek(models.Model):
     def get_absolute_url(self):
         return reverse("archiv:bibliothek_detail", kwargs={"pk": self.id})
 
-    def get_absolute_url(self):
-        return reverse("archiv:bibliothek_detail", kwargs={"pk": self.id})
-
     def get_delete_url(self):
         return reverse("archiv:bibliothek_delete", kwargs={"pk": self.id})
 
@@ -233,20 +227,20 @@ class Bibliothek(models.Model):
         return reverse("archiv:bibliothek_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:bibliothek_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:bibliothek_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:bibliothek_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:bibliothek_detail", kwargs={"pk": prev.id})
         return False
 
 
 class Initium(models.Model):
-    ### Beschreibt Initia ###
+    """ Beschreibt Initia """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -415,20 +409,20 @@ class Initium(models.Model):
         return reverse("archiv:initium_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:initium_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:initium_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:initium_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:initium_detail", kwargs={"pk": prev.id})
         return False
 
 
 class Literatur(models.Model):
-    ### Literatur ###
+    """ Literatur """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -552,20 +546,20 @@ class Literatur(models.Model):
         return reverse("archiv:literatur_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:literatur_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:literatur_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:literatur_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:literatur_detail", kwargs={"pk": prev.id})
         return False
 
 
 class Manuscript(models.Model):
-    ### Beschreibt ein Manuscript ###
+    """ Beschreibt ein Manuscript """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -774,20 +768,20 @@ class Manuscript(models.Model):
         return reverse("archiv:manuscript_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:manuscript_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:manuscript_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:manuscript_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:manuscript_detail", kwargs={"pk": prev.id})
         return False
 
 
 class MsDesc(models.Model):
-    ### Handschriftenbeschreibung ###
+    """ Handschriftenbeschreibung """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -908,20 +902,20 @@ class MsDesc(models.Model):
         return reverse("archiv:msdesc_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:msdesc_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:msdesc_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:msdesc_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:msdesc_detail", kwargs={"pk": prev.id})
         return False
 
 
 class MsPart(models.Model):
-    ### Beschreibt einen Teil einer Handschrift ###
+    """ Beschreibt einen Teil einer Handschrift """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -1042,20 +1036,20 @@ class MsPart(models.Model):
         return reverse("archiv:mspart_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:mspart_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:mspart_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:mspart_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:mspart_detail", kwargs={"pk": prev.id})
         return False
 
 
 class Place(models.Model):
-    ### Beschreibt einen Ort ###
+    """ Beschreibt einen Ort """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     name = models.CharField(
         max_length=250,
@@ -1114,20 +1108,20 @@ class Place(models.Model):
         return reverse("archiv:place_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:place_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:place_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:place_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:place_detail", kwargs={"pk": prev.id})
         return False
 
 
 class Verfasser(models.Model):
-    ### Beschreibt Verfasser*in einer Beschreibung ###
+    """ Beschreibt Verfasser*in einer Beschreibung """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     name = models.CharField(
         max_length=250,
@@ -1186,20 +1180,20 @@ class Verfasser(models.Model):
         return reverse("archiv:verfasser_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:verfasser_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:verfasser_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:verfasser_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:verfasser_detail", kwargs={"pk": prev.id})
         return False
 
 
 class WebLit(models.Model):
-    ### Link zu Literatur ###
+    """ Link zu Literatur """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -1290,20 +1284,20 @@ class WebLit(models.Model):
         return reverse("archiv:weblit_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:weblit_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:weblit_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:weblit_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:weblit_detail", kwargs={"pk": prev.id})
         return False
 
 
 class WerkInstanz(models.Model):
-    ### Beschreibt ein konkrete Werk ###
+    """ Beschreibt ein konkrete Werk """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -1456,20 +1450,20 @@ class WerkInstanz(models.Model):
         return reverse("archiv:werkinstanz_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:werkinstanz_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:werkinstanz_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:werkinstanz_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:werkinstanz_detail", kwargs={"pk": prev.id})
         return False
 
 
 class Zitat(models.Model):
-    ### Zitat ###
+    """ Zitat """
     legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
     legacy_pk = models.IntegerField(
         blank=True,
@@ -1572,13 +1566,13 @@ class Zitat(models.Model):
         return reverse("archiv:zitat_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = next_in_order(self)
         if next:
-            return reverse("archiv:zitat_detail", kwargs={"pk": next.first().id})
+            return reverse("archiv:zitat_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by("-id")
+        prev = prev_in_order(self)
         if prev:
-            return reverse("archiv:zitat_detail", kwargs={"pk": prev.first().id})
+            return reverse("archiv:zitat_detail", kwargs={"pk": prev.id})
         return False
