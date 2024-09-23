@@ -37,10 +37,18 @@
                             Browse
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% nav_menu app='archiv' as links %}
-                            {% for x in links %}
-                            <li><a class="dropdown-item" href="{{ x.link }}">{{ x.name }}</a></li>
-                            {% endfor %}
+                            <li><a class="dropdown-item" href="{% url 'archiv:autor_browse' %}">Autor</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:bibliothek_browse' %}">Bibliothek</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:initium_browse' %}">Initium</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:initium_browse' %}">Literatur</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:manuscript_browse' %}">Manuscript</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:msdesc_browse' %}">MsDesc</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:mspart_browse' %}">Mspart</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:place_browse' %}">Place</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:verfasser_browse' %}">Verfasser</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:weblit_browse' %}">Web Resourcen</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:werkinstanz_browse' %}">Werke</a></li>
+                            <li><a class="dropdown-item" href="{% url 'archiv:zitat_browse' %}">Zitat</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
