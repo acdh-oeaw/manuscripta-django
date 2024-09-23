@@ -404,9 +404,6 @@ class Initium(models.Model):
     def get_absolute_url(self):
         return reverse("archiv:initium_detail", kwargs={"pk": self.id})
 
-    def get_absolute_url(self):
-        return reverse("archiv:initium_detail", kwargs={"pk": self.id})
-
     def get_delete_url(self):
         return reverse("archiv:initium_delete", kwargs={"pk": self.id})
 
@@ -538,9 +535,6 @@ class Literatur(models.Model):
     @classmethod
     def get_createview_url(self):
         return reverse("archiv:literatur_create")
-
-    def get_absolute_url(self):
-        return reverse("archiv:literatur_detail", kwargs={"pk": self.id})
 
     def get_absolute_url(self):
         return reverse("archiv:literatur_detail", kwargs={"pk": self.id})
@@ -897,9 +891,6 @@ class MsDesc(models.Model):
     def get_absolute_url(self):
         return reverse("archiv:msdesc_detail", kwargs={"pk": self.id})
 
-    def get_absolute_url(self):
-        return reverse("archiv:msdesc_detail", kwargs={"pk": self.id})
-
     def get_delete_url(self):
         return reverse("archiv:msdesc_delete", kwargs={"pk": self.id})
 
@@ -1032,9 +1023,6 @@ class MsPart(models.Model):
     def get_absolute_url(self):
         return reverse("archiv:mspart_detail", kwargs={"pk": self.id})
 
-    def get_absolute_url(self):
-        return reverse("archiv:mspart_detail", kwargs={"pk": self.id})
-
     def get_delete_url(self):
         return reverse("archiv:mspart_delete", kwargs={"pk": self.id})
 
@@ -1105,9 +1093,6 @@ class Place(models.Model):
     def get_absolute_url(self):
         return reverse("archiv:place_detail", kwargs={"pk": self.id})
 
-    def get_absolute_url(self):
-        return reverse("archiv:place_detail", kwargs={"pk": self.id})
-
     def get_delete_url(self):
         return reverse("archiv:place_delete", kwargs={"pk": self.id})
 
@@ -1174,9 +1159,6 @@ class Verfasser(models.Model):
     @classmethod
     def get_createview_url(self):
         return reverse("archiv:verfasser_create")
-
-    def get_absolute_url(self):
-        return reverse("archiv:verfasser_detail", kwargs={"pk": self.id})
 
     def get_absolute_url(self):
         return reverse("archiv:verfasser_detail", kwargs={"pk": self.id})
@@ -1279,9 +1261,6 @@ class WebLit(models.Model):
     @classmethod
     def get_createview_url(self):
         return reverse("archiv:weblit_create")
-
-    def get_absolute_url(self):
-        return reverse("archiv:weblit_detail", kwargs={"pk": self.id})
 
     def get_absolute_url(self):
         return reverse("archiv:weblit_detail", kwargs={"pk": self.id})
@@ -1450,9 +1429,6 @@ class WerkInstanz(models.Model):
     def get_absolute_url(self):
         return reverse("archiv:werkinstanz_detail", kwargs={"pk": self.id})
 
-    def get_absolute_url(self):
-        return reverse("archiv:werkinstanz_detail", kwargs={"pk": self.id})
-
     def get_delete_url(self):
         return reverse("archiv:werkinstanz_delete", kwargs={"pk": self.id})
 
@@ -1563,9 +1539,6 @@ class Zitat(models.Model):
     @classmethod
     def get_createview_url(self):
         return reverse("archiv:zitat_create")
-
-    def get_absolute_url(self):
-        return reverse("archiv:zitat_detail", kwargs={"pk": self.id})
 
     def get_absolute_url(self):
         return reverse("archiv:zitat_detail", kwargs={"pk": self.id})
