@@ -558,6 +558,9 @@ class Literatur(models.Model):
         return False
 
 
+from django.db import models
+
+
 class Manuscript(models.Model):
     """Beschreibt ein Manuscript"""
 
@@ -615,6 +618,40 @@ class Manuscript(models.Model):
         data_lookup="shelfmark",
         arche_prop="hasNonLinkedIdentifier",
         arche_prop_str_template="Signatur: <value>",
+    )
+    adest = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="adest",
+        help_text="adest",
+    ).set_extra(
+        is_public=True,
+        data_lookup="adest",
+        arche_prop="hasNonLinkedIdentifier",
+        arche_prop_str_template="adest: <value>",
+    )
+    ms_group = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="ms_group",
+        help_text="ms_group",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ms_group",
+        arche_prop="hasNonLinkedIdentifier",
+        arche_prop_str_template="ms_group: <value>",
+    )
+
+    olim_signatur = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Olim",
+        help_text="Olim",
+    ).set_extra(
+        is_public=True,
+        data_lookup="olim_signatur",
+        arche_prop="hasNonLinkedIdentifier",
+        arche_prop_str_template="Olim: <value>",
     )
     heading = models.TextField(
         blank=True,
@@ -685,7 +722,7 @@ class Manuscript(models.Model):
         max_length=250,
         blank=True,
         verbose_name="Fragm",
-        help_text="Fragm",
+        help_text="Fragmente",
     ).set_extra(
         is_public=True,
         data_lookup="fragm",
@@ -719,6 +756,53 @@ class Manuscript(models.Model):
     ).set_extra(
         is_public=True,
         data_lookup="geschichte",
+    )
+    origin = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="origin",
+        help_text="origin",
+    ).set_extra(
+        is_public=True,
+        data_lookup="origin",
+    )
+    date = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="date",
+        help_text="date",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date",
+    )
+    start_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Datierung (nicht vor)",
+        help_text="ISO-Date nicht vor (JJJJ-MM-TT)"
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_begin",
+        arche_prop="hasCreatedOriginalStartDate",
+    )
+    end_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Datierung (nicht nach)",
+        help_text="ISO-Date nicht nach (JJJJ-MM-TT)"
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_begin",
+        arche_prop="hasCreatedOriginalEndDate",
+    )
+    folio_range = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="range",
+        help_text="range",
+    ).set_extra(
+        is_public=True,
+        data_lookup="range",
     )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
