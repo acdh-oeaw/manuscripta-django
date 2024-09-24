@@ -13,16 +13,16 @@
 {% block custom %}
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#new-view-tab" type="button"
-      role="tab" aria-controls="new-view-tab" aria-selected="true">Neue Ansicht</button>
+    <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#new-view-tab" type="button"
+      role="tab" aria-controls="new-view-tab" aria-selected="true">dev</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#classic-view-tab" type="button"
+    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#classic-view-tab" type="button"
       role="tab" aria-controls="classic-view-tab" aria-selected="false">Klassische Ansicht</button>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="new-view-tab" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+  <div class="tab-pane fade" id="new-view-tab" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
     <div class="row">
       <div class="col-md-6">
         <div class="card">
@@ -289,7 +289,7 @@
       </div>
     </div>
   </div>
-  <div class="tab-pane fade" id="classic-view-tab" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+  <div class="tab-pane fade show active" id="classic-view-tab" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
     <div class="p-2">
       Innsbruck, Universitäts- und Landesbibliothek Tirol (ULBT) [Handschriftenliste | Kataloge | Infos | Kontakt]
     </div>
@@ -380,6 +380,10 @@
       <li>
         <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a> |
         {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}, {% endif %}{{ x.werk_titel }}</strong>{%elif x.werk_titel_alt %} {{x.werk_titel_alt|safe }} {% else %} leer {% endif %}
+        {% for y in x.rvn_initium_werk_werkinstanz.all %}
+        <br />
+        <a href="{{ y.get_absolute_url }}">{{ y.fol }}</a> | {{ y.titel_vorspann }} {{ y.initium}} {{ y.titel }}
+        {% endfor %}
       </li>
       {% endfor %}
     </ul>
