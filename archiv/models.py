@@ -58,6 +58,36 @@ class Autor(models.Model):
         is_public=True,
         data_lookup="biogr_daten",
     )
+    jahrhundert = models.CharField(
+        blank=True,
+        null=True,
+        verbose_name="Jahrhundert",
+        help_text="Jahrhundert (in standardisierter Schreibweise)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="zeit_SM",
+    )
+    orden = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_autor_orden_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Orden",
+        help_text="Mitglied eines Ordens",
+    ).set_extra(
+        is_public=True,
+        data_lookup="orden",
+    )
+    bibliography = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Bibliographie",
+        help_text="Bibliographie",
+    ).set_extra(
+        is_public=True,
+        data_lookup="bibliography",
+    )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
     ).set_extra(is_public=True)
@@ -371,9 +401,7 @@ class Initium(models.Model):
 
     class Meta:
 
-        ordering = [
-            "manuscript", "fol_sort"
-        ]
+        ordering = ["manuscript", "fol_sort"]
         verbose_name = "Initium"
 
     def __str__(self):
@@ -556,9 +584,6 @@ class Literatur(models.Model):
         if prev:
             return reverse("archiv:literatur_detail", kwargs={"pk": prev.id})
         return False
-
-
-from django.db import models
 
 
 class Manuscript(models.Model):
@@ -779,7 +804,7 @@ class Manuscript(models.Model):
         blank=True,
         null=True,
         verbose_name="Datierung (nicht vor)",
-        help_text="ISO-Date nicht vor (JJJJ-MM-TT)"
+        help_text="ISO-Date nicht vor (JJJJ-MM-TT)",
     ).set_extra(
         is_public=True,
         data_lookup="date_begin",
@@ -789,10 +814,10 @@ class Manuscript(models.Model):
         blank=True,
         null=True,
         verbose_name="Datierung (nicht nach)",
-        help_text="ISO-Date nicht nach (JJJJ-MM-TT)"
+        help_text="ISO-Date nicht nach (JJJJ-MM-TT)",
     ).set_extra(
         is_public=True,
-        data_lookup="date_begin",
+        data_lookup="date_end",
         arche_prop="hasCreatedOriginalEndDate",
     )
     folio_range = models.CharField(

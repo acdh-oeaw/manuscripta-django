@@ -1,7 +1,7 @@
 import datetime
 from dateutil.parser import parse
 from pandas import pandas as pd
-from vocabs.models import *
+from vocabs.models import SkosCollection
 
 
 def pop_char_field(temp_item, row, cur_attr, max_length=249, fd=None):
@@ -48,7 +48,7 @@ def pop_int_field(temp_item, row, cur_attr, fd=None):
         lookup_val = fd.get(cur_attr, cur_attr)
         my_val = int(row[lookup_val])
         setattr(temp_item, cur_attr, my_val)
-    except ValueError:
+    except (ValueError, TypeError):
         pass
     return temp_item
 
@@ -67,7 +67,7 @@ def pop_fk_field(current_class, temp_item, row, cur_attr, fd=None, source_name=F
     rel_model_name = fk.related_model._meta.model_name
     try:
         my_val = float(row[lookup_val])
-    except Exception as e:
+    except:
         my_val = row[lookup_val]
     if rel_model_name == "skosconcept":
         legacy_id = f"{cur_attr}__{my_val}".strip().lower()
@@ -135,12 +135,11 @@ def pop_date_field(temp_item, row, cur_attr, fd=None):
     if isinstance(row[lookup_val], int):
         value = parse(f"{row[lookup_val]}-01-01")
     elif isinstance(row[lookup_val], datetime.date):
-        value = row[cur_attr]
+        value = row[lookup_val]
     elif isinstance(row[lookup_val], str):
         try:
             value = parse(row[lookup_val])
-        except Exception as e:
-            # print(f"{row[lookup_val]} for field: {cur_attr} could not be parsed, due to Error: {e}")
+        except:
             value = None
     elif pd.isnull(row[lookup_val]):
         value = None
@@ -164,7 +163,7 @@ def pop_date_range_field(temp_item, row, cur_attr, sep="|", fd=None):
         if len(row[lookup_val].split(sep)) == 2:
             start_date, end_date = row[lookup_val].split("/")
             try:
-                valid_start = parse(start_date)
+                parse(start_date)
                 valid_end = parse(end_date)
             except Exception as e:
                 print(f"could not parse {start_date} or {end_date} due to: {e}")

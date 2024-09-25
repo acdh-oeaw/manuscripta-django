@@ -3,9 +3,60 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
-from .filters import *
-from .forms import *
-from .tables import *
+from .filters import (
+    AutorListFilter,
+    BibliothekListFilter,
+    InitiumListFilter,
+    LiteraturListFilter,
+    ManuscriptListFilter,
+    MsDescListFilter,
+    MsPartListFilter,
+    PlaceListFilter,
+    VerfasserListFilter,
+    WebLitListFilter,
+    WerkInstanzListFilter,
+    ZitatListFilter,
+)
+from .forms import (
+    AutorFilterFormHelper,
+    AutorForm,
+    BibliothekFilterFormHelper,
+    BibliothekForm,
+    InitiumFilterFormHelper,
+    InitiumForm,
+    LiteraturFilterFormHelper,
+    LiteraturForm,
+    ManuscriptFilterFormHelper,
+    ManuscriptForm,
+    MsDescFilterFormHelper,
+    MsDescForm,
+    MsPartFilterFormHelper,
+    MsPartForm,
+    PlaceFilterFormHelper,
+    PlaceForm,
+    VerfasserFilterFormHelper,
+    VerfasserForm,
+    WebLitFilterFormHelper,
+    WebLitForm,
+    WerkInstanzFilterFormHelper,
+    WerkInstanzForm,
+    ZitatFilterFormHelper,
+    ZitatForm,
+)
+from .tables import (
+    AutorTable,
+    BibliothekTable,
+    InitiumTable,
+    LiteraturTable,
+    ManuscriptTable,
+    MsDescTable,
+    MsPartTable,
+    PlaceTable,
+    VerfasserTable,
+    WebLitTable,
+    WerkInstanzTable,
+    ZitatTable,
+)
 from .models import (
     Autor,
     Bibliothek,
@@ -37,6 +88,9 @@ class AutorListView(GenericListView):
     init_columns = [
         "id",
         "name",
+        "biogr_daten",
+        "jahrhundert",
+        "orden",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"

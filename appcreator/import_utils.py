@@ -2,6 +2,7 @@ import glob
 import json
 
 from sqlalchemy import create_engine
+from tqdm import tqdm
 
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -10,8 +11,16 @@ from django.conf import settings
 from django.core.exceptions import FieldDoesNotExist
 
 from pandas import pandas as pd
-from .populate_fields import *
-
+from .populate_fields import (
+    pop_char_field,
+    pop_date_field,
+    pop_date_range_field,
+    pop_fk_field,
+    pop_int_field,
+    pop_m2m_field,
+    pop_text_field
+)
+from vocabs.models import SkosConceptScheme, SkosCollection
 
 dbc = settings.LEGACY_DB_CONNECTION
 db_connection_str = (
@@ -124,6 +133,7 @@ def run_import(
         field_mapping_dict = field_mapping(current_class)
         print(field_mapping_dict)
         field_mapping_inverse_dict = field_mapping_inverse(current_class)
+        print(field_mapping_inverse_dict)
         query = f"SELECT * FROM {source_name}"
         if filter_query:
             query = f"{query} {filter_query}"
@@ -142,7 +152,7 @@ def run_import(
             legacy_id_source_field = field_mapping_inverse_dict[legacy_id_field]
             if limit:
                 df_data = df_data.head(limit)
-            for i, row in df_data.iterrows():
+            for i, row in tqdm(df_data.iterrows(), total=len(df_data)):
                 try:
                     temp_item, _ = current_class.objects.get_or_create(
                         legacy_id=f"{float(row[legacy_id_source_field])}".lower().strip()
@@ -284,7 +294,7 @@ def import_m2m_tables(app_name, m2m_df, db_connection):
                 legacy_id_source = f"{float(ds_row[prop_1])}"
                 try:
                     curr_source = curr_class.objects.get(legacy_id=legacy_id_source)
-                except Exception as e:
+                except:
                     curr_source = None
                 if curr_source is not None:
                     legacy_id_target = f"{float(ds_row[prop_2])}"
@@ -337,7 +347,7 @@ def import_and_create_m2m(app_name, m2m_df, db_connection):
             else:
                 source_natural_pk = None
             print(
-                f"cur_model_attr: {cur_model_attr}; table: {table}; prop 1: {prop_1}, source_natural_pk: {source_natural_pk}"
+                f"cur_model_attr: {cur_model_attr}; table: {table}; prop 1: {prop_1}, source_natural_pk: {source_natural_pk}"  # noqa:
             )
             if "#" in source:
                 query = f"SELECT * FROM {table}"
@@ -346,7 +356,7 @@ def import_and_create_m2m(app_name, m2m_df, db_connection):
                     legacy_id_source = f"{float(ds_row[prop_1])}"
                     try:
                         curr_source = curr_class.objects.get(legacy_id=legacy_id_source)
-                    except Exception as e:
+                    except:
                         curr_source = None
                     if curr_source is not None:
                         if source_natural_pk is not None:
@@ -381,7 +391,7 @@ def import_and_create_m2m(app_name, m2m_df, db_connection):
                                 )
                                 try:
                                     curr_target.save()
-                                except Exception as e:
+                                except:
                                     setattr(
                                         curr_target,
                                         source_natural_pk,
