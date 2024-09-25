@@ -19,7 +19,8 @@ from .models import (
     WebLit,
     WerkInstanz,
     Zitat,
-    Einband
+    Einband,
+    Schrift,
 )
 
 
@@ -583,6 +584,45 @@ class EinbandForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EinbandForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = "form-horizontal"
+        self.helper.label_class = "col-md-3"
+        self.helper.field_class = "col-md-9"
+        self.helper.add_input(
+            Submit("submit", "save"),
+        )
+
+
+class SchriftFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(SchriftFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = "genericFilterForm"
+        self.form_method = "GET"
+        self.form_tag = False
+        self.layout = Layout(
+            BS5Accordion(
+                AccordionGroup(
+                    "Filter",
+                    "legacy_pk",
+                    "manuscript",
+                    "verfasser",
+                    css_id="more",
+                ),
+                AccordionGroup("weitere Filter", "legacy_id", css_id="admin_search"),
+            ),
+        )
+
+
+class SchriftForm(forms.ModelForm):
+
+    class Meta:
+        model = Schrift
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(SchriftForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = "form-horizontal"

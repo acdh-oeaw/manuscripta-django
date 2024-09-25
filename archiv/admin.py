@@ -14,6 +14,7 @@ from .models import (
     WerkInstanz,
     Zitat,
     Einband,
+    Schrift,
 )
 
 admin.site.register(Autor)
@@ -29,3 +30,4 @@ admin.site.register(WebLit)
 admin.site.register(WerkInstanz)
 admin.site.register(Zitat)
 admin.site.register(Einband)
+admin.site.register(Schrift)

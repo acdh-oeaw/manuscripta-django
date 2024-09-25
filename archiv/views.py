@@ -17,6 +17,7 @@ from .filters import (
     WerkInstanzListFilter,
     ZitatListFilter,
     EinbandListFilter,
+    SchriftListFilter,
 )
 from .forms import (
     AutorFilterFormHelper,
@@ -45,6 +46,8 @@ from .forms import (
     ZitatForm,
     EinbandFilterFormHelper,
     EinbandForm,
+    SchriftFilterFormHelper,
+    SchriftForm,
 )
 from .tables import (
     AutorTable,
@@ -60,6 +63,7 @@ from .tables import (
     WerkInstanzTable,
     ZitatTable,
     EinbandTable,
+    SchriftTable,
 )
 from .models import (
     Autor,
@@ -74,7 +78,8 @@ from .models import (
     WebLit,
     WerkInstanz,
     Zitat,
-    Einband
+    Einband,
+    Schrift,
 )
 from browsing.browsing_utils import (
     GenericListView,
@@ -143,12 +148,7 @@ class BibliothekListView(GenericListView):
     filter_class = BibliothekListFilter
     formhelper_class = BibliothekFilterFormHelper
     table_class = BibliothekTable
-    init_columns = [
-        "id",
-        "lib_name",
-        "lib_code",
-        "lib_type"
-    ]
+    init_columns = ["id", "lib_name", "lib_code", "lib_type"]
     enable_merge = True
     template_name = "archiv/generic_list.html"
 
@@ -738,3 +738,53 @@ class EinbandDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(EinbandDelete, self).dispatch(*args, **kwargs)
+
+
+class SchriftListView(GenericListView):
+
+    model = Schrift
+    filter_class = SchriftListFilter
+    formhelper_class = SchriftFilterFormHelper
+    table_class = SchriftTable
+    init_columns = [
+        "id",
+        "legacy_pk",
+    ]
+    enable_merge = True
+    template_name = "archiv/generic_list.html"
+
+
+class SchriftDetailView(BaseDetailView):
+
+    model = Schrift
+    template_name = "archiv/generic_detail.html"
+
+
+class SchriftCreate(BaseCreateView):
+
+    model = Schrift
+    form_class = SchriftForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SchriftCreate, self).dispatch(*args, **kwargs)
+
+
+class SchriftUpdate(BaseUpdateView):
+
+    model = Schrift
+    form_class = SchriftForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SchriftUpdate, self).dispatch(*args, **kwargs)
+
+
+class SchriftDelete(DeleteView):
+    model = Schrift
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:schrift_browse")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SchriftDelete, self).dispatch(*args, **kwargs)

@@ -1909,3 +1909,230 @@ class Einband(models.Model):
         if prev:
             return reverse("archiv:einband_detail", kwargs={"pk": prev.id})
         return False
+
+
+class Schrift(models.Model):
+    legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
+    legacy_pk = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDschrift",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    mspart = models.ForeignKey(
+        "MsPart",
+        related_name="rvn_schrift_mspart_mspart",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="MS Part",
+        help_text="Teil einer Handschrift",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDparts",
+    )
+    manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name="rvn_schrift_manuscript_manuscript",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Manuscript",
+        help_text="Manuscript",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ms_code",
+    )
+    schriftart = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_schrift_schriftart_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Schriftart",
+        help_text="Schriftart",
+    ).set_extra(
+        is_public=True,
+        data_lookup="schriftart",
+    )
+    schmuck = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_schrift_schmuck_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Schmuck",
+        help_text="Schmuck",
+    ).set_extra(
+        is_public=True,
+        data_lookup="schmuck",
+    )
+    schr_hohe = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Schrifthöhe",
+        help_text="Höhe der Schrift",
+    ).set_extra(
+        is_public=True,
+        data_lookup="schr_hohe",
+    )
+    schr_breite = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Schriftbreite",
+        help_text="Breite der Schrift",
+    ).set_extra(
+        is_public=True,
+        data_lookup="schr_breite",
+    )
+    spaltenzahl = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Spaltenzahl",
+        help_text="Spaltenzahl",
+    ).set_extra(
+        is_public=True,
+        data_lookup="spaltenzahl",
+    )
+    zeilenzahl = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Zeilenanzahl",
+        help_text="Zeilenanzahl",
+    ).set_extra(
+        is_public=True,
+        data_lookup="zeilenzahl",
+    )
+    range = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Positionierung",
+        help_text="Folio-Folio",
+    ).set_extra(
+        is_public=True,
+        data_lookup="range",
+    )
+    position = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Position",
+        help_text="Position",
+    ).set_extra(
+        is_public=True,
+        data_lookup="position",
+    )
+    marginalien = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Marginalien",
+        help_text="Marginalien",
+    ).set_extra(
+        is_public=True,
+        data_lookup="marginalien",
+    )
+    glossen = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Glossen",
+        help_text="Glossen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="glossen",
+    )
+    geheimschrift = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Geheimschrift",
+        help_text="Geheimschrift",
+    ).set_extra(
+        is_public=True,
+        data_lookup="geheimschrift",
+    )
+    notation = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Notation",
+        help_text="Notation",
+    ).set_extra(
+        is_public=True,
+        data_lookup="notation",
+    )
+    remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Anmerkungen",
+        help_text="Anmerkungen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="schr_remarks",
+        arche_prop="hasNotes",
+    )
+    verfasser = models.ForeignKey(
+        "Verfasser",
+        related_name="rvn_schrift_verfasser_verfasser",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Verfasser*In",
+        help_text="Verfasser*In",
+    ).set_extra(
+        is_public=True,
+        data_lookup="verfasser",
+    )
+
+    class Meta:
+
+        ordering = [
+            "legacy_pk",
+        ]
+        verbose_name = "Schrift"
+
+    def __str__(self):
+        if self.legacy_pk:
+            return "{}".format(self.legacy_pk)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse("archiv:schrift_browse")
+
+    @classmethod
+    def get_source_table(self):
+        return "mss_schrift"
+
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse("archiv:schrift_create")
+
+    def get_absolute_url(self):
+        return reverse("archiv:schrift_detail", kwargs={"pk": self.id})
+
+    def get_delete_url(self):
+        return reverse("archiv:schrift_delete", kwargs={"pk": self.id})
+
+    def get_edit_url(self):
+        return reverse("archiv:schrift_edit", kwargs={"pk": self.id})
+
+    def get_next(self):
+        next = next_in_order(self)
+        if next:
+            return reverse("archiv:schrift_detail", kwargs={"pk": next.id})
+        return False
+
+    def get_prev(self):
+        prev = prev_in_order(self)
+        if prev:
+            return reverse("archiv:schrift_detail", kwargs={"pk": prev.id})
+        return False

@@ -16,6 +16,7 @@ from .models import (
     WerkInstanz,
     Zitat,
     Einband,
+    Schrift,
 )
 
 
@@ -37,7 +38,10 @@ class BibliothekTable(tables.Table):
 
     class Meta:
         model = Bibliothek
-        sequence = ("id", "lib_name",)
+        sequence = (
+            "id",
+            "lib_name",
+        )
         attrs = {"class": "table table-responsive table-hover"}
 
 
@@ -158,5 +162,16 @@ class EinbandTable(tables.Table):
 
     class Meta:
         model = Einband
+        sequence = ("id",)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class SchriftTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
+
+    class Meta:
+        model = Schrift
         sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}

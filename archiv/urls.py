@@ -225,4 +225,17 @@ urlpatterns = [
         views.EinbandDelete.as_view(),
         name="einband_delete",
     ),
+    path("schrift/", views.SchriftListView.as_view(), name="schrift_browse"),
+    path(
+        "schrift/detail/<int:pk>",
+        views.SchriftDetailView.as_view(),
+        name="schrift_detail",
+    ),
+    path("schrift/create/", views.SchriftCreate.as_view(), name="schrift_create"),
+    path("schrift/edit/<int:pk>", views.SchriftUpdate.as_view(), name="schrift_edit"),
+    path(
+        "schrift/delete/<int:pk>",
+        views.SchriftDelete.as_view(),
+        name="schrift_delete",
+    ),
 ]

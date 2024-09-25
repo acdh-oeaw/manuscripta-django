@@ -19,6 +19,7 @@ from .models import (
     WerkInstanz,
     Zitat,
     Einband,
+    Schrift,
 )
 
 
@@ -38,21 +39,27 @@ class AutorListFilter(django_filters.FilterSet):
         help_text=Autor._meta.get_field("name_gnd").help_text,
         label=Autor._meta.get_field("name_gnd").verbose_name,
     )
-    gnd_id = django_filters.CharFilter(
-        lookup_expr="icontains",
-        help_text=Autor._meta.get_field("gnd_id").help_text,
-        label=Autor._meta.get_field("gnd_id").verbose_name,
-    ),
-    bibliography = django_filters.CharFilter(
-        lookup_expr="icontains",
-        help_text=Autor._meta.get_field("bibliography").help_text,
-        label=Autor._meta.get_field("bibliography").verbose_name,
-    ),
-    jahrhundert = django_filters.CharFilter(
-        lookup_expr="icontains",
-        help_text=Autor._meta.get_field("jahrhundert").help_text,
-        label=Autor._meta.get_field("jahrhundert").verbose_name,
-    ),
+    gnd_id = (
+        django_filters.CharFilter(
+            lookup_expr="icontains",
+            help_text=Autor._meta.get_field("gnd_id").help_text,
+            label=Autor._meta.get_field("gnd_id").verbose_name,
+        ),
+    )
+    bibliography = (
+        django_filters.CharFilter(
+            lookup_expr="icontains",
+            help_text=Autor._meta.get_field("bibliography").help_text,
+            label=Autor._meta.get_field("bibliography").verbose_name,
+        ),
+    )
+    jahrhundert = (
+        django_filters.CharFilter(
+            lookup_expr="icontains",
+            help_text=Autor._meta.get_field("jahrhundert").help_text,
+            label=Autor._meta.get_field("jahrhundert").verbose_name,
+        ),
+    )
     orden = django_filters.ModelMultipleChoiceFilter(
         queryset=SkosConcept.objects.filter(collection__name="orden"),
         help_text=Autor._meta.get_field("orden").help_text,
@@ -734,6 +741,40 @@ class EinbandListFilter(django_filters.FilterSet):
 
     class Meta:
         model = Einband
+        fields = [
+            "id",
+            "legacy_id",
+            "legacy_pk",
+            "manuscript",
+            "verfasser",
+        ]
+
+
+class SchriftListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr="icontains",
+        help_text=Schrift._meta.get_field("legacy_id").help_text,
+        label=Schrift._meta.get_field("legacy_id").verbose_name,
+    )
+    manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=Manuscript.objects.all(),
+        help_text=Schrift._meta.get_field("manuscript").help_text,
+        label=Schrift._meta.get_field("manuscript").verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        ),
+    )
+    verfasser = django_filters.ModelMultipleChoiceFilter(
+        queryset=Verfasser.objects.all(),
+        help_text=Schrift._meta.get_field("verfasser").help_text,
+        label=Schrift._meta.get_field("verfasser").verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:verfasser-autocomplete",
+        ),
+    )
+
+    class Meta:
+        model = Schrift
         fields = [
             "id",
             "legacy_id",
