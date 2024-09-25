@@ -877,6 +877,17 @@ class Manuscript(models.Model):
         is_public=True,
         data_lookup="range",
     )
+    # manuscripta_id = models.IntegerField(
+    #     blank=True,
+    #     null=True,
+    #     verbose_name="Manuscript ID",
+    #     help_text="Manuscript ID",
+    # ).set_extra(
+    #     is_public=False,
+    #     data_lookup="ID",
+    #     arche_prop="hasNonLinkedIdentifier",
+    #     arche_prop_str_template="Manuscript ID: <value>",
+    # )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
     ).set_extra(is_public=True)

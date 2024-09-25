@@ -1,7 +1,7 @@
-{% extends "browsing/generic_detail.html" %}
+{% extends "archiv/generic_detail.html" %}
 {% load static %}
 {% load webpage_extras %}
-{% block title %}{{ object.shelfmark }}{% endblock %}
+{% block title %}{{ object.shelfmark }}, {{ object.lib_code }}{% endblock %}
 {% block scriptHeader %}
 
 <link rel="stylesheet" type="text/css"
@@ -11,385 +11,389 @@
 {% endblock scriptHeader %}
 
 {% block custom %}
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#new-view-tab" type="button"
-      role="tab" aria-controls="new-view-tab" aria-selected="true">dev</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#classic-view-tab" type="button"
-      role="tab" aria-controls="classic-view-tab" aria-selected="false">Klassische Ansicht</button>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade" id="new-view-tab" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            <h2 class="card-title">{{ object.lib_code.lib_name}}, {{ object.shelfmark }}</h2>
-          </div>
-          <div class="card-body">
-            <table class="table table-bordered table-hover">
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "lib_code" %}
-                </th>
-                <td>
-                  <a href="{{ object.lib_code.get_absolute_url }}">
-                    {{ object.lib_code }}
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "ms_code" %}
-                </th>
-                <td>
-                  {{ object.ms_code }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  orig data
-                </th>
-                <td>
-                  {{ object.orig_data_csv }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "shelfmark" %}
-                </th>
-                <td>
-                  {{ object.shelfmark }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "heading" %}
-                </th>
-                <td>
-                  {{ object.heading }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "material" %}
-                </th>
-                <td>
-                  <a href="{{ object.material.get_absolute_url}}">{{ object.material.legacy_id }}</a>
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "num_leaves" %}
-                </th>
-                <td>
-                  {{ object.num_leaves }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "dimensions" %}
-                </th>
-                <td>
-                  {{ object.dimensions }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "origin_date" %}
-                </th>
-                <td>
-                  {{ object.origin_date }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "prov" %}
-                </th>
-                <td>
-                  {{ object.prov }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "fragm" %}
-                </th>
-                <td>
-                  {{ object.fragm }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "hscensus" %}
-                </th>
-                <td>
-                  {{ object.hscensus }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "remarks" %}
-                </th>
-                <td>
-                  {{ object.remarks }}
-                </td>
-              </tr>
-              <tr>
-                <th>
-                  {% get_verbose_name manuscript "geschichte" %}
-                </th>
-                <td>
-                  {{ object.geschichte }}
-                </td>
-              </tr>
-
-            </table>
-          </div>
-          <div class="card-header">
-            <h4 class="card-title">MSDesc</h4>
-          </div>
-          <div class="card-body">
-            {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
-            <table class="table table-bordered table-hover">
-              <tr>
-                <th>phys_desc</th>
-                <td>{{ x.phys_desc|safe}}</td>
-              </tr>
-              <tr>
-                <th>content</th>
-                <td>{{ x.content|safe }}</td>
-              </tr>
-              <tr>
-                <th>Verfasser*in</th>
-                <td>{{ x.verfasser}}, {{ x.created}}</td>
-              </tr>
-            </table>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Initien</h4>
-          </div>
-          <div class="card-body">
-
-            <div style="padding:0;">
-
-              <table class="table table-bordered table-hover" id="example">
-                <thead>
-                  <tr>
-                    <th>
-                      Folio
-                    </th>
-                    <th>
-                      Initium
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for x in object.rvn_initium_manuscript_manuscript.all %}
-                  <tr>
-                    <td><a href="{{ x.get_absolute_url }}">{{ x.fol }}</a></td>
-                    <td>
-                      {{ x.initium }}
-                      {% if x.werk %} <br />
-                      <small>Werk: {{ x.werk }}</small>
-                      {% endif %}
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+<div class="container">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#new-view-tab" type="button"
+        role="tab" aria-controls="new-view-tab" aria-selected="true">dev</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#classic-view-tab" type="button"
+        role="tab" aria-controls="classic-view-tab" aria-selected="false">Klassische Ansicht</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade" id="new-view-tab" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">{{ object.lib_code.lib_name}}, {{ object.shelfmark }}</h2>
             </div>
-
-          </div>
-
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h4 class="card-title">Texte</h4>
-          </div>
-          <div class="card-body">
-
-            <div style="padding:0;">
-
-              <table class="table table-bordered table-hover" id="texte">
-                <thead>
-                  <tr>
-                    <th>
-                      Folio
-                    </th>
-                    <th>
-                      Titel
-                    </th>
-                    <th>
-                      Autor
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
-                  <tr>
-                    <td>
-                      <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a>
-                    </td>
-                    <td>
-                      {{ x.werk_titel }}
-                      {% for y in x.rvn_initium_werk_werkinstanz.all %}
-                      <li>{{ y.initium }}</li>
-                      {% endfor %}
-                    </td>
-                    <td><a href="{{ x.autor.get_absolute_url }}">{{ x.autor }}</a></td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Literatur zur Handschrift</h3>
-        </div>
-        <div class="card-body">
-          <table class="table table-bordered table-hover" id="example1">
-            <thead>
-              <tr>
-                <th>
-                  ID
-                </th>
-                <th>
-                  Zitat
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for x in object.rvn_zitat_manuscript_manuscript.all %}
-              <tr>
-                <td>
-                  <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                </td>
-                <td>
-                  {{ x.literatur.vollzitat }} {{ x.kz_ms }}
-                  {% for y in x.literatur.rvn_weblit_literatur_literatur.all %} <a href="{{ y }}">online</a>{% endfor%}
-                </td>
-                {% endfor %}
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="tab-pane fade show active" id="classic-view-tab" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-    <div class="p-2">
-      Innsbruck, Universitäts- und Landesbibliothek Tirol (ULBT) [Handschriftenliste | Kataloge | Infos | Kontakt]
-    </div>
-    <div class="border p-2">
-      <h2>{{ object.lib_code }}, {{ object.shelfmark }}</h2>
-      <h3>{{ object.heading }}</h3>
-      {% if object.olim_signatur %} Olim: {{ object.olim_signatur }}{% endif %}
-      {{ object.material }}
-      {{ object.num_leaves }}
-      {{ object.dimensions }}
-      {{ object.origin_date }} <br />
-      Provenienz/Letztbesitzer: {{ object.prov }}
-    </div>
-    <div class="msParts">
-      Handschrift aus {{ object.rvn_mspart_part_of_manuscript_manuscript.count }} Teilen zusammengesetzt:
-      {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
-      {{ x.part }} ({{ x.range }}), {{ x.date_str }}
-      {% endfor %}
-    </div>
-    <ul>
-      <li><strong>ToDo</strong> OLIVER - Online manuscript description (HMML).</li>
-      <li><strong>ToDo</strong> Wasserzeichen: Metadaten zu Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Vorschau Bilder zu
-        Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Einzelbilder: fol. 47, 48, 114, 115, 124, 160, 162, 221, 224, 233, 236,
-        237.</li>
-    </ul>
-    <div class="msDesc">
-      {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
-        <dl>
-          <dt>Wissenschaftliche Beschreibung:</dt>
-          <dd>{{ x.bibliography|safe }}</dd>
-          <dt>Phys Desc</dt>
-          <dd>{{ x.phys_desc|safe }}</dd>
-        </dl>
-        {% endfor %}
-    </div>
-
-    <div class="accordion" id="mainAccordion">
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapsLiteratur" aria-expanded="true" aria-controls="collapsLiteratur">
-            Weitere Literatur zur Handschrift (Anzahl: {{ object.rvn_zitat_manuscript_manuscript.count }})
-          </button>
-        </h2>
-        <div id="collapsLiteratur" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
-          <div class="accordion-body">
-            <ul class="no-style">
-              {% for x in object.rvn_zitat_manuscript_manuscript.all %}
-              <li>{{ x.literatur.vollzitat|safe }}, {{ x.kz_sm }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsEinband"
-            aria-expanded="true" aria-controls="collapsEinband">
-            Einband
-          </button>
-        </h2>
-        <div id="collapsEinband" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
-          <div class="accordion-body">
-            <strong>ToDo</strong> process mss_einbaende
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapsGeschichte" aria-expanded="true" aria-controls="collapsGeschichte">
-            Geschichte
-          </button>
-        </h2>
-        <div id="collapsGeschichte" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
-          <div class="accordion-body">
-            {{ object.geschichte }}<br />
-            <strong>ToDo</strong> process mss_prov
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr />
-    <ul>
-      <li>ToDo: Fix sorting</li>
-      {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
-      <li>
-        <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a> |
-        {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}, {% endif %}{{ x.werk_titel }}</strong>{%elif x.werk_titel_alt %} {{x.werk_titel_alt|safe }} {% else %} leer {% endif %}
-        {% for y in x.rvn_initium_werk_werkinstanz.all %}
-        <br />
-        <a href="{{ y.get_absolute_url }}">{{ y.fol }}</a> | {{ y.titel_vorspann }} {{ y.initium}} {{ y.titel }}
-        {% endfor %}
-      </li>
-      {% endfor %}
-    </ul>
+            <div class="card-body">
+              <table class="table table-bordered table-hover">
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "lib_code" %}
+                  </th>
+                  <td>
+                    <a href="{{ object.lib_code.get_absolute_url }}">
+                      {{ object.lib_code }}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "ms_code" %}
+                  </th>
+                  <td>
+                    {{ object.ms_code }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    orig data
+                  </th>
+                  <td>
+                    {{ object.orig_data_csv }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "shelfmark" %}
+                  </th>
+                  <td>
+                    {{ object.shelfmark }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "heading" %}
+                  </th>
+                  <td>
+                    {{ object.heading }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "material" %}
+                  </th>
+                  <td>
+                    <a href="{{ object.material.get_absolute_url}}">{{ object.material.legacy_id }}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "num_leaves" %}
+                  </th>
+                  <td>
+                    {{ object.num_leaves }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "dimensions" %}
+                  </th>
+                  <td>
+                    {{ object.dimensions }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "origin_date" %}
+                  </th>
+                  <td>
+                    {{ object.origin_date }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "prov" %}
+                  </th>
+                  <td>
+                    {{ object.prov }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "fragm" %}
+                  </th>
+                  <td>
+                    {{ object.fragm }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "hscensus" %}
+                  </th>
+                  <td>
+                    {{ object.hscensus }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "remarks" %}
+                  </th>
+                  <td>
+                    {{ object.remarks }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    {% get_verbose_name manuscript "geschichte" %}
+                  </th>
+                  <td>
+                    {{ object.geschichte }}
+                  </td>
+                </tr>
   
-
-
+              </table>
+            </div>
+            <div class="card-header">
+              <h4 class="card-title">MSDesc</h4>
+            </div>
+            <div class="card-body">
+              {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
+              <table class="table table-bordered table-hover">
+                <tr>
+                  <th>phys_desc</th>
+                  <td>{{ x.phys_desc|safe}}</td>
+                </tr>
+                <tr>
+                  <th>content</th>
+                  <td>{{ x.content|safe }}</td>
+                </tr>
+                <tr>
+                  <th>Verfasser*in</th>
+                  <td>{{ x.verfasser}}, {{ x.created}}</td>
+                </tr>
+              </table>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Initien</h4>
+            </div>
+            <div class="card-body">
+  
+              <div style="padding:0;">
+  
+                <table class="table table-bordered table-hover" id="example">
+                  <thead>
+                    <tr>
+                      <th>
+                        Folio
+                      </th>
+                      <th>
+                        Initium
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in object.rvn_initium_manuscript_manuscript.all %}
+                    <tr>
+                      <td><a href="{{ x.get_absolute_url }}">{{ x.fol }}</a></td>
+                      <td>
+                        {{ x.initium }}
+                        {% if x.werk %} <br />
+                        <small>Werk: {{ x.werk }}</small>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+  
+            </div>
+  
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Texte</h4>
+            </div>
+            <div class="card-body">
+  
+              <div style="padding:0;">
+  
+                <table class="table table-bordered table-hover" id="texte">
+                  <thead>
+                    <tr>
+                      <th>
+                        Folio
+                      </th>
+                      <th>
+                        Titel
+                      </th>
+                      <th>
+                        Autor
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
+                    <tr>
+                      <td>
+                        <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a>
+                      </td>
+                      <td>
+                        {{ x.werk_titel }}
+                        {% for y in x.rvn_initium_werk_werkinstanz.all %}
+                        <li>{{ y.initium }}</li>
+                        {% endfor %}
+                      </td>
+                      <td><a href="{{ x.autor.get_absolute_url }}">{{ x.autor }}</a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+  
+            </div>
+  
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Literatur zur Handschrift</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-hover" id="example1">
+              <thead>
+                <tr>
+                  <th>
+                    ID
+                  </th>
+                  <th>
+                    Zitat
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for x in object.rvn_zitat_manuscript_manuscript.all %}
+                <tr>
+                  <td>
+                    <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                  </td>
+                  <td>
+                    {{ x.literatur.vollzitat }} {{ x.kz_ms }}
+                    {% for y in x.literatur.rvn_weblit_literatur_literatur.all %} <a href="{{ y }}">online</a>{% endfor%}
+                  </td>
+                  {% endfor %}
+              </tbody>
+            </table>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade show active" id="classic-view-tab" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <div class="p-2">
+        <a href="{{ object.lib_code.homepage }}">{{ object.lib_code }}</a> [Handschriftenliste | Kataloge]
+      </div>
+      <div class="border p-2">
+        <h2>{{ object.lib_code }}, {{ object.shelfmark }} <a href="https://manuscripta.at/hs_detail.php?ID={{ object.legacy_pk }}">link</a></h2>
+        <h3>{{ object.heading }}</h3>
+        {% if object.olim_signatur %} Olim: {{ object.olim_signatur }}{% endif %}
+        {{ object.material }}
+        {{ object.num_leaves }}
+        {{ object.dimensions }}
+        {{ object.origin_date }} <br />
+        Provenienz/Letztbesitzer: {{ object.prov }}
+      </div>
+      <div class="msParts">
+        Handschrift aus {{ object.rvn_mspart_part_of_manuscript_manuscript.count }} Teilen zusammengesetzt:
+        {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
+        {{ x.part }} ({{ x.range }}), {{ x.date_str }}
+        {% endfor %}
+      </div>
+      <ul>
+        <li><strong>ToDo</strong> OLIVER - Online manuscript description (HMML).</li>
+        <li><strong>ToDo</strong> Wasserzeichen: Metadaten zu Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Vorschau Bilder zu
+          Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Einzelbilder: fol. 47, 48, 114, 115, 124, 160, 162, 221, 224, 233, 236,
+          237.</li>
+      </ul>
+      <div class="msDesc">
+        {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
+          <dl>
+            <dt>Wissenschaftliche Beschreibung:</dt>
+            <dd>{{ x.bibliography|safe }}</dd>
+            <dt>Phys Desc</dt>
+            <dd>{{ x.phys_desc|safe }}</dd>
+            <dt>Content</dt>
+            <dd>{{ x.content|safe }}</dd>
+          </dl>
+          {% endfor %}
+      </div>
+  
+      <div class="accordion" id="mainAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapsLiteratur" aria-expanded="true" aria-controls="collapsLiteratur">
+              Weitere Literatur zur Handschrift (Anzahl: {{ object.rvn_zitat_manuscript_manuscript.count }})
+            </button>
+          </h2>
+          <div id="collapsLiteratur" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+            <div class="accordion-body">
+              <ul class="no-style">
+                {% for x in object.rvn_zitat_manuscript_manuscript.all %}
+                <li>{{ x.literatur.vollzitat|safe }}, {{ x.kz_sm }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsEinband"
+              aria-expanded="true" aria-controls="collapsEinband">
+              Einband
+            </button>
+          </h2>
+          <div id="collapsEinband" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+            <div class="accordion-body">
+              <strong>ToDo</strong> process mss_einbaende
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapsGeschichte" aria-expanded="true" aria-controls="collapsGeschichte">
+              Geschichte
+            </button>
+          </h2>
+          <div id="collapsGeschichte" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+            <div class="accordion-body">
+              {{ object.geschichte }}<br />
+              <strong>ToDo</strong> process mss_prov
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <hr />
+      <ul>
+        <li>ToDo: Fix sorting</li>
+        {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
+        <li>
+          <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a> |
+          {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}, {% endif %}{{ x.werk_titel }}</strong>{%elif x.werk_titel_alt %} {{x.werk_titel_alt|safe }} {% else %} leer {% endif %}
+          {% for y in x.rvn_initium_werk_werkinstanz.all %}
+          <br />
+          <a href="{{ y.get_absolute_url }}">{{ y.fol }}</a> | {{ y.titel_vorspann }} {{ y.initium}} {{ y.titel }}
+          {% endfor %}
+        </li>
+        {% endfor %}
+      </ul>
+  
+  
+  
+    </div>
   </div>
 </div>
 

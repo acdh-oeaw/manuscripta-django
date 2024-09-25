@@ -292,6 +292,7 @@ class ManuscriptListView(GenericListView):
     table_class = ManuscriptTable
     init_columns = [
         "id",
+        "shelfmark",
         "ms_code",
     ]
     enable_merge = True
