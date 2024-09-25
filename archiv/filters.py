@@ -20,6 +20,7 @@ from .models import (
     Zitat,
     Einband,
     Schrift,
+    MsImage,
 )
 
 
@@ -780,5 +781,29 @@ class SchriftListFilter(django_filters.FilterSet):
             "legacy_id",
             "legacy_pk",
             "manuscript",
-            "verfasser",
+        ]
+
+
+class MsImageListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr="icontains",
+        help_text=MsImage._meta.get_field("legacy_id").help_text,
+        label=MsImage._meta.get_field("legacy_id").verbose_name,
+    )
+    manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=Manuscript.objects.all(),
+        help_text=MsImage._meta.get_field("manuscript").help_text,
+        label=MsImage._meta.get_field("manuscript").verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        ),
+    )
+
+    class Meta:
+        model = MsImage
+        fields = [
+            "id",
+            "legacy_id",
+            "legacy_pk",
+            "manuscript",
         ]

@@ -17,6 +17,7 @@ from .models import (
     Zitat,
     Einband,
     Schrift,
+    MsImage,
 )
 
 
@@ -173,5 +174,16 @@ class SchriftTable(tables.Table):
 
     class Meta:
         model = Schrift
+        sequence = ("id",)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class MsImageTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
+
+    class Meta:
+        model = MsImage
         sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}

@@ -18,6 +18,7 @@ from .filters import (
     ZitatListFilter,
     EinbandListFilter,
     SchriftListFilter,
+    MsImageListFilter,
 )
 from .forms import (
     AutorFilterFormHelper,
@@ -48,6 +49,8 @@ from .forms import (
     EinbandForm,
     SchriftFilterFormHelper,
     SchriftForm,
+    MsImageFilterFormHelper,
+    MsImageForm,
 )
 from .tables import (
     AutorTable,
@@ -64,6 +67,7 @@ from .tables import (
     ZitatTable,
     EinbandTable,
     SchriftTable,
+    MsImageTable,
 )
 from .models import (
     Autor,
@@ -80,6 +84,7 @@ from .models import (
     Zitat,
     Einband,
     Schrift,
+    MsImage,
 )
 from browsing.browsing_utils import (
     GenericListView,
@@ -788,3 +793,53 @@ class SchriftDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(SchriftDelete, self).dispatch(*args, **kwargs)
+
+
+class MsImageListView(GenericListView):
+
+    model = MsImage
+    filter_class = MsImageListFilter
+    formhelper_class = MsImageFilterFormHelper
+    table_class = MsImageTable
+    init_columns = [
+        "id",
+        "legacy_pk",
+    ]
+    enable_merge = True
+    template_name = "archiv/generic_list.html"
+
+
+class MsImageDetailView(BaseDetailView):
+
+    model = MsImage
+    template_name = "archiv/generic_detail.html"
+
+
+class MsImageCreate(BaseCreateView):
+
+    model = MsImage
+    form_class = MsImageForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsImageCreate, self).dispatch(*args, **kwargs)
+
+
+class MsImageUpdate(BaseUpdateView):
+
+    model = MsImage
+    form_class = MsImageForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsImageUpdate, self).dispatch(*args, **kwargs)
+
+
+class MsImageDelete(DeleteView):
+    model = MsImage
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:msimage_browse")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsImageDelete, self).dispatch(*args, **kwargs)

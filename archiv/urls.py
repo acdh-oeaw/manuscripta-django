@@ -238,4 +238,17 @@ urlpatterns = [
         views.SchriftDelete.as_view(),
         name="schrift_delete",
     ),
+    path("msimage/", views.MsImageListView.as_view(), name="msimage_browse"),
+    path(
+        "msimage/detail/<int:pk>",
+        views.MsImageDetailView.as_view(),
+        name="msimage_detail",
+    ),
+    path("msimage/create/", views.MsImageCreate.as_view(), name="msimage_create"),
+    path("msimage/edit/<int:pk>", views.MsImageUpdate.as_view(), name="msimage_edit"),
+    path(
+        "msimage/delete/<int:pk>",
+        views.MsImageDelete.as_view(),
+        name="msimage_delete",
+    ),
 ]
