@@ -13,6 +13,7 @@ from .models import (
     WebLit,
     WerkInstanz,
     Zitat,
+    Einband,
 )
 
 admin.site.register(Autor)
@@ -27,3 +28,4 @@ admin.site.register(Verfasser)
 admin.site.register(WebLit)
 admin.site.register(WerkInstanz)
 admin.site.register(Zitat)
+admin.site.register(Einband)

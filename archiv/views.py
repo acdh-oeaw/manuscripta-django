@@ -16,6 +16,7 @@ from .filters import (
     WebLitListFilter,
     WerkInstanzListFilter,
     ZitatListFilter,
+    EinbandListFilter,
 )
 from .forms import (
     AutorFilterFormHelper,
@@ -42,6 +43,8 @@ from .forms import (
     WerkInstanzForm,
     ZitatFilterFormHelper,
     ZitatForm,
+    EinbandFilterFormHelper,
+    EinbandForm,
 )
 from .tables import (
     AutorTable,
@@ -56,6 +59,7 @@ from .tables import (
     WebLitTable,
     WerkInstanzTable,
     ZitatTable,
+    EinbandTable,
 )
 from .models import (
     Autor,
@@ -70,6 +74,7 @@ from .models import (
     WebLit,
     WerkInstanz,
     Zitat,
+    Einband
 )
 from browsing.browsing_utils import (
     GenericListView,
@@ -683,3 +688,53 @@ class ZitatDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ZitatDelete, self).dispatch(*args, **kwargs)
+
+
+class EinbandListView(GenericListView):
+
+    model = Einband
+    filter_class = EinbandListFilter
+    formhelper_class = EinbandFilterFormHelper
+    table_class = EinbandTable
+    init_columns = [
+        "id",
+        "legacy_pk",
+    ]
+    enable_merge = True
+    template_name = "archiv/generic_list.html"
+
+
+class EinbandDetailView(BaseDetailView):
+
+    model = Einband
+    template_name = "archiv/generic_detail.html"
+
+
+class EinbandCreate(BaseCreateView):
+
+    model = Einband
+    form_class = EinbandForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(EinbandCreate, self).dispatch(*args, **kwargs)
+
+
+class EinbandUpdate(BaseUpdateView):
+
+    model = Einband
+    form_class = EinbandForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(EinbandUpdate, self).dispatch(*args, **kwargs)
+
+
+class EinbandDelete(DeleteView):
+    model = Einband
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:einband_browse")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(EinbandDelete, self).dispatch(*args, **kwargs)

@@ -15,6 +15,7 @@ from .models import (
     WebLit,
     WerkInstanz,
     Zitat,
+    Einband,
 )
 
 
@@ -146,5 +147,16 @@ class ZitatTable(tables.Table):
 
     class Meta:
         model = Zitat
+        sequence = ("id",)
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class EinbandTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
+
+    class Meta:
+        model = Einband
         sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}

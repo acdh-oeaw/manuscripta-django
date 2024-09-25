@@ -212,4 +212,17 @@ urlpatterns = [
         views.ZitatDelete.as_view(),
         name="zitat_delete",
     ),
+    path("einband/", views.EinbandListView.as_view(), name="einband_browse"),
+    path(
+        "einband/detail/<int:pk>",
+        views.EinbandDetailView.as_view(),
+        name="einband_detail",
+    ),
+    path("einband/create/", views.EinbandCreate.as_view(), name="einband_create"),
+    path("einband/edit/<int:pk>", views.EinbandUpdate.as_view(), name="einband_edit"),
+    path(
+        "einband/delete/<int:pk>",
+        views.EinbandDelete.as_view(),
+        name="einband_delete",
+    ),
 ]

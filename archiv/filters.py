@@ -18,6 +18,7 @@ from .models import (
     WebLit,
     WerkInstanz,
     Zitat,
+    Einband,
 )
 
 
@@ -705,4 +706,38 @@ class ZitatListFilter(django_filters.FilterSet):
             "manuscript",
             "kz_ms",
             "signatur",
+        ]
+
+
+class EinbandListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr="icontains",
+        help_text=Einband._meta.get_field("legacy_id").help_text,
+        label=Einband._meta.get_field("legacy_id").verbose_name,
+    )
+    manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=Manuscript.objects.all(),
+        help_text=Einband._meta.get_field("manuscript").help_text,
+        label=Einband._meta.get_field("manuscript").verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        ),
+    )
+    verfasser = django_filters.ModelMultipleChoiceFilter(
+        queryset=Verfasser.objects.all(),
+        help_text=Einband._meta.get_field("verfasser").help_text,
+        label=Einband._meta.get_field("verfasser").verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:verfasser-autocomplete",
+        ),
+    )
+
+    class Meta:
+        model = Einband
+        fields = [
+            "id",
+            "legacy_id",
+            "legacy_pk",
+            "manuscript",
+            "verfasser",
         ]

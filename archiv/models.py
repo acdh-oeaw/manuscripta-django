@@ -1728,3 +1728,184 @@ class Zitat(models.Model):
         if prev:
             return reverse("archiv:zitat_detail", kwargs={"pk": prev.id})
         return False
+
+
+class Einband(models.Model):
+    legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
+    legacy_pk = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="einbandID",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name="rvn_einband_manuscript_manuscript",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Manuscript",
+        help_text="Manuscript",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ms_code",
+    )
+    stil = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_einband_stil_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Stil",
+        help_text="Stil",
+    ).set_extra(
+        is_public=True,
+        data_lookup="stil",
+    )
+    schmuck = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_einband_schmuck_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Schmuck",
+        help_text="Schmuck",
+    ).set_extra(
+        is_public=True,
+        data_lookup="schmuck",
+    )
+    lokalisierung = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Lokalisierung",
+        help_text="Lokalisierung",
+    ).set_extra(
+        is_public=True,
+        data_lookup="lokalisierung",
+    )
+    werkstatt = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Werkstatt",
+        help_text="Werkstatt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="werkstatt",
+    )
+    fragment = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="fragment",
+        help_text="fragment",
+    ).set_extra(
+        is_public=True,
+        data_lookup="fragment",
+    )
+    datierung = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Datierung",
+        help_text="Datierung",
+    ).set_extra(
+        is_public=True,
+        data_lookup="datierung",
+    )
+    start_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Datierung (nicht vor)",
+        help_text="ISO-Date nicht vor (JJJJ-MM-TT)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_anf",
+        arche_prop="hasCreatedOriginalStartDate",
+    )
+    end_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Datierung (nicht nach)",
+        help_text="ISO-Date nicht nach (JJJJ-MM-TT)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_end",
+        arche_prop="hasCreatedOriginalEndDate",
+    )
+    remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Anmerkungen",
+        help_text="Anmerkungen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="remarks",
+        arche_prop="hasNotes",
+    )
+    verfasser = models.ForeignKey(
+        "Verfasser",
+        related_name="rvn_einband_verfasser_verfasser",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Verfasser*In",
+        help_text="Verfasser*In",
+    ).set_extra(
+        is_public=True,
+        data_lookup="verfasser",
+    )
+
+    class Meta:
+
+        ordering = [
+            "legacy_pk",
+        ]
+        verbose_name = "Einband"
+
+    def __str__(self):
+        if self.legacy_pk:
+            return "{}".format(self.legacy_pk)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse("archiv:einband_browse")
+
+    @classmethod
+    def get_source_table(self):
+        return "mss_einbaende"
+
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse("archiv:einband_create")
+
+    def get_absolute_url(self):
+        return reverse("archiv:einband_detail", kwargs={"pk": self.id})
+
+    def get_delete_url(self):
+        return reverse("archiv:einband_delete", kwargs={"pk": self.id})
+
+    def get_edit_url(self):
+        return reverse("archiv:einband_edit", kwargs={"pk": self.id})
+
+    def get_next(self):
+        next = next_in_order(self)
+        if next:
+            return reverse("archiv:einband_detail", kwargs={"pk": next.id})
+        return False
+
+    def get_prev(self):
+        prev = prev_in_order(self)
+        if prev:
+            return reverse("archiv:einband_detail", kwargs={"pk": prev.id})
+        return False

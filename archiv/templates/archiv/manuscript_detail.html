@@ -356,7 +356,26 @@
           </h2>
           <div id="collapsEinband" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
             <div class="accordion-body">
-              <strong>ToDo</strong> process mss_einbaende
+              {% for x in object.rvn_einband_manuscript_manuscript.all %}
+              <dl>
+                <dt>Datierung</dt>
+                <dd>{{ x.datierung }}</dd>
+                <dt>Schmuck</dt>
+                <dd>{{ x.schmuck }}</dd>
+
+                <dt>Stil</dt>
+                <dd>{{ x.stil }}</dd>
+
+                <dt>Lokalisierung</dt>
+                <dt>{{ x.lokalisierung }}</dt>
+
+                <dt>Werkstatt</dt>
+                <dt>{{ x.werkstatt }}</dt>
+
+                <dt>Anmerkungen</dt>
+                <dd>{{ x.remarks|safe }}</dd>
+              </dl>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -369,7 +388,7 @@
           </h2>
           <div id="collapsGeschichte" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
             <div class="accordion-body">
-              {{ object.geschichte }}<br />
+              {{ object.geschichte|safe }}<br />
               <strong>ToDo</strong> process mss_prov
             </div>
           </div>
