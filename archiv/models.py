@@ -2321,7 +2321,7 @@ class MsImage(models.Model):
         help_text="Anmerkungen",
     ).set_extra(
         is_public=True,
-        data_lookup="schr_remarks",
+        data_lookup="remarks",
         arche_prop="hasNotes",
     )
 
@@ -2330,7 +2330,7 @@ class MsImage(models.Model):
         ordering = [
             "manuscript", "fol_sort",
         ]
-        verbose_name = "MsImage"
+        verbose_name = "Bilddatei"
 
     def __str__(self):
         if self.filename:
