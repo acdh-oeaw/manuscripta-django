@@ -2244,3 +2244,136 @@ class Schrift(models.Model):
         if prev:
             return reverse("archiv:schrift_detail", kwargs={"pk": prev.id})
         return False
+
+
+class MsImage(models.Model):
+    legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
+    legacy_pk = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ID",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name="rvn_msimage_manuscript_manuscript",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Manuscript",
+        help_text="Manuscript",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ms_code",
+    )
+    filename = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Dateiname",
+        help_text="Dateiname",
+    ).set_extra(
+        is_public=True,
+        data_lookup="filename",
+    )
+    extpath = models.CharField(
+        max_length=400,
+        blank=True,
+        verbose_name="Link zu externer Resource",
+        help_text="Link zu externer Resource",
+    ).set_extra(
+        is_public=True,
+        data_lookup="extpath",
+    )
+    fol = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Folio",
+        help_text="Folio",
+    ).set_extra(
+        is_public=True,
+        data_lookup="fol",
+    )
+    fol_sort = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Folio (Sortierung)",
+        help_text="Folio (Sortierung)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="fol_sort",
+    )
+    caption = models.TextField(
+        blank=True,
+        verbose_name="Beschreibung",
+        help_text="Beschreibung des Bildes",
+    ).set_extra(
+        is_public=True,
+        data_lookup="caption",
+    )
+    remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Anmerkungen",
+        help_text="Anmerkungen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="schr_remarks",
+        arche_prop="hasNotes",
+    )
+
+    class Meta:
+
+        ordering = [
+            "manuscript", "fol_sort",
+        ]
+        verbose_name = "MsImage"
+
+    def __str__(self):
+        if self.filename:
+            return f"{self.filename}"
+        else:
+            return f"{self.id}"
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse("archiv:msimage_browse")
+
+    @classmethod
+    def get_source_table(self):
+        return "mssimages"
+
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse("archiv:msimage_create")
+
+    def get_absolute_url(self):
+        return reverse("archiv:msimage_detail", kwargs={"pk": self.id})
+
+    def get_delete_url(self):
+        return reverse("archiv:msimage_delete", kwargs={"pk": self.id})
+
+    def get_edit_url(self):
+        return reverse("archiv:msimage_edit", kwargs={"pk": self.id})
+
+    def get_next(self):
+        next = next_in_order(self)
+        if next:
+            return reverse("archiv:msimage_detail", kwargs={"pk": next.id})
+        return False
+
+    def get_prev(self):
+        prev = prev_in_order(self)
+        if prev:
+            return reverse("archiv:msimage_detail", kwargs={"pk": prev.id})
+        return False

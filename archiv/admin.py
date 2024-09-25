@@ -15,6 +15,7 @@ from .models import (
     Zitat,
     Einband,
     Schrift,
+    MsImage,
 )
 
 admin.site.register(Autor)
@@ -31,3 +32,4 @@ admin.site.register(WerkInstanz)
 admin.site.register(Zitat)
 admin.site.register(Einband)
 admin.site.register(Schrift)
+admin.site.register(MsImage)
