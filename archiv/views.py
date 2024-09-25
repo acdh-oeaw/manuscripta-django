@@ -99,7 +99,7 @@ class AutorListView(GenericListView):
 class AutorDetailView(BaseDetailView):
 
     model = Autor
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class AutorCreate(BaseCreateView):
@@ -151,7 +151,7 @@ class BibliothekListView(GenericListView):
 class BibliothekDetailView(BaseDetailView):
 
     model = Bibliothek
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class BibliothekCreate(BaseCreateView):
@@ -201,7 +201,7 @@ class InitiumListView(GenericListView):
 class InitiumDetailView(BaseDetailView):
 
     model = Initium
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class InitiumCreate(BaseCreateView):
@@ -251,7 +251,7 @@ class LiteraturListView(GenericListView):
 class LiteraturDetailView(BaseDetailView):
 
     model = Literatur
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class LiteraturCreate(BaseCreateView):
@@ -351,7 +351,7 @@ class MsDescListView(GenericListView):
 class MsDescDetailView(BaseDetailView):
 
     model = MsDesc
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class MsDescCreate(BaseCreateView):
@@ -401,7 +401,7 @@ class MsPartListView(GenericListView):
 class MsPartDetailView(BaseDetailView):
 
     model = MsPart
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class MsPartCreate(BaseCreateView):
@@ -451,7 +451,7 @@ class PlaceListView(GenericListView):
 class PlaceDetailView(BaseDetailView):
 
     model = Place
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class PlaceCreate(BaseCreateView):
@@ -501,7 +501,7 @@ class VerfasserListView(GenericListView):
 class VerfasserDetailView(BaseDetailView):
 
     model = Verfasser
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class VerfasserCreate(BaseCreateView):
@@ -551,7 +551,7 @@ class WebLitListView(GenericListView):
 class WebLitDetailView(BaseDetailView):
 
     model = WebLit
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class WebLitCreate(BaseCreateView):
@@ -601,7 +601,7 @@ class WerkInstanzListView(GenericListView):
 class WerkInstanzDetailView(BaseDetailView):
 
     model = WerkInstanz
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class WerkInstanzCreate(BaseCreateView):
@@ -651,7 +651,7 @@ class ZitatListView(GenericListView):
 class ZitatDetailView(BaseDetailView):
 
     model = Zitat
-    template_name = "browsing/generic_detail.html"
+    template_name = "archiv/generic_detail.html"
 
 
 class ZitatCreate(BaseCreateView):
