@@ -142,6 +142,7 @@ class BibliothekListView(GenericListView):
         "id",
         "lib_name",
         "lib_code",
+        "lib_type"
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"

@@ -213,6 +213,54 @@ class Bibliothek(models.Model):
         is_public=True,
         data_lookup="address",
     )
+    homepage = models.URLField(
+        blank=True,
+        null=True,
+        max_length=400,
+        verbose_name="Website",
+        help_text="Link zur Website"
+    ).set_extra(
+        is_public=True,
+        data_lookup="homepage"
+    )
+    hbhistbb = models.URLField(
+        blank=True,
+        null=True,
+        max_length=400,
+        verbose_name="HBhistBB",
+        help_text="HBhistBB (als URL)"
+    ).set_extra(
+        is_public=True,
+        data_lookup="HBhistBB"
+    )
+    hmml_msid = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="HMML_MSID",
+        help_text="HMML_MSID",
+    ).set_extra(
+        is_public=True,
+        data_lookup="HMML_MSID",
+    )
+    hmml_img = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="HMML_img",
+        help_text="HMML_img",
+    ).set_extra(
+        is_public=True,
+        data_lookup="HMML_img",
+    )
+    long_lat = models.CharField(
+        max_length=250,
+        blank=True,
+        null=True,
+        verbose_name="Koordinaten",
+        help_text="(Long,Lat)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="long_lat",
+    )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
     ).set_extra(is_public=True)
