@@ -1105,6 +1105,60 @@ class MsPart(models.Model):
         is_public=True,
         data_lookup="ms_code",
     )
+    part = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Teil",
+        help_text="Teil",
+    ).set_extra(
+        is_public=True,
+        data_lookup="part",
+    )
+    part_sort = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Teil (Sortierung)",
+        help_text="Teil (Sortierung)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="part_sort",
+    )
+    part_code = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_mspart_part_code_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Teil Code",
+        help_text="Teil Code",
+    ).set_extra(
+        is_public=True,
+        data_lookup="part_code",
+    )
+    material = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_mspart_material_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Teil Code",
+        help_text="Teil Code",
+    ).set_extra(
+        is_public=True,
+        data_lookup="material",
+    )
+    oc = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_mspart_oc_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="OC",
+        help_text="OC",
+    ).set_extra(
+        is_public=True,
+        data_lookup="oc",
+    )
     range = models.CharField(
         max_length=250,
         blank=True,
@@ -1151,6 +1205,60 @@ class MsPart(models.Model):
     ).set_extra(
         is_public=True,
         data_lookup="date_end",
+    )
+    lagen = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Lagen",
+        help_text="Lagen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="lagen",
+        arche_prop="hasNotes",
+    )
+    remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Anmerkungen",
+        help_text="Anmerkungen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="remarks",
+        arche_prop="hasNotes",
+    )
+    ausstattung = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_mspart_ausstattung_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Ausstattung",
+        help_text="Ausstattung",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ausstattung",
+    )
+    aus_remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Anmerkungen zur Ausstattung",
+        help_text="Anmerkungen zur Ausstattung",
+    ).set_extra(
+        is_public=True,
+        data_lookup="aus_remarks",
+        arche_prop="hasNotes",
+    )
+    verfasser = models.ForeignKey(
+        "Verfasser",
+        related_name="rvn_mspart_verfasser_verfasser",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Verfasser*In",
+        help_text="Verfasser*In",
+    ).set_extra(
+        is_public=True,
+        data_lookup="verfasser",
     )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
