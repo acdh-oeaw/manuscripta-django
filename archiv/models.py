@@ -61,6 +61,7 @@ class Autor(models.Model):
     jahrhundert = models.CharField(
         blank=True,
         null=True,
+        max_length=250,
         verbose_name="Jahrhundert",
         help_text="Jahrhundert (in standardisierter Schreibweise)",
     ).set_extra(
@@ -1964,6 +1965,9 @@ class Einband(models.Model):
         is_public=True,
         data_lookup="verfasser",
     )
+    orig_data_csv = models.TextField(
+        blank=True, null=True, verbose_name="The original data"
+    ).set_extra(is_public=True)
 
     class Meta:
 
@@ -2191,6 +2195,9 @@ class Schrift(models.Model):
         is_public=True,
         data_lookup="verfasser",
     )
+    orig_data_csv = models.TextField(
+        blank=True, null=True, verbose_name="The original data"
+    ).set_extra(is_public=True)
 
     class Meta:
 
@@ -2324,6 +2331,9 @@ class MsImage(models.Model):
         data_lookup="remarks",
         arche_prop="hasNotes",
     )
+    orig_data_csv = models.TextField(
+        blank=True, null=True, verbose_name="The original data"
+    ).set_extra(is_public=True)
 
     class Meta:
 
