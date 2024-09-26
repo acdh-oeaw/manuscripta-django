@@ -1267,7 +1267,7 @@ class MsPart(models.Model):
     class Meta:
 
         ordering = [
-            "legacy_pk",
+            "part_of_manuscript", "part_sort",
         ]
         verbose_name = "MsPart"
 
@@ -2340,6 +2340,23 @@ class MsImage(models.Model):
 
     def field_dict(self):
         return model_to_dict(self)
+
+    @property
+    def country_code(self):
+        return f"{self.filename[:2]}"
+
+    @property
+    def library_code(self):
+        return f"{self.filename[2:].split('-')[0]}"
+
+    @property
+    def ms_code(self):
+        return f"{self.filename.split("_")[0]}"
+
+    @property
+    def img_path(self):
+        url = "https://manuscripta.at/images"
+        return f"{url}/{self.country_code}/{self.library_code}/{self.ms_code}/{self.filename}.jpg"
 
     @classmethod
     def get_listview_url(self):

@@ -803,7 +803,8 @@ class MsImageListView(GenericListView):
     table_class = MsImageTable
     init_columns = [
         "id",
-        "legacy_pk",
+        "filename",
+        "manuscript",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"

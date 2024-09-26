@@ -296,7 +296,7 @@
       </div>
       <div class="border p-2">
         <h2>{{ object.lib_code }}, {{ object.shelfmark }} <a href="https://manuscripta.at/hs_detail.php?ID={{ object.legacy_pk }}">link</a></h2>
-        <h3>{{ object.heading }}</h3>
+        {% if object.heading %}<h3>{{ object.heading }}</h3>{% endif %}
         {% if object.olim_signatur %} Olim: {{ object.olim_signatur }}{% endif %}
         {{ object.material }}
         {{ object.num_leaves }}
@@ -304,18 +304,28 @@
         {{ object.origin_date }} <br />
         Provenienz/Letztbesitzer: {{ object.prov }}
       </div>
+      <div class="abbildungen">
+        {% if object.rvn_msimage_manuscript_manuscript.all %}
+        Abbildungen von:
+        {% for x in object.rvn_msimage_manuscript_manuscript.all %}
+        <a href="{{ x.img_path }}">{{ x.fol }}</a>
+        {% endfor %}
+        {% else %}
+        Keine Abbildungen zu dieser Handschrift vorhanden
+        {% endif %}
+      </div>
       <div class="msParts">
         Handschrift aus {{ object.rvn_mspart_part_of_manuscript_manuscript.count }} Teilen zusammengesetzt:
         {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
         {{ x.part }} ({{ x.range }}), {{ x.date_str }}
         {% endfor %}
       </div>
-      <ul>
+      <!-- <ul>
         <li><strong>ToDo</strong> OLIVER - Online manuscript description (HMML).</li>
         <li><strong>ToDo</strong> Wasserzeichen: Metadaten zu Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Vorschau Bilder zu
           Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Einzelbilder: fol. 47, 48, 114, 115, 124, 160, 162, 221, 224, 233, 236,
           237.</li>
-      </ul>
+      </ul> -->
       <div class="msDesc">
         {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
           <dl>
@@ -330,6 +340,7 @@
       </div>
   
       <div class="accordion" id="mainAccordion">
+        {% if object.rvn_mspart_part_of_manuscript_manuscript.count > 1 %}
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -341,7 +352,7 @@
             <div class="accordion-body">
               <ul class="no-style">
                 {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
-                <h3>Teil: {{ x.part }} {{ x.range }}</h3>
+                <h3><a href="{{ x.get_absolute_url }}">Teil:</a> {{ x.part }} {{ x.range }}</h3>
                 <dl>
                   <dt>Range</dt>
                   <dd>{{ x.range }}</dd>
@@ -377,6 +388,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -448,10 +460,10 @@
         {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
         <li>
           <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a> |
-          {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}, {% endif %}{{ x.werk_titel }}</strong>{%elif x.werk_titel_alt %} {{x.werk_titel_alt|safe }} {% else %} leer {% endif %}
+          {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}, {% endif %}</strong> {{ x.werk_titel }}{% elif x.werk_titel_alt %} {{x.werk_titel_alt|safe }} {% else %} leer {% endif %}
           {% for y in x.rvn_initium_werk_werkinstanz.all %}
           <br />
-          <a href="{{ y.get_absolute_url }}">{{ y.fol }}</a> | {{ y.titel_vorspann }} {{ y.initium}} {{ y.titel }}
+          <a href="{{ y.get_absolute_url }}">{{ y.fol }}</a> | <!--{{ y.titel_vorspann }}--> {{ y.initium }} {{ y.titel }}
           {% endfor %}
         </li>
         {% endfor %}
