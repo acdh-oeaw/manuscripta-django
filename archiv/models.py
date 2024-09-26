@@ -225,21 +225,15 @@ class Bibliothek(models.Model):
         null=True,
         max_length=400,
         verbose_name="Website",
-        help_text="Link zur Website"
-    ).set_extra(
-        is_public=True,
-        data_lookup="homepage"
-    )
+        help_text="Link zur Website",
+    ).set_extra(is_public=True, data_lookup="homepage")
     hbhistbb = models.URLField(
         blank=True,
         null=True,
         max_length=400,
         verbose_name="HBhistBB",
-        help_text="HBhistBB (als URL)"
-    ).set_extra(
-        is_public=True,
-        data_lookup="HBhistBB"
-    )
+        help_text="HBhistBB (als URL)",
+    ).set_extra(is_public=True, data_lookup="HBhistBB")
     hmml_msid = models.IntegerField(
         blank=True,
         null=True,
@@ -1304,7 +1298,8 @@ class MsPart(models.Model):
     class Meta:
 
         ordering = [
-            "part_of_manuscript", "part_sort",
+            "part_of_manuscript",
+            "part_sort",
         ]
         verbose_name = "MsPart"
 
@@ -2422,7 +2417,8 @@ class MsImage(models.Model):
     class Meta:
 
         ordering = [
-            "manuscript", "fol_sort",
+            "manuscript",
+            "fol_sort",
         ]
         verbose_name = "Bilddatei"
 
@@ -2493,4 +2489,143 @@ class MsImage(models.Model):
             return False
         if prev:
             return reverse("archiv:msimage_detail", kwargs={"pk": prev.id})
+        return False
+
+
+class Person(models.Model):
+    """Beschreibt einen Person"""
+
+    legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
+    legacy_pk = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ID",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    name = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Name",
+        help_text="Name",
+    ).set_extra(
+        is_public=True,
+        data_lookup="autor",
+        arche_prop="hasTitle",
+    )
+    name_gnd = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Name (GND)",
+        help_text="Name (GND)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="name_GND",
+        arche_prop="hasAlternativeName",
+    )
+    gnd_id = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="GND-ID",
+        help_text="GND-ID",
+    ).set_extra(is_public=True, data_lookup="PND")
+    person_type = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Typ",
+        help_text="Typ",
+    ).set_extra(is_public=True, data_lookup="typ")
+    funktion = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Funktion",
+        help_text="Funktion",
+    ).set_extra(is_public=True, data_lookup="funktion")
+    ort = models.ForeignKey(
+        "Place",
+        related_name="rvn_person_ort_place",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Ort",
+        help_text="Ort",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ort",
+    )
+    remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Anmerkungen",
+        help_text="Anmerkungen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="remarks",
+        arche_prop="hasNotes",
+    )
+    orig_data_csv = models.TextField(
+        blank=True, null=True, verbose_name="The original data"
+    ).set_extra(is_public=True)
+
+    class Meta:
+
+        ordering = [
+            "name",
+            "id",
+        ]
+        verbose_name = "Person"
+
+    def __str__(self):
+        if self.filename:
+            return f"{self.filename}"
+        else:
+            return f"{self.id}"
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse("archiv:person_browse")
+
+    @classmethod
+    def get_source_table(self):
+        return "personen"
+
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse("archiv:person_create")
+
+    def get_absolute_url(self):
+        return reverse("archiv:person_detail", kwargs={"pk": self.id})
+
+    def get_delete_url(self):
+        return reverse("archiv:person_delete", kwargs={"pk": self.id})
+
+    def get_edit_url(self):
+        return reverse("archiv:person_edit", kwargs={"pk": self.id})
+
+    def get_next(self):
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
+        if next:
+            return reverse("archiv:person_detail", kwargs={"pk": next.id})
+        return False
+
+    def get_prev(self):
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
+        if prev:
+            return reverse("archiv:person_detail", kwargs={"pk": prev.id})
         return False
