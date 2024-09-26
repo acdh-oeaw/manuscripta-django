@@ -1388,6 +1388,11 @@ class Place(models.Model):
     def field_dict(self):
         return model_to_dict(self)
 
+    def save(self, *args, **kwargs):
+        if not self.name and self.legacy_id:
+            self.name = self.legacy_id
+        super(Place, self).save(*args, **kwargs)
+
     @classmethod
     def get_listview_url(self):
         return reverse("archiv:place_browse")
@@ -2513,7 +2518,7 @@ class Person(models.Model):
         help_text="Name",
     ).set_extra(
         is_public=True,
-        data_lookup="autor",
+        data_lookup="name",
         arche_prop="hasTitle",
     )
     name_gnd = models.CharField(
@@ -2579,8 +2584,8 @@ class Person(models.Model):
         verbose_name = "Person"
 
     def __str__(self):
-        if self.filename:
-            return f"{self.filename}"
+        if self.name:
+            return f"{self.name}"
         else:
             return f"{self.id}"
 

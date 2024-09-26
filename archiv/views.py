@@ -19,6 +19,7 @@ from .filters import (
     EinbandListFilter,
     SchriftListFilter,
     MsImageListFilter,
+    PersonListFilter,
 )
 from .forms import (
     AutorFilterFormHelper,
@@ -51,6 +52,8 @@ from .forms import (
     SchriftForm,
     MsImageFilterFormHelper,
     MsImageForm,
+    PersonFilterFormHelper,
+    PersonForm
 )
 from .tables import (
     AutorTable,
@@ -68,6 +71,7 @@ from .tables import (
     EinbandTable,
     SchriftTable,
     MsImageTable,
+    PersonTable,
 )
 from .models import (
     Autor,
@@ -85,6 +89,7 @@ from .models import (
     Einband,
     Schrift,
     MsImage,
+    Person,
 )
 from browsing.browsing_utils import (
     GenericListView,
@@ -845,3 +850,53 @@ class MsImageDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(MsImageDelete, self).dispatch(*args, **kwargs)
+
+
+class PersonListView(GenericListView):
+
+    model = Person
+    filter_class = PersonListFilter
+    formhelper_class = PersonFilterFormHelper
+    table_class = PersonTable
+    init_columns = [
+        "id",
+        "name",
+    ]
+    enable_merge = True
+    template_name = "archiv/generic_list.html"
+
+
+class PersonDetailView(BaseDetailView):
+
+    model = Person
+    template_name = "archiv/generic_detail.html"
+
+
+class PersonCreate(BaseCreateView):
+
+    model = Person
+    form_class = PersonForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PersonCreate, self).dispatch(*args, **kwargs)
+
+
+class PersonUpdate(BaseUpdateView):
+
+    model = Person
+    form_class = PersonForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PersonUpdate, self).dispatch(*args, **kwargs)
+
+
+class PersonDelete(DeleteView):
+    model = Person
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:person_browse")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PersonDelete, self).dispatch(*args, **kwargs)

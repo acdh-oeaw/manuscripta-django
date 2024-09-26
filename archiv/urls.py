@@ -251,4 +251,17 @@ urlpatterns = [
         views.MsImageDelete.as_view(),
         name="msimage_delete",
     ),
+    path("person/", views.PersonListView.as_view(), name="person_browse"),
+    path(
+        "person/detail/<int:pk>",
+        views.PersonDetailView.as_view(),
+        name="person_detail",
+    ),
+    path("person/create/", views.PersonCreate.as_view(), name="person_create"),
+    path("person/edit/<int:pk>", views.PersonUpdate.as_view(), name="person_edit"),
+    path(
+        "person/delete/<int:pk>",
+        views.PersonDelete.as_view(),
+        name="person_delete",
+    ),
 ]

@@ -22,6 +22,7 @@ from .models import (
     Einband,
     Schrift,
     MsImage,
+    Person,
 )
 
 
@@ -662,6 +663,38 @@ class MsImageForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MsImageForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = "form-horizontal"
+        self.helper.label_class = "col-md-3"
+        self.helper.field_class = "col-md-9"
+        self.helper.add_input(
+            Submit("submit", "save"),
+        )
+
+class PersonFilterFormHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(PersonFilterFormHelper, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.form_class = "genericFilterForm"
+        self.form_method = "GET"
+        self.form_tag = False
+        self.layout = Layout(
+            BS5Accordion(
+                AccordionGroup("Filter", "name", css_id="more"),
+                AccordionGroup("weitere Filter", "legacy_id", css_id="admin_search"),
+            ),
+        )
+
+
+class PersonForm(forms.ModelForm):
+
+    class Meta:
+        model = Person
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(PersonForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = True
         self.helper.form_class = "form-horizontal"
