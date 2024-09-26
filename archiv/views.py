@@ -202,7 +202,8 @@ class InitiumListView(GenericListView):
     table_class = InitiumTable
     init_columns = [
         "id",
-        "legacy_pk",
+        "manuscript",
+        "werk",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
@@ -252,7 +253,7 @@ class LiteraturListView(GenericListView):
     table_class = LiteraturTable
     init_columns = [
         "id",
-        "kurz_zitat",
+        "vollzitat",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
