@@ -135,13 +135,19 @@ class Autor(models.Model):
         return reverse("archiv:autor_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:autor_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:autor_detail", kwargs={"pk": prev.id})
         return False
@@ -310,13 +316,19 @@ class Bibliothek(models.Model):
         return reverse("archiv:bibliothek_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:bibliothek_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:bibliothek_detail", kwargs={"pk": prev.id})
         return False
@@ -488,13 +500,19 @@ class Initium(models.Model):
         return reverse("archiv:initium_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:initium_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:initium_detail", kwargs={"pk": prev.id})
         return False
@@ -623,13 +641,19 @@ class Literatur(models.Model):
         return reverse("archiv:literatur_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:literatur_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:literatur_detail", kwargs={"pk": prev.id})
         return False
@@ -935,13 +959,19 @@ class Manuscript(models.Model):
         return reverse("archiv:manuscript_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:manuscript_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:manuscript_detail", kwargs={"pk": prev.id})
         return False
@@ -1067,13 +1097,19 @@ class MsDesc(models.Model):
         return reverse("archiv:msdesc_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:msdesc_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:msdesc_detail", kwargs={"pk": prev.id})
         return False
@@ -1307,13 +1343,19 @@ class MsPart(models.Model):
         return reverse("archiv:mspart_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:mspart_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:mspart_detail", kwargs={"pk": prev.id})
         return False
@@ -1377,13 +1419,19 @@ class Place(models.Model):
         return reverse("archiv:place_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:place_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:place_detail", kwargs={"pk": prev.id})
         return False
@@ -1447,13 +1495,19 @@ class Verfasser(models.Model):
         return reverse("archiv:verfasser_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:verfasser_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:verfasser_detail", kwargs={"pk": prev.id})
         return False
@@ -1549,13 +1603,19 @@ class WebLit(models.Model):
         return reverse("archiv:weblit_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:weblit_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:weblit_detail", kwargs={"pk": prev.id})
         return False
@@ -1713,13 +1773,19 @@ class WerkInstanz(models.Model):
         return reverse("archiv:werkinstanz_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:werkinstanz_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:werkinstanz_detail", kwargs={"pk": prev.id})
         return False
@@ -1827,13 +1893,19 @@ class Zitat(models.Model):
         return reverse("archiv:zitat_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:zitat_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:zitat_detail", kwargs={"pk": prev.id})
         return False
@@ -2011,13 +2083,19 @@ class Einband(models.Model):
         return reverse("archiv:einband_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:einband_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:einband_detail", kwargs={"pk": prev.id})
         return False
@@ -2241,13 +2319,19 @@ class Schrift(models.Model):
         return reverse("archiv:schrift_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:schrift_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:schrift_detail", kwargs={"pk": prev.id})
         return False
@@ -2361,7 +2445,7 @@ class MsImage(models.Model):
 
     @property
     def ms_code(self):
-        return f"{self.filename.split("_")[0]}"
+        return f"{self.manuscript.ms_code}"
 
     @property
     def img_path(self):
@@ -2394,13 +2478,19 @@ class MsImage(models.Model):
         return reverse("archiv:msimage_edit", kwargs={"pk": self.id})
 
     def get_next(self):
-        next = next_in_order(self)
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
         if next:
             return reverse("archiv:msimage_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
-        prev = prev_in_order(self)
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
         if prev:
             return reverse("archiv:msimage_detail", kwargs={"pk": prev.id})
         return False

@@ -403,7 +403,7 @@ class MsPartListView(GenericListView):
     table_class = MsPartTable
     init_columns = [
         "id",
-        "legacy_pk",
+        "part_of_manuscript",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
