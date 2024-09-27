@@ -302,44 +302,65 @@
         {{ object.num_leaves }}
         {{ object.dimensions }}
         {{ object.origin_date }} <br />
-        Provenienz/Letztbesitzer: {{ object.prov }}
+        {% if object.prov %} Provenienz/Letztbesitzer: {{ object.prov }} {% endif %}
       </div>
-      <div class="abbildungen">
-        {% if object.rvn_msimage_manuscript_manuscript.all %}
-        Abbildungen von:
-        {% for x in object.rvn_msimage_manuscript_manuscript.all %}
-        <a href="{{ x.img_path }}">{{ x.fol }}</a>
-        {% endfor %}
-        {% else %}
-        Keine Abbildungen zu dieser Handschrift vorhanden
-        {% endif %}
-      </div>
+      
+      {% if object.rvn_mspart_part_of_manuscript_manuscript.count > 1 %}
       <div class="msParts">
         Handschrift aus {{ object.rvn_mspart_part_of_manuscript_manuscript.count }} {% if object.rvn_mspart_part_of_manuscript_manuscript.count > 1 %} Teilen {% else %} Teil {% endif %} zusammengesetzt:
         {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
         {{ x.part }} {% if x.range %} ({{ x.range }}),{% endif %} {{ x.date_str }}
         {% endfor %}
       </div>
-      <!-- <ul>
-        <li><strong>ToDo</strong> OLIVER - Online manuscript description (HMML).</li>
-        <li><strong>ToDo</strong> Wasserzeichen: Metadaten zu Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Vorschau Bilder zu
-          Teil 1, Teil 2, Teil 3, Teil 4, Teil 5 | Einzelbilder: fol. 47, 48, 114, 115, 124, 160, 162, 221, 224, 233, 236,
-          237.</li>
-      </ul> -->
-      <div class="msDesc">
-        {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
-          <dl>
-            <dt>Wissenschaftliche Beschreibung:</dt>
-            <dd>{{ x.bibliography|safe }}</dd>
-            <dt>Phys Desc</dt>
-            <dd>{{ x.phys_desc|safe }}</dd>
-            <dt>Content</dt>
-            <dd>{{ x.content|safe }}</dd>
-          </dl>
-          {% endfor %}
+      {% endif %}
+
+      <div class="abbildungen">
+        {% if object.rvn_msimage_manuscript_manuscript.all %}
+        Abbildungen von:
+        {% for x in object.rvn_msimage_manuscript_manuscript.all %}
+        <a href="{{ x.img_path }}">{{ x.fol }}</a>
+        {% endfor %}
+        {% endif %}
       </div>
-  
-      <div class="accordion" id="mainAccordion">
+
+      <div class="literatur">
+        {% if object.rvn_msdesc_manuscript_manuscript.all %}
+        Literatur zur Handschrift:
+        {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
+        {{ x.bibliography|safe }}
+        {% endfor %}
+        {% endif %}
+      </div>
+      
+     
+      <div class="accordion pt-3 pb-2" id="mainAccordion">
+        {% if object.rvn_msdesc_manuscript_manuscript.all %}
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsMsdesc"
+              aria-expanded="true" aria-controls="collapsMsdesc">
+              Beschreibung der Hs.
+            </button>
+          </h2>
+          <div id="collapsMsdesc" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
+            <div class="accordion-body">
+              <ul class="no-style">
+                {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
+                <a href="{{ x.get_absolute_url }}">link</a>
+                <dl>
+                  <dt>Wissenschaftliche Beschreibung:</dt>
+                  <dd>{{ x.bibliography|safe }}</dd>
+                  <dt>Phys Desc</dt>
+                  <dd>{{ x.phys_desc|safe }}</dd>
+                  <dt>Content</dt>
+                  <dd>{{ x.content|safe }}</dd>
+                </dl>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        {% endif %}
         {% if object.rvn_mspart_part_of_manuscript_manuscript.count > 1 %}
         <div class="accordion-item">
           <h2 class="accordion-header">
@@ -389,6 +410,7 @@
           </div>
         </div>
         {% endif %}
+        {% if object.rvn_zitat_manuscript_manuscript.all %}
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -406,6 +428,8 @@
             </div>
           </div>
         </div>
+        {% endif %}
+        {% if object.rvn_einband_manuscript_manuscript.all %}
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsEinband"
@@ -438,11 +462,13 @@
             </div>
           </div>
         </div>
+        {% endif %}
+        {% if object.rvn_msprov_manuscript_manuscript.all or  object.geschichte %}
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
               data-bs-target="#collapsGeschichte" aria-expanded="true" aria-controls="collapsGeschichte">
-              Geschichte
+              Geschichte der Hs.
             </button>
           </h2>
           <div id="collapsGeschichte" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
@@ -460,17 +486,32 @@
             </div>
           </div>
         </div>
+        {% endif %}
       </div>
   
       <hr />
       <ul class="list-unstyled">
         {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
         <li>
-          <a href="{{ x.get_absolute_url }}">({{ x.fol_start }} {% if x.fol_end %} - {{x.fol_end}}{% endif %})</a> |
-          {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}
+          {% if x.fol_start %}
+            <a href="{{ x.get_absolute_url }}"> ({{ x.fol_start }}{% if x.fol_end %}—{{ x.fol_end }}{% endif %})</a> |
+          {% endif %}
+          {% if x.autor.name %}
+          <strong> {{ x.autor }}
             <a href="{{ x.autor.get_absolute_url }}" title="Mehr zu {{ x.autor }}">
               <i class="bi bi-box-arrow-up-right" aria-hidden="true"><span class="visually-hidden">Mehr zu {{ x.autor }}</span></i>
-            </a>: {% endif %}</strong> <strong>{{ x.werk_titel }}</strong>{% elif x.werk_titel_alt %} <strong>{{x.werk_titel_alt|safe }}</strong> {% else %} leer {% endif %}
+            </a>:
+          </strong>
+          {% endif %}
+          {% if x.werk_titel and x.autor.name %}
+          {{ x.werk_titel }} {% if x.werk_titel_alt %} {{ x.werk_titel_alt|safe }} {% endif %}
+          {% elif x.werk_titel %}
+         {{ x.werk_titel }} {% if x.werk_titel_alt %} {{ x.werk_titel_alt|safe }} {% endif %}
+          {% elif  x.werk_titel_alt and x.autor.name %}
+          {{ x.werk_titel_alt|safe }}
+          {% elif x.werk_titel_alt %}
+          {{ x.werk_titel_alt|safe }}
+         {% endif %}
           {% for y in x.rvn_initium_werk_werkinstanz.all %}
           <br />
           <div class="ps-2"><a href="{{ y.get_absolute_url }}"><sup>{{ y.fol }}</sup></a> {% if y.titel %}{{ y.titel_vorspann }} {{ y.titel|safe }}<br />{% endif %}{{ y.initium|safe }} ... {% if y.explicit %}— ... {{ y.explicit|safe }} {% endif %}</div>
