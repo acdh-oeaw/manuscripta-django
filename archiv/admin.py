@@ -17,6 +17,7 @@ from .models import (
     Schrift,
     MsImage,
     Person,
+    MsProv,
 )
 
 admin.site.register(Autor)
@@ -35,3 +36,4 @@ admin.site.register(Einband)
 admin.site.register(Schrift)
 admin.site.register(MsImage)
 admin.site.register(Person)
+admin.site.register(MsProv)

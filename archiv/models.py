@@ -2634,3 +2634,188 @@ class Person(models.Model):
         if prev:
             return reverse("archiv:person_detail", kwargs={"pk": prev.id})
         return False
+
+
+class MsProv(models.Model):
+    """Provenienz"""
+
+    legacy_id = models.CharField(max_length=300, blank=True, verbose_name="Legacy ID")
+    legacy_pk = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Primärschlüssel Alt",
+        help_text="Primärschlüssel Alt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDprov",
+        arche_prop="hasNonLinkedIdentifier",
+    )
+    manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name="rvn_msprov_manuscript_manuscript",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Manuscript",
+        help_text="Manuscript",
+    ).set_extra(
+        is_public=True,
+        data_lookup="ms_code",
+    )
+    prov_manuscript = models.ForeignKey(
+        "Manuscript",
+        related_name="rvn_msprov_prov_manuscript_manuscript",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Provenienz Handschrift",
+        help_text="Provenienz Handschrift",
+    ).set_extra(
+        is_public=True,
+        data_lookup="prov_msCode",
+    )
+    prov_lib = models.ForeignKey(
+        "Bibliothek",
+        related_name="rvn_msprov_prov_lib_bibliothek",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Provenienz Bibliothek",
+        help_text="Provenienz Bibliothek",
+    ).set_extra(
+        is_public=True,
+        data_lookup="prov_library",
+    )
+    prov_signatur = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Proveninez Signatur",
+        help_text="Proveninez Signatur",
+    ).set_extra(
+        is_public=True,
+        data_lookup="prov_signatur",
+    )
+    previous_owner = models.ForeignKey(
+        "Person",
+        related_name="rvn_msprov_person_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Vorbesitzer",
+        help_text="Vorbesitzer",
+    ).set_extra(
+        is_public=True,
+        data_lookup="IDvorbesitzer",
+    )
+    date = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="date",
+        help_text="date",
+    ).set_extra(
+        is_public=True,
+        data_lookup="datierung",
+    )
+    start_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Datierung (nicht vor)",
+        help_text="ISO-Date nicht vor (JJJJ-MM-TT)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_anf",
+        arche_prop="hasCreatedOriginalStartDate",
+    )
+    end_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Datierung (nicht nach)",
+        help_text="ISO-Date nicht nach (JJJJ-MM-TT)",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_end",
+        arche_prop="hasCreatedOriginalEndDate",
+    )
+    remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Anmerkungen",
+        help_text="Anmerkungen",
+    ).set_extra(
+        is_public=True,
+        data_lookup="remarks",
+    )
+    verfasser = models.ForeignKey(
+        "Verfasser",
+        related_name="rvn_msprov_verfasser_verfasser",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Verfasser*In",
+        help_text="Verfasser*In",
+    ).set_extra(
+        is_public=True,
+        data_lookup="verfasser",
+    )
+    orig_data_csv = models.TextField(
+        blank=True, null=True, verbose_name="The original data"
+    ).set_extra(is_public=True)
+
+    class Meta:
+
+        ordering = [
+            "legacy_pk",
+        ]
+        verbose_name = "Provenienz der Handschrift"
+
+    def __str__(self):
+        if self.legacy_pk:
+            return "{}".format(self.legacy_pk)
+        else:
+            return "{}".format(self.legacy_id)
+
+    def field_dict(self):
+        return model_to_dict(self)
+
+    @classmethod
+    def get_listview_url(self):
+        return reverse("archiv:schrift_browse")
+
+    @classmethod
+    def get_source_table(self):
+        return "mss_prov"
+
+    @classmethod
+    def get_natural_primary_key(self):
+        return "legacy_pk"
+
+    @classmethod
+    def get_createview_url(self):
+        return reverse("archiv:schrift_create")
+
+    def get_absolute_url(self):
+        return reverse("archiv:schrift_detail", kwargs={"pk": self.id})
+
+    def get_delete_url(self):
+        return reverse("archiv:schrift_delete", kwargs={"pk": self.id})
+
+    def get_edit_url(self):
+        return reverse("archiv:schrift_edit", kwargs={"pk": self.id})
+
+    def get_next(self):
+        try:
+            next = next_in_order(self)
+        except ValueError:
+            return False
+        if next:
+            return reverse("archiv:schrift_detail", kwargs={"pk": next.id})
+        return False
+
+    def get_prev(self):
+        try:
+            prev = prev_in_order(self)
+        except ValueError:
+            return False
+        if prev:
+            return reverse("archiv:schrift_detail", kwargs={"pk": prev.id})
+        return False
