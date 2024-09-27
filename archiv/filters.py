@@ -49,13 +49,6 @@ class AutorListFilter(django_filters.FilterSet):
             label=Autor._meta.get_field("gnd_id").verbose_name,
         ),
     )
-    bibliography = (
-        django_filters.CharFilter(
-            lookup_expr="icontains",
-            help_text=Autor._meta.get_field("bibliography").help_text,
-            label=Autor._meta.get_field("bibliography").verbose_name,
-        ),
-    )
     jahrhundert = (
         django_filters.CharFilter(
             lookup_expr="icontains",

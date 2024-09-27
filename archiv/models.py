@@ -80,15 +80,6 @@ class Autor(models.Model):
         is_public=True,
         data_lookup="orden",
     )
-    bibliography = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="Bibliographie",
-        help_text="Bibliographie",
-    ).set_extra(
-        is_public=True,
-        data_lookup="bibliography",
-    )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
     ).set_extra(is_public=True)
@@ -1727,6 +1718,46 @@ class WerkInstanz(models.Model):
         is_public=True,
         data_lookup="autor",
     )
+    bibliography = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Bibliographie",
+        help_text="Bibliographie",
+    ).set_extra(
+        is_public=True,
+        data_lookup="bibliography",
+    )
+    source = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Bibliographie",
+        help_text="Bibliographie",
+    ).set_extra(
+        is_public=True,
+        data_lookup="source",
+    )
+    remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Anmerkungen",
+        help_text="Anmerkungen zur Ausstattung",
+    ).set_extra(
+        is_public=True,
+        data_lookup="remarks",
+        arche_prop="hasNotes",
+    )
+    verfasser = models.ForeignKey(
+        "Verfasser",
+        related_name="rvn_werkinstanz_verfasser_verfasser",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Verfasser*In",
+        help_text="Verfasser*In",
+    ).set_extra(
+        is_public=True,
+        data_lookup="verfasser",
+    )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
     ).set_extra(is_public=True)
@@ -1734,7 +1765,7 @@ class WerkInstanz(models.Model):
     class Meta:
 
         ordering = [
-            "legacy_pk",
+            "fol_sort", "legacy_pk",
         ]
         verbose_name = "Instanz eines Werkes"
 

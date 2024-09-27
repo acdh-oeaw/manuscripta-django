@@ -315,9 +315,9 @@
         {% endif %}
       </div>
       <div class="msParts">
-        Handschrift aus {{ object.rvn_mspart_part_of_manuscript_manuscript.count }} Teilen zusammengesetzt:
+        Handschrift aus {{ object.rvn_mspart_part_of_manuscript_manuscript.count }} {% if object.rvn_mspart_part_of_manuscript_manuscript.count > 1 %} Teilen {% else %} Teil {% endif %} zusammengesetzt:
         {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
-        {{ x.part }} ({{ x.range }}), {{ x.date_str }}
+        {{ x.part }} {% if x.range %} ({{ x.range }}),{% endif %} {{ x.date_str }}
         {% endfor %}
       </div>
       <!-- <ul>
@@ -463,15 +463,17 @@
       </div>
   
       <hr />
-      <ul>
-        <li>ToDo: Fix sorting</li>
+      <ul class="list-unstyled">
         {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
         <li>
-          <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a> |
-          {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}, {% endif %}</strong> {{ x.werk_titel }}{% elif x.werk_titel_alt %} {{x.werk_titel_alt|safe }} {% else %} leer {% endif %}
+          <a href="{{ x.get_absolute_url }}">({{ x.fol_start }} {% if x.fol_end %} - {{x.fol_end}}{% endif %})</a> |
+          {% if x.werk_titel %}<strong>{% if x.autor.name %} {{ x.autor }}
+            <a href="{{ x.autor.get_absolute_url }}" title="Mehr zu {{ x.autor }}">
+              <i class="bi bi-box-arrow-up-right" aria-hidden="true"><span class="visually-hidden">Mehr zu {{ x.autor }}</span></i>
+            </a>: {% endif %}</strong> <strong>{{ x.werk_titel }}</strong>{% elif x.werk_titel_alt %} <strong>{{x.werk_titel_alt|safe }}</strong> {% else %} leer {% endif %}
           {% for y in x.rvn_initium_werk_werkinstanz.all %}
           <br />
-          <a href="{{ y.get_absolute_url }}">{{ y.fol }}</a> | <!--{{ y.titel_vorspann }}--> {{ y.initium }} {{ y.titel }}
+          <div class="ps-2"><a href="{{ y.get_absolute_url }}"><sup>{{ y.fol }}</sup></a> {% if y.titel %}{{ y.titel_vorspann }} {{ y.titel|safe }}<br />{% endif %}{{ y.initium|safe }} ... {% if y.explicit %}— ... {{ y.explicit|safe }} {% endif %}</div>
           {% endfor %}
         </li>
         {% endfor %}
