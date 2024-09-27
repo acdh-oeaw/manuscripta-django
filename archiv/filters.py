@@ -22,6 +22,7 @@ from .models import (
     Schrift,
     MsImage,
     Person,
+    MsProv,
 )
 
 
@@ -829,4 +830,47 @@ class PersonListFilter(django_filters.FilterSet):
             "legacy_id",
             "legacy_pk",
             "name",
+        ]
+
+
+class MsProvListFilter(django_filters.FilterSet):
+    legacy_id = django_filters.CharFilter(
+        lookup_expr="icontains",
+        help_text=MsProv._meta.get_field("legacy_id").help_text,
+        label=MsProv._meta.get_field("legacy_id").verbose_name,
+    )
+    manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=MsProv.objects.all(),
+        help_text=MsProv._meta.get_field("manuscript").help_text,
+        label=MsProv._meta.get_field("manuscript").verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        ),
+    )
+    prov_manuscript = django_filters.ModelMultipleChoiceFilter(
+        queryset=MsProv.objects.all(),
+        help_text=MsProv._meta.get_field("prov_manuscript").help_text,
+        label=MsProv._meta.get_field("prov_manuscript").verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:manuscript-autocomplete",
+        ),
+    )
+    prov_lib = django_filters.ModelMultipleChoiceFilter(
+        queryset=Bibliothek.objects.all(),
+        help_text=MsProv._meta.get_field("prov_lib").help_text,
+        label=MsProv._meta.get_field("prov_lib").verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="archiv-ac:bibliothek-autocomplete",
+        ),
+    )
+
+    class Meta:
+        model = MsProv
+        fields = [
+            "id",
+            "legacy_id",
+            "legacy_pk",
+            "manuscript",
+            "prov_manuscript",
+            "prov_lib",
         ]

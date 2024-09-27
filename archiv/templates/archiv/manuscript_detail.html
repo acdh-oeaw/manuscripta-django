@@ -297,7 +297,7 @@
       <div class="border p-2">
         <h2>{{ object.lib_code }}, {{ object.shelfmark }} <a href="https://manuscripta.at/hs_detail.php?ID={{ object.legacy_pk }}">link</a></h2>
         {% if object.heading %}<h3>{{ object.heading }}</h3>{% endif %}
-        {% if object.olim_signatur %} Olim: {{ object.olim_signatur }}{% endif %}
+        {% if object.olim_signatur %} Olim: {{ object.olim_signatur|safe }}{% endif %}
         {{ object.material }}
         {{ object.num_leaves }}
         {{ object.dimensions }}
@@ -426,10 +426,10 @@
                 <dd>{{ x.stil }}</dd>
 
                 <dt>Lokalisierung</dt>
-                <dt>{{ x.lokalisierung }}</dt>
+                <dd>{{ x.lokalisierung }}</dd>
 
                 <dt>Werkstatt</dt>
-                <dt>{{ x.werkstatt }}</dt>
+                <dd>{{ x.werkstatt }}</dd>
 
                 <dt>Anmerkungen</dt>
                 <dd>{{ x.remarks|safe }}</dd>
@@ -448,7 +448,15 @@
           <div id="collapsGeschichte" class="accordion-collapse collapse" data-bs-parent="#mainAccordion">
             <div class="accordion-body">
               {{ object.geschichte|safe }}<br />
-              <strong>ToDo</strong> process mss_prov
+              {% for x in object.rvn_msprov_manuscript_manuscript.all %}
+              <a href="{{ x.get_absolute_url }}">Vorbesitzer</a> <a href="{{ x.previous_owner.get_absolute_url }}">{{ x.previous_owner }}</a>
+              {% if x.start_date %}
+                {{ x.start_date.year }}-{{x.end_date.year }}
+              {% elif  x.date %}
+                {{ x.date }}
+              {% endif %}
+                <br />
+              {% endfor %}
             </div>
           </div>
         </div>

@@ -20,6 +20,7 @@ from .filters import (
     SchriftListFilter,
     MsImageListFilter,
     PersonListFilter,
+    MsProvListFilter,
 )
 from .forms import (
     AutorFilterFormHelper,
@@ -53,7 +54,9 @@ from .forms import (
     MsImageFilterFormHelper,
     MsImageForm,
     PersonFilterFormHelper,
-    PersonForm
+    PersonForm,
+    MsProvFilterFormHelper,
+    MsProvForm,
 )
 from .tables import (
     AutorTable,
@@ -72,6 +75,7 @@ from .tables import (
     SchriftTable,
     MsImageTable,
     PersonTable,
+    MsProvTable,
 )
 from .models import (
     Autor,
@@ -90,6 +94,7 @@ from .models import (
     Schrift,
     MsImage,
     Person,
+    MsProv,
 )
 from browsing.browsing_utils import (
     GenericListView,
@@ -900,3 +905,54 @@ class PersonDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(PersonDelete, self).dispatch(*args, **kwargs)
+
+
+class MsProvListView(GenericListView):
+
+    model = MsProv
+    filter_class = MsProvListFilter
+    formhelper_class = MsProvFilterFormHelper
+    table_class = MsProvTable
+    init_columns = [
+        "id",
+        "manuscript",
+        "previous_owner",
+    ]
+    enable_merge = True
+    template_name = "archiv/generic_list.html"
+
+
+class MsProvDetailView(BaseDetailView):
+
+    model = MsProv
+    template_name = "archiv/generic_detail.html"
+
+
+class MsProvCreate(BaseCreateView):
+
+    model = MsProv
+    form_class = MsProvForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsProvCreate, self).dispatch(*args, **kwargs)
+
+
+class MsProvUpdate(BaseUpdateView):
+
+    model = MsProv
+    form_class = MsProvForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsProvUpdate, self).dispatch(*args, **kwargs)
+
+
+class MsProvDelete(DeleteView):
+    model = MsProv
+    template_name = "webpage/confirm_delete.html"
+    success_url = reverse_lazy("archiv:msprov_browse")
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MsProvDelete, self).dispatch(*args, **kwargs)

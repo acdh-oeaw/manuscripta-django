@@ -264,4 +264,17 @@ urlpatterns = [
         views.PersonDelete.as_view(),
         name="person_delete",
     ),
+    path("msprov/", views.MsProvListView.as_view(), name="msprov_browse"),
+    path(
+        "msprov/detail/<int:pk>",
+        views.MsProvDetailView.as_view(),
+        name="msprov_detail",
+    ),
+    path("msprov/create/", views.MsProvCreate.as_view(), name="msprov_create"),
+    path("msprov/edit/<int:pk>", views.MsProvUpdate.as_view(), name="msprov_edit"),
+    path(
+        "msprov/delete/<int:pk>",
+        views.MsProvDelete.as_view(),
+        name="msprov_delete",
+    ),
 ]

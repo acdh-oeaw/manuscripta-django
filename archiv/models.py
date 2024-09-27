@@ -1057,10 +1057,10 @@ class MsDesc(models.Model):
         verbose_name = "Manuscript Description"
 
     def __str__(self):
-        if self.legacy_pk:
-            return "{}".format(self.legacy_pk)
+        if self.manuscript:
+            return f"Beschreibung zu {self.manuscript}"
         else:
-            return "{}".format(self.legacy_id)
+            return f"{self.id}"
 
     def field_dict(self):
         return model_to_dict(self)
@@ -2697,7 +2697,7 @@ class MsProv(models.Model):
     )
     previous_owner = models.ForeignKey(
         "Person",
-        related_name="rvn_msprov_person_skosconcept",
+        related_name="rvn_msprov_previous_owner_person",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -2769,17 +2769,17 @@ class MsProv(models.Model):
         verbose_name = "Provenienz der Handschrift"
 
     def __str__(self):
-        if self.legacy_pk:
-            return "{}".format(self.legacy_pk)
+        if self.manuscript:
+            return f"Prov. zu {self.manuscript}"
         else:
-            return "{}".format(self.legacy_id)
+            return f"{self.id}"
 
     def field_dict(self):
         return model_to_dict(self)
 
     @classmethod
     def get_listview_url(self):
-        return reverse("archiv:schrift_browse")
+        return reverse("archiv:msprov_browse")
 
     @classmethod
     def get_source_table(self):
@@ -2791,16 +2791,16 @@ class MsProv(models.Model):
 
     @classmethod
     def get_createview_url(self):
-        return reverse("archiv:schrift_create")
+        return reverse("archiv:msprov_create")
 
     def get_absolute_url(self):
-        return reverse("archiv:schrift_detail", kwargs={"pk": self.id})
+        return reverse("archiv:msprov_detail", kwargs={"pk": self.id})
 
     def get_delete_url(self):
-        return reverse("archiv:schrift_delete", kwargs={"pk": self.id})
+        return reverse("archiv:msprov_delete", kwargs={"pk": self.id})
 
     def get_edit_url(self):
-        return reverse("archiv:schrift_edit", kwargs={"pk": self.id})
+        return reverse("archiv:msprov_edit", kwargs={"pk": self.id})
 
     def get_next(self):
         try:
@@ -2808,7 +2808,7 @@ class MsProv(models.Model):
         except ValueError:
             return False
         if next:
-            return reverse("archiv:schrift_detail", kwargs={"pk": next.id})
+            return reverse("archiv:msprov_detail", kwargs={"pk": next.id})
         return False
 
     def get_prev(self):
@@ -2817,5 +2817,5 @@ class MsProv(models.Model):
         except ValueError:
             return False
         if prev:
-            return reverse("archiv:schrift_detail", kwargs={"pk": prev.id})
+            return reverse("archiv:msprov_detail", kwargs={"pk": prev.id})
         return False

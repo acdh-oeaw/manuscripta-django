@@ -18,7 +18,7 @@ from .populate_fields import (
     pop_fk_field,
     pop_int_field,
     pop_m2m_field,
-    pop_text_field
+    pop_text_field,
 )
 from vocabs.models import SkosConceptScheme, SkosCollection
 

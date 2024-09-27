@@ -19,6 +19,7 @@ from .models import (
     Schrift,
     MsImage,
     Person,
+    MsProv,
 )
 
 
@@ -197,5 +198,19 @@ class PersonTable(tables.Table):
 
     class Meta:
         model = Person
-        sequence = ("id", "name",)
+        sequence = (
+            "id",
+            "name",
+        )
+        attrs = {"class": "table table-responsive table-hover"}
+
+
+class MsProvTable(tables.Table):
+
+    id = tables.LinkColumn(verbose_name="ID")
+    merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
+
+    class Meta:
+        model = MsProv
+        sequence = ("id",)
         attrs = {"class": "table table-responsive table-hover"}
