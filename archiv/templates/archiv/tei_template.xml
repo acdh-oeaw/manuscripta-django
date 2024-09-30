@@ -1,0 +1,62 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="{{ object.ms_code }}.xml"
+    xml:base="https://manuscripta.at/tei/">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>{{ object.lib_code }}, {{ object.shelfmark }}</title>
+                <respStmt>
+                    <resp>Katalogisierung der Handschrift via manuscripta.at
+                        <!--
+                        persName key="#verfasser__{{ object.verfasser.id }}">{{ object.verfasser }}</persName>
+                        -->
+                    </resp>
+                </respStmt>
+                <editionStmt>
+                    <edition>Elektronische Ausgabe nach TEI P5</edition>
+                    <respStmt>
+                        <resp>TEI-P5 konforme Kodierung durch </resp>
+                        <name type="org">manuscripta.at</name>
+                    </respStmt>
+                </editionStmt>
+                <publicationStmt>
+                    <publisher>
+                        <name type="org">Institut für Mittelalterforschung der Österreichischen
+                            Akademie der Wissenschaften</name>
+                        <ptr target="https://www.oeaw.ac.at/imafo/home" />
+                    </publisher>
+                    <distributor>Institut für Mittelalterforschung der Österreichischen Akademie der
+                        Wissenschaften</distributor>
+                    <availability>
+                        <licence target="https://creativecommons.org/licenses/by/4.0/deed.de">
+                            <p>
+                                Dieses Dokument steht unter einer Creative Commons
+                                Namensnennung 4.0
+                            </p>
+                        </licence>
+                    </availability>
+                    <pubPlace>
+                        <ptr type="purl" subtype="description-html"
+                            target="https://manuscripta.at/?ID={{ object.legacy_pk }}" />
+                        <ptr type="purl" subtype="description-xml"
+                            target="https://manuscripta.at/tei/{{ object.ms_code }}.xml" />
+                    </pubPlace>
+                    <idno type="URN">https://manuscripta.at/?ID={{ object.legacy_pk }}</idno>
+                </publicationStmt>
+                <sourceDesc>
+                    <p>born digital</p>
+                </sourceDesc>
+            </titleStmt>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <msDesc>
+                <msIdentifier>
+                    <settlement key="#place__{{ object.lib_code.location.id }} ">{{ object.lib_code.location }}</settlement>
+                    <repository key="#{{ object.lib_code.lib_code }}">{{ object.lib_code }}</repository>
+                    <idno sortKey="{{ object.ms_code_sort }}">{{ object.shelfmark }}</idno>
+                </msIdentifier>
+            </msDesc>
+        </body>
+    </text>
+</TEI>

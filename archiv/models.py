@@ -7,6 +7,8 @@ from next_prev import next_in_order, prev_in_order
 from vocabs.models import SkosConcept
 from browsing.browsing_utils import model_to_dict
 
+from archiv.tei_utils import make_tei
+
 
 def set_extra(self, **kwargs):
     self.extra = kwargs
@@ -917,6 +919,12 @@ class Manuscript(models.Model):
 
     def field_dict(self):
         return model_to_dict(self)
+
+    def get_tei(self):
+        return make_tei(self)
+
+    def tei_url(self):
+        return reverse("webpage:tei", kwargs={"pk": self.id})
 
     @classmethod
     def get_listview_url(self):

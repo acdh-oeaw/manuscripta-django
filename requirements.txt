@@ -1,3 +1,4 @@
+acdh-tei-pyutils
 Django>=5.0.6,<6
 django-autocomplete-light
 django-crispy-forms
@@ -9,7 +10,6 @@ django-next-prev>=1.1.0,<2
 django-super-deduper
 django-tables2
 djangorestframework
-lxml
 pandas
 psycopg2-binary
 python-dateutil

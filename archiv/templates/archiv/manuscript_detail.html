@@ -296,6 +296,7 @@
       </div>
       <div class="border p-2">
         <h2>{{ object.lib_code }}, {{ object.shelfmark }} <a href="https://manuscripta.at/hs_detail.php?ID={{ object.legacy_pk }}">link</a></h2>
+        <a href="{{ object.tei_url }}">tei</a>
         {% if object.heading %}<h3>{{ object.heading }}</h3>{% endif %}
         {% if object.olim_signatur %} Olim: {{ object.olim_signatur|safe }}{% endif %}
         {{ object.material }}
