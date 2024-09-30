@@ -5,58 +5,79 @@
             <titleStmt>
                 <title>{{ object.lib_code }}, {{ object.shelfmark }}</title>
                 <respStmt>
-                    <resp>Katalogisierung der Handschrift via manuscripta.at
-                        <!--
-                        persName key="#verfasser__{{ object.verfasser.id }}">{{ object.verfasser }}</persName>
-                        -->
-                    </resp>
+                    <resp>Katalogisierung der Handschrift via manuscripta.at</resp>
+                    <persName key="#verfasser__{{ object.verfasser.id }}">{{ object.verfasser }}</persName>
                 </respStmt>
-                <editionStmt>
-                    <edition>Elektronische Ausgabe nach TEI P5</edition>
-                    <respStmt>
-                        <resp>TEI-P5 konforme Kodierung durch </resp>
-                        <name type="org">manuscripta.at</name>
-                    </respStmt>
-                </editionStmt>
-                <publicationStmt>
-                    <publisher>
-                        <name type="org">Institut für Mittelalterforschung der Österreichischen
-                            Akademie der Wissenschaften</name>
-                        <ptr target="https://www.oeaw.ac.at/imafo/home" />
-                    </publisher>
-                    <distributor>Institut für Mittelalterforschung der Österreichischen Akademie der
-                        Wissenschaften</distributor>
-                    <availability>
-                        <licence target="https://creativecommons.org/licenses/by/4.0/deed.de">
-                            <p>
-                                Dieses Dokument steht unter einer Creative Commons
-                                Namensnennung 4.0
-                            </p>
-                        </licence>
-                    </availability>
-                    <pubPlace>
-                        <ptr type="purl" subtype="description-html"
-                            target="https://manuscripta.at/?ID={{ object.legacy_pk }}" />
-                        <ptr type="purl" subtype="description-xml"
-                            target="https://manuscripta.at/tei/{{ object.ms_code }}.xml" />
-                    </pubPlace>
-                    <idno type="URN">https://manuscripta.at/?ID={{ object.legacy_pk }}</idno>
-                </publicationStmt>
-                <sourceDesc>
-                    <p>born digital</p>
-                </sourceDesc>
             </titleStmt>
+            <editionStmt>
+                <edition>Elektronische Ausgabe nach TEI P5</edition>
+                <respStmt>
+                    <resp>TEI-Kodierung</resp>
+                    <name type="org">manuscripta.at</name>
+                </respStmt>
+            </editionStmt>
+            <publicationStmt>
+                <publisher>
+                    <name type="org">Institut für Mittelalterforschung der Österreichischen
+                        Akademie der Wissenschaften</name>
+                    <ptr target="https://www.oeaw.ac.at/imafo/home" />
+                </publisher>
+                <distributor>Institut für Mittelalterforschung der Österreichischen Akademie der
+                    Wissenschaften</distributor>
+                <availability>
+                    <licence target="https://creativecommons.org/licenses/by/4.0/deed.de">
+                        <p>Creative Commons Namensnennung 4.0</p>
+                    </licence>
+                </availability>
+                <pubPlace>
+                    <ptr type="purl" subtype="description-html"
+                        target="https://manuscripta.at/?ID={{ object.legacy_pk }}" />
+                    <ptr type="purl" subtype="description-xml"
+                        target="https://manuscripta.at/tei/{{ object.ms_code }}.xml" />
+                </pubPlace>
+                <idno type="URN">https://manuscripta.at/?ID={{ object.legacy_pk }}</idno>
+            </publicationStmt>
+            <sourceDesc>
+                <msDesc>
+                    <msIdentifier>
+                        <settlement key="#place__{{ object.lib_code.location.id }} ">
+                            {{ object.lib_code.location }}
+                        </settlement>
+                        <repository key="#{{ object.lib_code.lib_code }}">{{ object.lib_code }}</repository>
+                        <idno sortKey="{{ object.ms_code_sort }}">{{ object.shelfmark }}</idno>{% if object.olim_signatur %}
+                        <altIdentifier type="olim">
+                            <idno type="olim">{{ object.olim_signatur }}</idno>
+                        </altIdentifier>{% endif %}
+                    </msIdentifier>{% if object.heading %}
+                    <head>
+                        <title>{{ object.heading }}</title>{% if object.origin_date %}
+                        <date {% if object.start_date %} notBefore="{{ object.start_date|date:'Y-m-d' }}"{% endif %} {% if object.end_date %} notAfter="{{ object.end_date|date:'Y-m-d' }}"{% endif %}>{{ object.origin_date }}</date>{% endif %}
+                    </head>{% endif %}
+                     <physDesc>
+                        <objectDesc form="codex">
+                            <supportDesc material="{{ object.material }}">
+                                <support>
+                                    <p>
+                                        <material>{{ object.material }}</material>
+                                    </p>
+                                </support>{% if object.num_leaves or object.dimensions %}
+                                <extent>{% if object.num_leaves %}
+                                    <!-- ToDo: provide some method to convert object.num_leaves into numbers quantity="{{ object.num_leaves }}" -->
+                                    <measure type="leavesCount"  >{{ object.num_leaves }}</measure>{% endif %}{% if object.dimensions %}
+                                    <dimensions type="leaf" unit="mm">
+                                        <!-- ToDo: provide some method to convert things like 124x432 into height/width -->
+                                        <height quantity="29">29</height> 
+                                        <width quantity="24">24</width>
+                                    </dimensions>{% endif %}
+                                </extent>{% endif %}
+                            </supportDesc>
+                        </objectDesc>
+                    </physDesc>
+                </msDesc>
+            </sourceDesc>
         </fileDesc>
     </teiHeader>
     <text>
-        <body>
-            <msDesc>
-                <msIdentifier>
-                    <settlement key="#place__{{ object.lib_code.location.id }} ">{{ object.lib_code.location }}</settlement>
-                    <repository key="#{{ object.lib_code.lib_code }}">{{ object.lib_code }}</repository>
-                    <idno sortKey="{{ object.ms_code_sort }}">{{ object.shelfmark }}</idno>
-                </msIdentifier>
-            </msDesc>
-        </body>
+        <body><p></p></body>
     </text>
 </TEI>
