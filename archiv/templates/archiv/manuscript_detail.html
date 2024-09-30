@@ -295,8 +295,7 @@
         <a href="{{ object.lib_code.homepage }}">{{ object.lib_code }}</a> [Handschriftenliste | Kataloge]
       </div>
       <div class="border p-2">
-        <h2>{{ object.lib_code }}, {{ object.shelfmark }} <a href="https://manuscripta.at/hs_detail.php?ID={{ object.legacy_pk }}">link</a></h2>
-        <a href="{{ object.tei_url }}">tei</a>
+        <h2>{{ object.lib_code }}, {{ object.shelfmark }} <a href="https://manuscripta.at/hs_detail.php?ID={{ object.legacy_pk }}">link</a> | <a href="{{ object.tei_url }}">TEI/XML</a></h2>
         {% if object.heading %}<h3>{{ object.heading }}</h3>{% endif %}
         {% if object.olim_signatur %} Olim: {{ object.olim_signatur|safe }}{% endif %}
         {{ object.material }}

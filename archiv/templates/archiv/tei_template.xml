@@ -72,7 +72,16 @@
                                 </extent>{% endif %}
                             </supportDesc>
                         </objectDesc>
-                    </physDesc>
+                    </physDesc>{% if object.rvn_werkinstanz_manuscript_manuscript.all %}
+                    <msContents>{% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
+                        <msItem n="{{ forloop.counter }}">
+                            <locus>{{ x.fol_start }}{% if x.fol_end %}—{{ x.fol_end }}{% endif %}</locus>{% if x.autor.name %}
+                            <author key="author__{{ x.autor.id }}">{{ x.autor }}</author>{% endif %}
+                            <title>{% if x.werk_titel %}{{ x.werk_titel }}{% elif x.werk_titel_alt %}{{ x.werk_titel_alt }}{% else %}kein Titel{% endif %}</title>{% for y in x.rvn_initium_werk_werkinstanz.all %}{% if y.initium %}
+                            <incipit>{{ y.initium }}</incipit>{% endif %}{% if y.explicit %}
+                            <explicit>{{ y.explicit }}</explicit>{% endif %}{% endfor %}
+                        </msItem>{% endfor %}
+                    </msContents>{% endif %}
                 </msDesc>
             </sourceDesc>
         </fileDesc>
