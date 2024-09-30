@@ -72,7 +72,19 @@
                                 </extent>{% endif %}
                             </supportDesc>
                         </objectDesc>
-                    </physDesc>{% if object.rvn_werkinstanz_manuscript_manuscript.all %}
+                    </physDesc>
+                    {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
+                    <msPart n="{% if x.part %} {{ x.part }} {% else %} {{ forloop.counter }} {% endif %}" xml:id="ms-part__{{ x.id }}">
+                        <msIdentifier>
+                            <idno>{{ object.shelfmark }}{% if x.range %}, {{ x.range }}{% endif %}</idno>
+                        </msIdentifier>{% if x.date_str %}
+                        <history>
+                            <origin>
+                                <origDate {% if x.date_str %} notBefore="{{ x.date_begin|date:'Y-m-d' }}"{% endif %} {% if x.date_end %} notAfter="{{ x.date_end|date:'Y-m-d' }}"{% endif %}>{{ x.date_str }}</origDate>
+                            </origin>
+                        </history>{% endif %}
+                    </msPart>{% endfor %}
+                    {% if object.rvn_werkinstanz_manuscript_manuscript.all %}
                     <msContents>{% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
                         <msItem n="{{ forloop.counter }}">
                             <locus>{{ x.fol_start }}{% if x.fol_end %}—{{ x.fol_end }}{% endif %}</locus>{% if x.autor.name %}
