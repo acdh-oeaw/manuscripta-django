@@ -793,6 +793,15 @@ class Manuscript(models.Model):
         arche_prop="hasNote",
         arche_prop_str_template="Entstehungsdatum: <value>",
     )
+    date_zusatz = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Datierungsanmerkung",
+        help_text="Ergänzung zur Datierung",
+    ).set_extra(
+        is_public=True,
+        data_lookup="date_zusatz",
+    )
     prov = models.TextField(
         blank=True,
         null=True,
@@ -831,6 +840,16 @@ class Manuscript(models.Model):
     ).set_extra(
         is_public=True,
         data_lookup="remarks",
+        arche_prop="hasNotes",
+    )
+    gesbeschreibung = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Gestaltsbeschreibung",
+        help_text="Beschreibung der Gestalt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="gesbeschreibung",
         arche_prop="hasNotes",
     )
     geschichte = models.TextField(
@@ -889,17 +908,27 @@ class Manuscript(models.Model):
         is_public=True,
         data_lookup="range",
     )
-    # manuscripta_id = models.IntegerField(
-    #     blank=True,
-    #     null=True,
-    #     verbose_name="Manuscript ID",
-    #     help_text="Manuscript ID",
-    # ).set_extra(
-    #     is_public=False,
-    #     data_lookup="ID",
-    #     arche_prop="hasNonLinkedIdentifier",
-    #     arche_prop_str_template="Manuscript ID: <value>",
-    # )
+    data_source = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="Quelle",
+        help_text="Quelle",
+    ).set_extra(
+        is_public=True,
+        data_lookup="data_source",
+    )
+    verfasser = models.ForeignKey(
+        "Verfasser",
+        related_name="rvn_manuscript_verfasser_verfasser",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Verfasser*In",
+        help_text="Verfasser*In",
+    ).set_extra(
+        is_public=True,
+        data_lookup="verfasser",
+    )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
     ).set_extra(is_public=True)
@@ -1773,7 +1802,8 @@ class WerkInstanz(models.Model):
     class Meta:
 
         ordering = [
-            "fol_sort", "legacy_pk",
+            "fol_sort",
+            "legacy_pk",
         ]
         verbose_name = "Instanz eines Werkes"
 
