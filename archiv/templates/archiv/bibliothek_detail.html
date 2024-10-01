@@ -1,0 +1,39 @@
+{% extends "archiv/generic_detail.html" %}
+{% load static %}
+{% load webpage_extras %}
+{% block title %}{{ object}}{% endblock %}
+
+{% block custom %}
+<div class="container">
+  <h2 class="text-center">Handschriftenliste</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Signatur</th>
+        <th>Titel</th>
+        <th>Material</th>
+        <th>Kurzbeschreibung</th>
+        <th>Abbildungen</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for x in object.rvn_manuscript_lib_code_bibliothek.all %}
+      
+      <tr>
+        <td><a href="{{ x.get_absolute_url }}">{{ x.shelfmark }}</a></td>
+        <td>{{ x.heading|safe }}</td>
+        <td> {{ x.material }}</td>
+        <td>
+          {{ x.num_leaves }}
+          {{ x.dimensions }}
+          {{ x.origin_date }}
+        </td>
+        <td>{% if x.rvn_msimage_manuscript_manuscript.all %} Ja {% else %} Nein {% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table> 
+</div>
+
+
+{% endblock custom %}

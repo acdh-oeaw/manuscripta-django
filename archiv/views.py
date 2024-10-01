@@ -179,7 +179,7 @@ class BibliothekListView(GenericListView):
 class BibliothekDetailView(BaseDetailView):
 
     model = Bibliothek
-    template_name = "archiv/generic_detail.html"
+    template_name = "archiv/bibliothek_detail.html"
 
 
 class BibliothekCreate(BaseCreateView):
