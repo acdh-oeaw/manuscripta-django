@@ -5,34 +5,57 @@
 
 {% block custom %}
 <div class="container">
-  <h2 class="text-center">Handschriftenliste</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Signatur</th>
-        <th>Titel</th>
-        <th>Material</th>
-        <th>Kurzbeschreibung</th>
-        <th>Abbildungen</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for x in object.rvn_manuscript_lib_code_bibliothek.all %}
-      
-      <tr>
-        <td><a href="{{ x.get_absolute_url }}">{{ x.shelfmark }}</a></td>
-        <td>{{ x.heading|safe }}</td>
-        <td> {{ x.material }}</td>
-        <td>
-          {{ x.num_leaves }}
-          {{ x.dimensions }}
-          {{ x.origin_date }}
-        </td>
-        <td>{% if x.rvn_msimage_manuscript_manuscript.all %} Ja {% else %} Nein {% endif %}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table> 
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="hanschriftenliste" data-bs-toggle="tab"
+        data-bs-target="#hanschriftenliste-pane" type="button" role="tab" aria-controls="hanschriftenliste-pane"
+        aria-selected="true">Handschriftenliste</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="kataloge" data-bs-toggle="tab" data-bs-target="#kataloge-pane" type="button"
+        role="tab" aria-controls="kataloge-pane" aria-selected="false">Kataloge</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="hanschriftenliste-pane" role="tabpanel"
+      aria-labelledby="hanschriftenliste" tabindex="0">
+      <h2 class="text-center p-2">Handschriftenliste</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Signatur</th>
+            <th>Titel</th>
+            <th>Material</th>
+            <th>Kurzbeschreibung</th>
+            <th>Abbildungen</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for x in object.rvn_manuscript_lib_code_bibliothek.all %}
+          <tr>
+            <td><a href="{{ x.get_absolute_url }}">{{ x.shelfmark }}</a></td>
+            <td>{{ x.heading|safe }}</td>
+            <td> {{ x.material }}</td>
+            <td>
+              {{ x.num_leaves }}
+              {{ x.dimensions }}
+              {{ x.origin_date }}
+            </td>
+            <td>{% if x.rvn_msimage_manuscript_manuscript.all %} Ja {% else %} Nein {% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane fade" id="kataloge-pane" role="tabpanel" aria-labelledby="kataloge" tabindex="0">
+      <h2 class="text-center p-2">Kataloge</h2>
+      <ul>
+        {% for x in object.literatur.all %}
+        <li>{{ x.vollzitat|safe }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 </div>
 
 

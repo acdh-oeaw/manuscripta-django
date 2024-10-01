@@ -192,6 +192,15 @@ class Bibliothek(models.Model):
         data_lookup="library_name_short",
         arche_prop="hasAlternativeTitle",
     )
+    literatur = models.ManyToManyField(
+        "Literatur",
+        blank=True,
+        verbose_name="Katologe",
+        help_text="Kataloge",
+        related_name="rvn_bibliothek_literatur_literatur",
+    ).set_extra(
+        is_public=True,
+    )
     location = models.ForeignKey(
         "Place",
         related_name="rvn_bibliothek_location_place",
@@ -595,9 +604,11 @@ class Literatur(models.Model):
 
     def __str__(self):
         if self.kurz_zitat:
-            return "{}".format(self.kurz_zitat)
+            return f"{self.kurz_zitat}"
+        elif self.vollzitat:
+            return f"{self.vollzitat[:70]} ..."
         else:
-            return "{}".format(self.legacy_id)
+            return f"{self.id}"
 
     def field_dict(self):
         return model_to_dict(self)
