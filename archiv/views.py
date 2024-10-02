@@ -272,6 +272,7 @@ class LiteraturListView(GenericListView):
     init_columns = [
         "id",
         "vollzitat",
+        "cit_short",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
