@@ -591,6 +591,15 @@ class Literatur(models.Model):
         is_public=True,
         data_lookup="Anmerkungen",
     )
+    cit_short = models.CharField(
+        max_length=250,
+        blank=True,
+        verbose_name="citshort",
+        help_text="Für die Auflösung von Kurzzitaten benötigt",
+    ).set_extra(
+        is_public=True,
+        data_lookup="citshort",
+    )
     orig_data_csv = models.TextField(
         blank=True, null=True, verbose_name="The original data"
     ).set_extra(is_public=True)
@@ -1211,8 +1220,8 @@ class MsPart(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name="Teil Code",
-        help_text="Teil Code",
+        verbose_name="Material",
+        help_text="Material",
     ).set_extra(
         is_public=True,
         data_lookup="material",
@@ -2248,7 +2257,7 @@ class Schrift(models.Model):
         help_text="Höhe der Schrift",
     ).set_extra(
         is_public=True,
-        data_lookup="schr_hohe",
+        data_lookup="schr_hoehe",
     )
     schr_breite = models.CharField(
         max_length=250,

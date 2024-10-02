@@ -772,7 +772,9 @@ class SchriftListView(GenericListView):
     table_class = SchriftTable
     init_columns = [
         "id",
-        "legacy_pk",
+        "schriftart",
+        "schr_hohe",
+        "schr_breite",
     ]
     enable_merge = True
     template_name = "archiv/generic_list.html"
