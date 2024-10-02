@@ -2,13 +2,6 @@
 {% load static %}
 {% load webpage_extras %}
 {% block title %}{{ object.shelfmark }}, {{ object.lib_code }}{% endblock %}
-{% block scriptHeader %}
-
-<link rel="stylesheet" type="text/css"
-  href="https://cdn.datatables.net/v/bs4/dt-1.10.21/b-1.6.2/b-html5-1.6.2/datatables.min.css" />
-<script type="text/javascript"
-  src="https://cdn.datatables.net/v/bs4/dt-1.10.21/b-1.6.2/b-html5-1.6.2/datatables.min.js"></script>
-{% endblock scriptHeader %}
 
 {% block custom %}
 <div class="container">
@@ -24,13 +17,9 @@
   </ul>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade" id="new-view-tab" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              <h2 class="card-title">{{ object.lib_code.lib_name}}, {{ object.shelfmark }}</h2>
-            </div>
-            <div class="card-body">
+      
+              
+            <div>
               <table class="table table-bordered table-hover">
                 <tr>
                   <th>
@@ -149,146 +138,7 @@
   
               </table>
             </div>
-            <div class="card-header">
-              <h4 class="card-title">MSDesc</h4>
-            </div>
-            <div class="card-body">
-              {% for x in object.rvn_msdesc_manuscript_manuscript.all %}
-              <table class="table table-bordered table-hover">
-                <tr>
-                  <th>phys_desc</th>
-                  <td>{{ x.phys_desc|safe}}</td>
-                </tr>
-                <tr>
-                  <th>content</th>
-                  <td>{{ x.content|safe }}</td>
-                </tr>
-                <tr>
-                  <th>Verfasser*in</th>
-                  <td>{{ x.verfasser}}, {{ x.created}}</td>
-                </tr>
-              </table>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">Initien</h4>
-            </div>
-            <div class="card-body">
-  
-              <div style="padding:0;">
-  
-                <table class="table table-bordered table-hover" id="example">
-                  <thead>
-                    <tr>
-                      <th>
-                        Folio
-                      </th>
-                      <th>
-                        Initium
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for x in object.rvn_initium_manuscript_manuscript.all %}
-                    <tr>
-                      <td><a href="{{ x.get_absolute_url }}">{{ x.fol }}</a></td>
-                      <td>
-                        {{ x.initium }}
-                        {% if x.werk %} <br />
-                        <small>Werk: {{ x.werk }}</small>
-                        {% endif %}
-                      </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-  
-            </div>
-  
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">Texte</h4>
-            </div>
-            <div class="card-body">
-  
-              <div style="padding:0;">
-  
-                <table class="table table-bordered table-hover" id="texte">
-                  <thead>
-                    <tr>
-                      <th>
-                        Folio
-                      </th>
-                      <th>
-                        Titel
-                      </th>
-                      <th>
-                        Autor
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for x in object.rvn_werkinstanz_manuscript_manuscript.all %}
-                    <tr>
-                      <td>
-                        <a href="{{ x.get_absolute_url }}">{{ x.fol_start }}</a>
-                      </td>
-                      <td>
-                        {{ x.werk_titel }}
-                        {% for y in x.rvn_initium_werk_werkinstanz.all %}
-                        <li>{{ y.initium }}</li>
-                        {% endfor %}
-                      </td>
-                      <td><a href="{{ x.autor.get_absolute_url }}">{{ x.autor }}</a></td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-  
-            </div>
-  
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Literatur zur Handschrift</h3>
-          </div>
-          <div class="card-body">
-            <table class="table table-bordered table-hover" id="example1">
-              <thead>
-                <tr>
-                  <th>
-                    ID
-                  </th>
-                  <th>
-                    Zitat
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for x in object.rvn_zitat_manuscript_manuscript.all %}
-                <tr>
-                  <td>
-                    <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                  </td>
-                  <td>
-                    {{ x.literatur.vollzitat }} {{ x.kz_ms }}
-                    {% for y in x.literatur.rvn_weblit_literatur_literatur.all %} <a href="{{ y }}">online</a>{% endfor%}
-                  </td>
-                  {% endfor %}
-              </tbody>
-            </table>
-  
-          </div>
-        </div>
-      </div>
+            
     </div>
     <div class="tab-pane fade show active" id="classic-view-tab" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
       <div class="p-2">
@@ -379,7 +229,7 @@
                     <td widht="92%">
                       {% if x.range %} {{ x.range }},{% endif %} {% if x.material %}<a href="{{ x.material }}">{{ x.material }}</a>{% endif %} {{ x.date_str }}
                       {% if x.rvn_schrift_mspart_mspart.all %}
-                      <table class="table table-compact table-borderless">
+                      <table class="table table-borderless">
                         {% for y in x.rvn_schrift_mspart_mspart.all %}
                         <tr>
                           <th widht="8%">Schrift {{ forloop.counter }}</th>
@@ -407,41 +257,6 @@
                   {% endfor %}
                 </tbody>
               </table>
-              <ul class="no-style">
-                {% for x in object.rvn_mspart_part_of_manuscript_manuscript.all %}
-                <h3><a href="{{ x.get_absolute_url }}">Teil:</a> {{ x.part }} {{ x.range }}</h3>
-                <dl>
-                  <dt>Range</dt>
-                  <dd>{{ x.range }}</dd>
-                </dl>
-                <h4>Schrift</h4>
-                {% for y in x.rvn_schrift_mspart_mspart.all %}
-                <a href="{{ y.get_absolute_url }}">link</a>
-                  <dl>
-                    <dt>Schriftraum</dt>
-                    <dd>
-                      {% if y.schr_hohe and y.schr_breite %}
-                        {{ y.schr_hohe }} × {{ y.schr_breite }}
-                      {% else %}
-                      {{ y.schr_hohe }}{{ y.schr_breite }}
-                      {% endif %}
-                    </dd>
-
-                    <dt>Spaltenzahl</dt>
-                    <dd>{{ y.spaltenzahl }}</dd>
-
-                    <dt>Zeilenzahl</dt>
-                    <dd>{{ y.zeilenzahl }}</dd>
-
-                    <dt>Schriftart</dt>
-                    <dd><a href="{{ y.schriftart.get_absolute_url }}">{{ y.schriftart }}</a></dd>
-                    
-                    <dt>Anmerkungen</dt>
-                    <dd>{{ y.remarks|safe }}</dd>
-                  </dl>
-                {% endfor %}
-                {% endfor %}
-              </ul>
             </div>
           </div>
         </div>
@@ -562,41 +377,4 @@
     </div>
   </div>
 </div>
-
-<script>
-  $(document).ready(function () {
-    $('#example').DataTable({
-      "pageLength": 50,
-      dom: 'Bfrtip',
-      buttons: [
-        'copy', 'csv'
-      ],
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-      }
-    });
-
-    $('#example1').DataTable({
-      "pageLength": 50,
-      dom: 'Bfrtip',
-      buttons: [
-        'copy', 'csv'
-      ],
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-      }
-    });
-    $('#texte').DataTable({
-      "pageLength": 50,
-      dom: 'Bfrtip',
-      buttons: [
-        'copy', 'csv'
-      ],
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-      }
-    });
-
-  });
-</script>
 {% endblock custom %}
