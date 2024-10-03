@@ -171,6 +171,7 @@ class SkosConceptListView(GenericListView):
     formhelper_class = SkosConceptFormHelper
     init_columns = [
         "id",
+        "legacy_id",
         "pref_label",
         "broader_concept",
     ]

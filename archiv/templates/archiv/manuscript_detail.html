@@ -148,9 +148,13 @@
         <h2>{{ object.lib_code }}, {{ object.shelfmark }} <a href="https://manuscripta.at/hs_detail.php?ID={{ object.legacy_pk }}">link</a> | <a href="{{ object.tei_url }}">TEI/XML</a></h2>
         {% if object.heading %}<h3>{{ object.heading }}</h3>{% endif %}
         {% if object.olim_signatur %} Olim: {{ object.olim_signatur|safe }}{% endif %}
-        {{ object.material }}
-        {{ object.format }}
+        {% if object.material %}
+          {{ object.material }} <a href="{{ object.material.get_absolute_url }}"><i class="bi bi-box-arrow-up-right" aria-hidden="true"><span class="visually-hidden">Material</span></i></a>
+        {% endif %}
+        {% if object.format %}
+          {{ object.format }} <a href="{{ object.format.get_absolute_url }}"><i class="bi bi-box-arrow-up-right" aria-hidden="true"><span class="visually-hidden">Format</span></i></a>
         {{ object.num_leaves }}
+        {% endif %}
         {{ object.dimensions }}
         {{ object.origin_date }} <br />
         {% if object.prov %} Provenienz/Letztbesitzer: {{ object.prov }} {% endif %}
@@ -228,7 +232,7 @@
                   <tr>
                     <th width="8%"><a href="{{ x.get_absolute_url }}">Teil {{ forloop.counter }}</a></td>
                     <td widht="92%">
-                      {% if x.range %} {{ x.range }},{% endif %} {% if x.material %}<a href="{{ x.material }}">{{ x.material }}</a>{% endif %} {{ x.date_str }}
+                      {% if x.range %} {{ x.range }},{% endif %} {% if x.material %}<a href="{{ x.material.get_absolute_url }}">{{ x.material }}</a>{% endif %} {{ x.date_str }}
                       {% if x.rvn_schrift_mspart_mspart.all %}
                       <table class="table table-borderless">
                         {% for y in x.rvn_schrift_mspart_mspart.all %}

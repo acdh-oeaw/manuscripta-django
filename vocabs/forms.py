@@ -1,8 +1,9 @@
 from dal import autocomplete
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
-from crispy_forms.bootstrap import *
+from crispy_forms.layout import Submit, Layout, Fieldset
+from crispy_bootstrap5.bootstrap5 import BS5Accordion
+from crispy_forms.bootstrap import AccordionGroup
 from .models import SkosConcept, SkosConceptScheme, SkosLabel, SkosCollection, Metadata
 
 
@@ -21,7 +22,7 @@ class UploadFileForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(UploadFileForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_tag = True
+        self.form_tag = True
         self.helper.form_class = "form-horizontal"
         self.helper.label_class = "col-md-3"
         self.helper.field_class = "col-md-9"
@@ -36,17 +37,17 @@ class SkosConceptFormHelper(FormHelper):
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
-        self.helper.form_tag = False
+        self.form_tag = False
         self.add_input(Submit("Filter", "Search"))
         self.layout = Layout(
-            Fieldset(
-                "Basic search options",
-                "pref_label",
-                "collection",
-                "other_label",
-                css_id="basic_search_fields",
-            ),
-            Accordion(
+            BS5Accordion(
+                AccordionGroup(
+                    "Basic search options",
+                    "pref_label",
+                    "collection",
+                    "other_label",
+                    css_id="basic_search_fields",
+                ),
                 AccordionGroup(
                     "Advanced search",
                     "broader_concept",
@@ -71,7 +72,7 @@ class MetadataForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MetadataForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_tag = True
+        self.form_tag = True
         self.helper.form_class = "form-horizontal"
         self.helper.label_class = "col-md-3 create-label"
         self.helper.field_class = "col-md-9"
@@ -88,7 +89,7 @@ class SkosCollectionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SkosCollectionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_tag = True
+        self.form_tag = True
         self.helper.form_class = "form-horizontal"
         self.helper.label_class = "col-md-3 create-label"
         self.helper.field_class = "col-md-9"
@@ -141,7 +142,7 @@ class SkosConceptForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SkosConceptForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_tag = True
+        self.form_tag = True
         self.helper.form_class = "form-horizontal"
         self.helper.label_class = "col-md-3 create-label"
         self.helper.field_class = "col-md-9"
@@ -163,7 +164,7 @@ class SkosConceptForm(forms.ModelForm):
                 "same_as_external",
                 css_id="basic_skos_fields",
             ),
-            Accordion(
+            BS5Accordion(
                 AccordionGroup(
                     "Advanced fields",
                     "other_label",
@@ -202,7 +203,7 @@ class SkosConceptSchemeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SkosConceptSchemeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_tag = True
+        self.form_tag = True
         self.helper.form_class = "form-horizontal"
         self.helper.label_class = "col-md-3 create-label"
         self.helper.field_class = "col-md-9"
@@ -217,7 +218,7 @@ class SkosConceptSchemeFormHelper(FormHelper):
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
-        self.helper.form_tag = False
+        self.form_tag = False
         self.add_input(Submit("Filter", "Search"))
         self.layout = Layout(
             Fieldset("", "dc_title", "dc_creator", css_id="basic_search_fields"),
@@ -232,7 +233,7 @@ class SkosLabelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SkosLabelForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_tag = True
+        self.form_tag = True
         self.helper.form_class = "form-horizontal"
         self.helper.label_class = "col-md-3 create-label"
         self.helper.field_class = "col-md-9"
@@ -247,7 +248,7 @@ class SkosLabelFormHelper(FormHelper):
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
-        self.helper.form_tag = False
+        self.form_tag = False
         self.add_input(Submit("Filter", "Search"))
 
 
@@ -258,7 +259,7 @@ class SkosCollectionFormHelper(FormHelper):
         self.helper = FormHelper()
         self.form_class = "genericFilterForm"
         self.form_method = "GET"
-        self.helper.form_tag = False
+        self.form_tag = False
         self.add_input(Submit("Filter", "Search"))
         self.layout = Layout(
             Fieldset(

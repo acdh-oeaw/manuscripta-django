@@ -1,6 +1,6 @@
 import django_tables2 as tables
 from django_tables2.utils import A
-from vocabs.models import *
+from vocabs.models import SkosCollection, SkosConcept, SkosConceptScheme, SkosLabel
 
 
 class SkosLabelTable(tables.Table):
@@ -33,9 +33,18 @@ class SkosCollectionTable(tables.Table):
 class SkosConceptTable(tables.Table):
     broader_concept = tables.Column(verbose_name="Broader Term")
     pref_label = tables.LinkColumn("vocabs:skosconcept_detail", args=[A("pk")])
+    id = tables.LinkColumn("vocabs:skosconcept_detail", args=[A("pk")])
+    legacy_id = tables.LinkColumn(
+        "vocabs:skosconcept_detail", args=[A("pk")], verbose_name="legacy id"
+    )
     all_schemes = tables.Column(verbose_name="in SkosScheme", orderable=False)
 
     class Meta:
         model = SkosConcept
-        sequence = ["broader_concept", "pref_label", "all_schemes", "namespace"]
+        sequence = [
+            "broader_concept",
+            "pref_label",
+            "all_schemes",
+            "namespace",
+        ]
         attrs = {"class": "table table-hover table-striped table-condensed"}
