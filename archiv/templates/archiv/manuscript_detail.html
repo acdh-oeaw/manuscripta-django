@@ -149,6 +149,7 @@
         {% if object.heading %}<h3>{{ object.heading }}</h3>{% endif %}
         {% if object.olim_signatur %} Olim: {{ object.olim_signatur|safe }}{% endif %}
         {{ object.material }}
+        {{ object.format }}
         {{ object.num_leaves }}
         {{ object.dimensions }}
         {{ object.origin_date }} <br />
@@ -273,7 +274,7 @@
             <div class="accordion-body">
               <ul class="no-style">
                 {% for x in object.rvn_zitat_manuscript_manuscript.all %}
-                <li>{{ x.literatur.vollzitat|safe }}, {{ x.kz_sm }}</li>
+                <li>{{ x.literatur.vollzitat|safe }}, {{ x.kz_sm }} <a href="{{ x.get_absolute_url }}"><i class="bi bi-box-arrow-up-right" aria-hidden="true"><span class="visually-hidden">link zum Eintrag {{ x.cit_short }}</span></i></a></li>
                 {% endfor %}
               </ul>
             </div>

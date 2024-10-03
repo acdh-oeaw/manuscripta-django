@@ -62,7 +62,9 @@ class InitiumTable(tables.Table):
 class LiteraturTable(tables.Table):
 
     id = tables.LinkColumn(verbose_name="ID")
-    vollzitat = tables.TemplateColumn("{{ record.vollzitat|safe }}", verbose_name="Vollzitat")
+    vollzitat = tables.TemplateColumn(
+        "{{ record.vollzitat|safe }}", verbose_name="Vollzitat"
+    )
     merge = MergeColumn(verbose_name="keep | remove", accessor="pk")
 
     class Meta:

@@ -780,6 +780,18 @@ class Manuscript(models.Model):
         is_public=True,
         data_lookup="material",
     )
+    format = models.ForeignKey(
+        SkosConcept,
+        related_name="rvn_manuscript_format_skosconcept",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Format",
+        help_text="Format",
+    ).set_extra(
+        is_public=True,
+        data_lookup="format",
+    )
     num_leaves = models.CharField(
         max_length=250,
         blank=True,
@@ -1949,9 +1961,9 @@ class Zitat(models.Model):
 
     def __str__(self):
         if self.literatur:
-            return "{}".format(self.literatur)
+            return f"{self.literatur}"
         else:
-            return "{}".format(self.legacy_id)
+            return f"{self.id}"
 
     def field_dict(self):
         return model_to_dict(self)
