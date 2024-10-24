@@ -5,7 +5,7 @@ django-crispy-forms
 acdh-django-browsing==2.0
 django-extensions
 django-filter
-django-leaflet
+# django-leaflet
 django-next-prev>=1.1.0,<2
 django-super-deduper
 django-tables2

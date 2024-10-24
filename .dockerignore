@@ -1,1 +1,7 @@
 myenv
+env
+venv
+db.sqlite3
+.env
+secret.env
+.git

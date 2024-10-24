@@ -1,15 +1,13 @@
 # manuscripta
 
-## docker
+### building the image
 
-build the image with `docker build -t manuscripta .`
+* `docker build -t manuscripta:latest .`
+* `docker build -t manuscripta:latest --no-cache .`
 
-provide a .env file with
-```
-DB_NAME=db-name
-DB_USER=asdf
-DB_PASSWORD=asdf
-PROJECT_NAME=nomythdbapp
-SECRET_KEY=hansi4ever
-```
-run the container with `docker run -it -p 8020:8020 --rm --env-file .env_dev manuscripta`
+
+### running the image
+
+To run the image you should provide an `.env` file to pass in needed environment variables; see example below:
+
+* `docker run -it --rm --network="host" --env-file .env_dev --name manuscripta manuscripta:latest` and open http://127.0.0.1:8020/

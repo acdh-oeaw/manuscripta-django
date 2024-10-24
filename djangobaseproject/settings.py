@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "django_filters",
     "django_tables2",
     "rest_framework",
-    "leaflet",
     "idprovider",
     "webpage",
     "browsing",
